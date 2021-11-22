@@ -365,6 +365,28 @@ body{
     bottom: 0;
 }
 
+.bullet_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+}
+
+.bullet{
+    width: 15px;
+    height: 15px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.ans_cor{
+    background-color: green;
+}
+
+.ans_err{
+    background-color: red;
+}
 .quest{
     position: relative;
     max-width: 1000px;
