@@ -35,7 +35,7 @@ const config = {
         }),
         new CopyPlugin({
             patterns: [
-                {from: './public', to:'assets/pictures' }
+                {from: './public', to:'assets/' }
             ]
         }),
         // Add your plugins here
