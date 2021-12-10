@@ -1,0 +1,32 @@
+.toy{
+    width: 225px;
+    height: 342px;
+    border-radius: 5px;
+    background-color: rgba(38, 103, 116, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    color: white;
+}
+
+.toy_picture{
+    width: 85px;
+    height: 106px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.font_info{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.font_name{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+}
