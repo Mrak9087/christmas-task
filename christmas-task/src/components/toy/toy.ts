@@ -76,4 +76,16 @@ export class Toy extends BaseComponent {
     getSize():string{
         return this.size;
     }
+
+    getColor():string{
+        return this.color;
+    }
+
+    getShape():string{
+        return this.shape;
+    }
+
+    getFavorite():boolean{
+        return this.favorite;
+    }
 }

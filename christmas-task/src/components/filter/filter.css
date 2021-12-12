@@ -1,9 +1,97 @@
 
 
+
+.filter_item_val{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.btn_color{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin: 15px 10px;
+    border: 1px solid #278D9F;
+    border-radius: 5px;
+    outline: 0;
+    background-color: transparent;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn_color:hover{
+    border-color: #ccc;
+}
+
+.btn_color.active::after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 9px;
+    width: 6px;
+    height: 10px;
+    border: solid #666;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+}
+
+.clWhite{
+    background-color: #fff;
+}
+
+.clYellow{
+    background-color: #FDD700;
+}
+
+.clRed{
+    background-color: #FD0000;
+}
+
+.clBlue{
+    background-color: #2199EB;
+}
+
+.clGreen{
+    background-color: #08AA05;
+}
+
+.btn_size{
+    width: 50px;
+    height: 50px;
+    margin: 5px 5px;
+    border: 0;
+    outline: 0;
+    background-image: url('../../../public/svg/ball.svg');
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+    stroke: black;
+    transition: .3s;
+}
+
+.btn_size:hover{
+    filter: invert(20%);
+}
+
+.middle{
+    background-size: 40px 40px;
+}
+
+.small{
+    background-size: 32px 32px;
+}
+
+.btn_size.active{
+    filter: invert(9%) sepia(63%) saturate(461%) hue-rotate(322deg) brightness(83%) contrast(88%);
+}
+
 .box_toys{
     display: flex;
     width: 100%;
     flex-wrap: wrap;
     gap: 10px;
-    
 }
