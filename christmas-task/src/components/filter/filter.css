@@ -5,9 +5,10 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+    background-color: rgba(31, 112, 127, .3);
 }
 
-.btn_color{
+.btn_color,.btn_favor{
     position: relative;
     width: 30px;
     height: 30px;
@@ -24,7 +25,7 @@
     border-color: #ccc;
 }
 
-.btn_color.active::after{
+.btn_color.active::after, .btn_favor.active::after{
     content: '';
     display: block;
     position: absolute;
@@ -57,13 +58,55 @@
     background-color: #08AA05;
 }
 
+.btn_shape{
+    width: 40px;
+    height: 40px;
+    margin: 10px 7px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn_shape:hover{
+    filter: invert(20%);
+}
+
+.btn_shape.active{
+    filter: invert(9%) sepia(63%) saturate(461%) hue-rotate(322deg) brightness(83%) contrast(88%);
+}
+
+.clBall{
+    background-image: url('../../assets/svg/ball.svg');
+}
+
+.clBell{
+    background-image: url('../../assets/svg/bell.svg');
+}
+
+.clCone{
+    background-image: url('../../assets/svg/cone.svg');
+}
+
+.clSnow{
+    background-image: url('../../assets/svg/snowflake.svg');
+}
+
+.clToy{
+    background-image: url('../../assets/svg/toy.svg');
+}
+
 .btn_size{
     width: 50px;
     height: 50px;
     margin: 5px 5px;
     border: 0;
     outline: 0;
-    background-image: url('../../../public/svg/ball.svg');
+    background-image: url('../../assets/svg/ball.svg');
     background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
@@ -94,4 +137,8 @@
     width: 100%;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.btn_favor{
+    background-color: #278D9F;
 }

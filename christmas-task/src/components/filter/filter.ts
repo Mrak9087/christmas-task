@@ -1,12 +1,14 @@
 import './filter.css';
 import { Toy } from '../toy/toy';
 import {BaseComponent} from '../baseComponent/baseComponent';
-import {filterSize, filterColor, IFilterObj} from '../generalTypes/general';
+import {filterSize, filterColor, filterShape,IFilterObj} from '../generalTypes/general';
 
 export class FilterToy extends BaseComponent{
     private readonly arrayToys: Toy[];
     private filterColorDiv:HTMLDivElement;
     private filterSizeDiv:HTMLDivElement;
+    private filterShapeDiv:HTMLDivElement;
+    private filterFavoriteDiv:HTMLDivElement;
     private boxToys: HTMLDivElement;
     private filters:IFilterObj;
     constructor(arrayToys: Toy[]){
@@ -22,6 +24,11 @@ export class FilterToy extends BaseComponent{
 
     async init(){
 
+        this.filterShapeDiv = document.createElement('div');
+        this.filterShapeDiv.className = 'filter_item_val';
+        this.filterShapeDiv.innerHTML = '<span>Форма:</span>'
+        this.createBtnFilterShape();
+
         this.filterColorDiv = document.createElement('div');
         this.filterColorDiv.className = 'filter_item_val';
         this.filterColorDiv.innerHTML = '<span>Цвет:</span>'
@@ -32,12 +39,17 @@ export class FilterToy extends BaseComponent{
         this.filterSizeDiv.innerHTML = '<span>Размер:</span>'
         const fltSizeContainer: HTMLDivElement = document.createElement('div');
         this.createBtnFilterSize();
+
+        this.filterFavoriteDiv = document.createElement('div');
+        this.filterFavoriteDiv.className = 'filter_item_val';
+        this.filterFavoriteDiv.innerHTML = '<span>Только любимые:</span>'
+        this.createBtnFilterFavorite();
         
         this.boxToys = document.createElement('div');
         this.boxToys.className = 'box_toys';
         const arrFiltered = await this.doFilter();
         this.showToys(arrFiltered);
-        this.node.append(this.filterColorDiv, this.filterSizeDiv, this.boxToys);
+        this.node.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv, this.boxToys);
     }
 
     createBtnFilterSize():void{
@@ -93,6 +105,50 @@ export class FilterToy extends BaseComponent{
         })
     }
 
+    createBtnFilterShape():void{
+        filterShape.forEach((item) => {
+            const btn:HTMLButtonElement = document.createElement('button');
+            btn.dataset.filterValue = item;
+            btn.className = 'btn_shape';
+            switch (item){
+                case 'шар':{
+                    btn.classList.add('clBall');
+                    break
+                } 
+                case 'колокольчик':{
+                    btn.classList.add('clBell');
+                    break;
+                } 
+                case 'шишка':{
+                    btn.classList.add('clCone');
+                    break;
+                } 
+                case 'снежинка':{
+                    btn.classList.add('clSnow');
+                    break;
+                }
+                case 'фигурка':{
+                    btn.classList.add('clToy');
+                    break;
+                }
+            }
+            
+            btn.addEventListener('click', () => {
+                this.filterShapeHandler(btn);
+            })
+            this.filterShapeDiv.append(btn);
+        })
+    }
+
+    createBtnFilterFavorite():void{
+        const btn:HTMLButtonElement = document.createElement('button');
+        btn.className = 'btn_favor';
+        btn.addEventListener('click', () => {
+            this.filterFavoriteHandler(btn);
+        })
+        this.filterFavoriteDiv.append(btn);
+    }
+
      async filterSizeHandler(btn:HTMLElement){
         let idx: number = this.filters.size.findIndex((item) => item === btn.dataset.filterValue);
         if (idx > -1) {
@@ -114,6 +170,33 @@ export class FilterToy extends BaseComponent{
             btn.classList.remove('active');
         } else {
             this.filters.color.push(btn.dataset.filterValue);
+            btn.classList.add('active');
+        }
+        
+        const arrFiltered = await this.doFilter();
+        this.showToys(arrFiltered);
+    }
+
+    async filterShapeHandler(btn:HTMLElement){
+        let idx: number = this.filters.shape.findIndex((item) => item === btn.dataset.filterValue);
+        if (idx > -1) {
+            this.filters.shape.splice(idx,1);
+            btn.classList.remove('active');
+        } else {
+            this.filters.shape.push(btn.dataset.filterValue);
+            btn.classList.add('active');
+        }
+        
+        const arrFiltered = await this.doFilter();
+        this.showToys(arrFiltered);
+    }
+
+    async filterFavoriteHandler(btn:HTMLElement){
+        if (this.filters.favor) {
+            this.filters.favor = false;
+            btn.classList.remove('active');
+        } else {
+            this.filters.favor = true;
             btn.classList.add('active');
         }
         
