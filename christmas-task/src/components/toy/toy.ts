@@ -72,4 +72,8 @@ export class Toy extends BaseComponent {
     changeFavorite():void{
         this.favorite = !this.favorite;
     }
+
+    getSize():string{
+        return this.size;
+    }
 }
