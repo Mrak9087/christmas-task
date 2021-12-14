@@ -18,5 +18,9 @@ export interface IFilterObj{
     shape:string[],
     color:string[],
     favor:boolean,
+    count:{
+        min:number,
+        max:number,
+    }
     
 }

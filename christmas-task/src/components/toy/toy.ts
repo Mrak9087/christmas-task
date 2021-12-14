@@ -88,4 +88,9 @@ export class Toy extends BaseComponent {
     getFavorite():boolean{
         return this.favorite;
     }
+
+    getCount():number{
+        return this.count;
+    }
 }
+

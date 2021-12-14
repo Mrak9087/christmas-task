@@ -1,6 +1,7 @@
 import './filter.css';
 import { Toy } from '../toy/toy';
 import {BaseComponent} from '../baseComponent/baseComponent';
+import {FilterRange} from './filterRange';
 import {filterSize, filterColor, filterShape,IFilterObj} from '../generalTypes/general';
 
 export class FilterToy extends BaseComponent{
@@ -11,6 +12,7 @@ export class FilterToy extends BaseComponent{
     private filterFavoriteDiv:HTMLDivElement;
     private boxToys: HTMLDivElement;
     private filters:IFilterObj;
+    private filterCount:FilterRange;
     constructor(arrayToys: Toy[]){
         super('filter_container');
         this.arrayToys = arrayToys;
@@ -19,6 +21,10 @@ export class FilterToy extends BaseComponent{
             shape:Array<string>(),
             color:Array<string>(),
             favor:false,
+            count:{
+                min:1,
+                max:12,
+            }
         }
     }
 
@@ -49,7 +55,20 @@ export class FilterToy extends BaseComponent{
         this.boxToys.className = 'box_toys';
         const arrFiltered = await this.doFilter();
         this.showToys(arrFiltered);
-        this.node.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv, this.boxToys);
+        this.filterCount = new FilterRange(1,12,1);
+        this.filterCount.init();
+
+        this.filterCount.funcFilter = this.filterCountHandler;
+
+        // this.filterCount.funcFilter = async () => {
+        //     this.filters.count.min = this.filterCount.minValue;
+        //     this.filters.count.max = this.filterCount.maxValue;
+        //     const arrFiltered = await this.doFilter();
+        //     this.showToys(arrFiltered);
+        // };
+
+        this.node.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv,
+            this.filterCount.node, this.boxToys);
     }
 
     createBtnFilterSize():void{
@@ -191,6 +210,13 @@ export class FilterToy extends BaseComponent{
         this.showToys(arrFiltered);
     }
 
+    filterCountHandler = async () => {
+        this.filters.count.min = this.filterCount.minValue;
+        this.filters.count.max = this.filterCount.maxValue;
+        const arrFiltered = await this.doFilter();
+        this.showToys(arrFiltered);
+    };
+
     async filterFavoriteHandler(btn:HTMLElement){
         if (this.filters.favor) {
             this.filters.favor = false;
@@ -229,6 +255,11 @@ export class FilterToy extends BaseComponent{
                     if(!itemToy.getFavorite()){
                         return false;
                     }
+                }
+
+                if ((itemToy.getCount() < this.filters.count.min) || (itemToy.getCount() > this.filters.count.max)){
+                    console.log(itemToy.getCount());
+                    return false;
                 }
     
                 return true;
