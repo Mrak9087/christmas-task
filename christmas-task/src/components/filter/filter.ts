@@ -12,6 +12,8 @@ export class FilterToy extends BaseComponent{
     private filterFavoriteDiv:HTMLDivElement;
     private boxToys: HTMLDivElement;
     private filters:IFilterObj;
+    private filterCountItem:HTMLDivElement;
+    private filterYearsItem:HTMLDivElement;
     private filterCount:FilterRange;
     private filterYear:FilterRange;
     constructor(arrayToys: Toy[]){
@@ -61,15 +63,27 @@ export class FilterToy extends BaseComponent{
         const arrFiltered = await this.doFilter();
         this.showToys(arrFiltered);
 
+        this.filterCountItem = document.createElement('div');
+        this.filterCountItem.className = 'filter_item_val range_item';
+        this.filterCountItem.innerHTML = '<span>Количество экземпляров:</span>'
+
+        this.filterYearsItem = document.createElement('div');
+        this.filterYearsItem.className = 'filter_item_val range_item';
+        this.filterYearsItem.innerHTML = '<span>Год приобретения:</span>'
+        
+
         this.filterCount = new FilterRange(this.filters.count.min,this.filters.count.max,1);
         this.filterCount.init();
 
         this.filterCount.funcFilter = this.filterCountHandler;
 
+        this.filterCountItem.append(this.filterCount.node);
+
         this.filterYear = new FilterRange(this.filters.years.min,this.filters.years.max,10);
         this.filterYear.init();
 
         this.filterYear.funcFilter = this.filterYearHandler;
+        this.filterYearsItem.append(this.filterYear.node);
 
         // this.filterCount.funcFilter = async () => {
         //     this.filters.count.min = this.filterCount.minValue;
@@ -79,7 +93,7 @@ export class FilterToy extends BaseComponent{
         // };
 
         this.node.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv,
-            this.filterCount.node, this.filterYear.node, this.boxToys);
+            this.filterCountItem, this.filterYearsItem, this.boxToys);
     }
 
     createBtnFilterSize():void{
