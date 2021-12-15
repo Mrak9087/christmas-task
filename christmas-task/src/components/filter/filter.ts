@@ -294,6 +294,13 @@ export class FilterToy extends BaseComponent{
     }
 
     showToys(toys:Toy[]):void{
+        toys = toys.sort((toyA:Toy, toyB:Toy)=>{
+            let lowerA:string = toyA.getName().toLowerCase();
+            let lowerB:string = toyB.getName().toLowerCase();
+            if (lowerA < lowerB) return -1;
+            if (lowerA > lowerB) return 1;
+            return 0;
+        })
         this.boxToys.innerHTML = '';
         toys.forEach((item) => {
             this.boxToys.append(item.node);

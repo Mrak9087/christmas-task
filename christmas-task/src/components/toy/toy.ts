@@ -96,5 +96,9 @@ export class Toy extends BaseComponent {
     getYear():number{
         return this.year;
     }
+
+    getName():string{
+        return this.name;
+    }
 }
 
