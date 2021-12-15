@@ -92,5 +92,9 @@ export class Toy extends BaseComponent {
     getCount():number{
         return this.count;
     }
+
+    getYear():number{
+        return this.year;
+    }
 }
 

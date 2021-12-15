@@ -21,6 +21,11 @@ export interface IFilterObj{
     count:{
         min:number,
         max:number,
+    },
+    years:{
+        min:number,
+        max:number,
     }
+    
     
 }

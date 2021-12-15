@@ -15,6 +15,8 @@ export class FilterRange extends BaseComponent{
     private range:HTMLDivElement;
     private thumbLeft:HTMLDivElement;
     private thumbRight:HTMLDivElement;
+    private outMin:HTMLOutputElement;
+    private outMax:HTMLOutputElement;
 
 
     constructor(minRange:number, maxRange:number, step:number){
@@ -30,6 +32,7 @@ export class FilterRange extends BaseComponent{
     init():void{
         this.inputLeftHid = document.createElement('input');
         this.inputLeftHid.type = 'range';
+        this.inputLeftHid.className = 'progress';
         this.inputLeftHid.min = this.minRange.toString();
         this.inputLeftHid.max = this.maxRange.toString();
         this.inputLeftHid.step = this.step.toString();
@@ -38,6 +41,7 @@ export class FilterRange extends BaseComponent{
         
         this.inputRightHid = document.createElement('input');
         this.inputRightHid.type = 'range';
+        this.inputRightHid.className = 'progress';
         this.inputRightHid.min = this.minRange.toString();
         this.inputRightHid.max = this.maxRange.toString();
         this.inputRightHid.step = this.step.toString();
@@ -85,8 +89,13 @@ export class FilterRange extends BaseComponent{
             this.thumbRight.classList.remove("active");
         });
 
-        this.slider.append(this.track,this.range,this.thumbLeft,this.thumbRight)
-        this.node.append(this.inputLeftHid,this.inputRightHid,this.slider);
+        this.outMin = document.createElement('output');
+        this.outMin.className = 'out';
+        this.outMax = document.createElement('output');
+        this.outMax.className = 'out';
+
+        this.slider.append(this.inputLeftHid,this.inputRightHid,this.track,this.range,this.thumbLeft,this.thumbRight)
+        this.node.append(this.outMin,this.slider,this.outMax);
         this.setLeftValue();
         this.setRightValue();
     }
@@ -98,8 +107,9 @@ export class FilterRange extends BaseComponent{
     
         this.minValue = Math.min(parseInt(this.inputLeftHid.value), 
                                     parseInt(this.inputRightHid.value));
+        this.outMin.innerHTML =  this.minValue.toString();
 
-        this.inputLeftHid.value = this.minValue.toString()
+        this.inputLeftHid.value = this.minValue.toString();
         
     
         let percent = ((parseInt(this.inputLeftHid.value) - min) / (max - min)) * 100;
@@ -117,7 +127,9 @@ export class FilterRange extends BaseComponent{
         let max:number = this.maxRange;
     
         this.maxValue = Math.max(parseInt(this.inputRightHid.value), 
-                                    parseInt(this.inputLeftHid.value) - 1);
+                                    parseInt(this.inputLeftHid.value));
+
+        this.outMax.innerHTML = this.maxValue.toString();
         
         this.inputRightHid.value = this.maxValue.toString();
     

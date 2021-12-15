@@ -13,6 +13,7 @@ export class FilterToy extends BaseComponent{
     private boxToys: HTMLDivElement;
     private filters:IFilterObj;
     private filterCount:FilterRange;
+    private filterYear:FilterRange;
     constructor(arrayToys: Toy[]){
         super('filter_container');
         this.arrayToys = arrayToys;
@@ -24,6 +25,10 @@ export class FilterToy extends BaseComponent{
             count:{
                 min:1,
                 max:12,
+            },
+            years:{
+                min:1940,
+                max:2020,
             }
         }
     }
@@ -55,10 +60,16 @@ export class FilterToy extends BaseComponent{
         this.boxToys.className = 'box_toys';
         const arrFiltered = await this.doFilter();
         this.showToys(arrFiltered);
-        this.filterCount = new FilterRange(1,12,1);
+
+        this.filterCount = new FilterRange(this.filters.count.min,this.filters.count.max,1);
         this.filterCount.init();
 
         this.filterCount.funcFilter = this.filterCountHandler;
+
+        this.filterYear = new FilterRange(this.filters.years.min,this.filters.years.max,10);
+        this.filterYear.init();
+
+        this.filterYear.funcFilter = this.filterYearHandler;
 
         // this.filterCount.funcFilter = async () => {
         //     this.filters.count.min = this.filterCount.minValue;
@@ -68,7 +79,7 @@ export class FilterToy extends BaseComponent{
         // };
 
         this.node.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv,
-            this.filterCount.node, this.boxToys);
+            this.filterCount.node, this.filterYear.node, this.boxToys);
     }
 
     createBtnFilterSize():void{
@@ -217,6 +228,13 @@ export class FilterToy extends BaseComponent{
         this.showToys(arrFiltered);
     };
 
+    filterYearHandler = async () => {
+        this.filters.years.min = this.filterYear.minValue;
+        this.filters.years.max = this.filterYear.maxValue;
+        const arrFiltered = await this.doFilter();
+        this.showToys(arrFiltered);
+    };
+
     async filterFavoriteHandler(btn:HTMLElement){
         if (this.filters.favor) {
             this.filters.favor = false;
@@ -258,7 +276,13 @@ export class FilterToy extends BaseComponent{
                 }
 
                 if ((itemToy.getCount() < this.filters.count.min) || (itemToy.getCount() > this.filters.count.max)){
-                    console.log(itemToy.getCount());
+                    
+                    return false;
+                }
+
+                if ((itemToy.getYear() < this.filters.years.min) || 
+                    (itemToy.getYear() > this.filters.years.max)){
+                    
                     return false;
                 }
     
