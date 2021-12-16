@@ -2,16 +2,20 @@ import './filter.css';
 import { Toy } from '../toy/toy';
 import {BaseComponent} from '../baseComponent/baseComponent';
 import {FilterRange} from './filterRange';
-import {filterSize, filterColor, filterShape,IFilterObj} from '../generalTypes/general';
+import {filterSize, filterColor, filterShape, FilterObjType} from '../generalTypes/general';
 
 export class FilterToy extends BaseComponent{
     private readonly arrayToys: Toy[];
+    private shapeFilterBtns:HTMLButtonElement[] = [];
+    private colorFilterBtns:HTMLButtonElement[] = [];
+    private sizeFilterBtns:HTMLButtonElement[]= [];
+    private favoriteFilterBtn:HTMLButtonElement;
     private filterColorDiv:HTMLDivElement;
     private filterSizeDiv:HTMLDivElement;
     private filterShapeDiv:HTMLDivElement;
     private filterFavoriteDiv:HTMLDivElement;
     private boxToys: HTMLDivElement;
-    private filters:IFilterObj;
+    private filters:FilterObjType;
     private filterCountItem:HTMLDivElement;
     private filterYearsItem:HTMLDivElement;
     private selectSort: HTMLSelectElement;
@@ -91,13 +95,6 @@ export class FilterToy extends BaseComponent{
         this.filterYear.funcFilter = this.filterYearHandler;
         this.filterYearsItem.append(this.filterYear.node);
 
-        // this.filterCount.funcFilter = async () => {
-        //     this.filters.count.min = this.filterCount.minValue;
-        //     this.filters.count.max = this.filterCount.maxValue;
-        //     const arrFiltered = await this.doFilter();
-        //     this.showToys(arrFiltered);
-        // };
-
         this.selectSort = document.createElement('select');
         this.selectSort.className = 'sort_select';
         this.selectSort.innerHTML = `<option selected="" value="sort-name-max">По названию от «А» до «Я»</option>
@@ -127,7 +124,7 @@ export class FilterToy extends BaseComponent{
 
     createBtnFilterSize():void{
         filterSize.forEach((item) => {
-            const btn:HTMLButtonElement = document.createElement('button');
+            const btn = document.createElement('button');
             btn.dataset.filterValue = item;
             btn.className = 'btn_size';
             if (item === 'средний'){
@@ -137,15 +134,17 @@ export class FilterToy extends BaseComponent{
                 btn.classList.add('small');
             }
             btn.addEventListener('click', () => {
-                this.filterSizeHandler(btn);
+                // this.filterSizeHandler(btn);
+                this.filterHandler(btn, this.filters.size);
             })
+            this.sizeFilterBtns.push(btn);
             this.filterSizeDiv.append(btn);
         })
     }
 
     createBtnFilterColor():void{
         filterColor.forEach((item) => {
-            const btn:HTMLButtonElement = document.createElement('button');
+            const btn = document.createElement('button');
             btn.dataset.filterValue = item;
             btn.className = 'btn_color';
             switch (item){
@@ -172,15 +171,17 @@ export class FilterToy extends BaseComponent{
             }
             
             btn.addEventListener('click', () => {
-                this.filterColorHandler(btn);
+                // this.filterColorHandler(btn);
+                this.filterHandler(btn, this.filters.color)
             })
+            this.colorFilterBtns.push(btn);
             this.filterColorDiv.append(btn);
         })
     }
 
     createBtnFilterShape():void{
         filterShape.forEach((item) => {
-            const btn:HTMLButtonElement = document.createElement('button');
+            const btn = document.createElement('button');
             btn.dataset.filterValue = item;
             btn.className = 'btn_shape';
             switch (item){
@@ -207,56 +208,30 @@ export class FilterToy extends BaseComponent{
             }
             
             btn.addEventListener('click', () => {
-                this.filterShapeHandler(btn);
+                // this.filterShapeHandler(btn);
+                this.filterHandler(btn, this.filters.shape)
             })
+            this.shapeFilterBtns.push(btn);
             this.filterShapeDiv.append(btn);
         })
     }
 
     createBtnFilterFavorite():void{
-        const btn:HTMLButtonElement = document.createElement('button');
-        btn.className = 'btn_favor';
-        btn.addEventListener('click', () => {
-            this.filterFavoriteHandler(btn);
+        this.favoriteFilterBtn = document.createElement('button');
+        this.favoriteFilterBtn.className = 'btn_favor';
+        this.favoriteFilterBtn.addEventListener('click', () => {
+            this.filterFavoriteHandler(this.favoriteFilterBtn);
         })
-        this.filterFavoriteDiv.append(btn);
+        this.filterFavoriteDiv.append(this.favoriteFilterBtn);
     }
 
-     async filterSizeHandler(btn:HTMLElement){
-        let idx: number = this.filters.size.findIndex((item) => item === btn.dataset.filterValue);
+    async filterHandler(btn:HTMLElement, filters:string[]){
+        let idx: number = filters.findIndex((item) => item === btn.dataset.filterValue);
         if (idx > -1) {
-            this.filters.size.splice(idx,1);
+            filters.splice(idx,1);
             btn.classList.remove('active');
         } else {
-            this.filters.size.push(btn.dataset.filterValue);
-            btn.classList.add('active');
-        }
-        
-        this.arrFiltered = await this.doFilter(this.arrayToys);
-        this.showToys(this.arrFiltered);
-    }
-
-    async filterColorHandler(btn:HTMLElement){
-        let idx: number = this.filters.color.findIndex((item) => item === btn.dataset.filterValue);
-        if (idx > -1) {
-            this.filters.color.splice(idx,1);
-            btn.classList.remove('active');
-        } else {
-            this.filters.color.push(btn.dataset.filterValue);
-            btn.classList.add('active');
-        }
-        
-        this.arrFiltered = await this.doFilter(this.arrayToys);
-        this.showToys(this.arrFiltered);
-    }
-
-    async filterShapeHandler(btn:HTMLElement){
-        let idx: number = this.filters.shape.findIndex((item) => item === btn.dataset.filterValue);
-        if (idx > -1) {
-            this.filters.shape.splice(idx,1);
-            btn.classList.remove('active');
-        } else {
-            this.filters.shape.push(btn.dataset.filterValue);
+            filters.push(btn.dataset.filterValue);
             btn.classList.add('active');
         }
         

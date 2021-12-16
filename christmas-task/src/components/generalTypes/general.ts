@@ -9,11 +9,11 @@ export interface IToy{
     favorite: boolean,
 }
 
-export const filterSize:string[] = ['большой', 'средний', 'малый'];
-export const filterColor:string[] = ['белый', 'желтый', 'красный', 'синий', 'зелёный'];
-export const filterShape:string[] = ['шар', 'колокольчик', 'шишка', 'снежинка', 'фигурка'];
+export const filterSize = ['большой', 'средний', 'малый'];
+export const filterColor = ['белый', 'желтый', 'красный', 'синий', 'зелёный'];
+export const filterShape = ['шар', 'колокольчик', 'шишка', 'снежинка', 'фигурка'];
 
-export interface IFilterObj{
+export type FilterObjType = {
     size:string[],
     shape:string[],
     color:string[],
