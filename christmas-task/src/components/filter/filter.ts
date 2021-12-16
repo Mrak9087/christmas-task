@@ -66,7 +66,7 @@ export class FilterToy extends BaseComponent{
         
         this.boxToys = document.createElement('div');
         this.boxToys.className = 'box_toys';
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
 
         this.filterCountItem = document.createElement('div');
@@ -117,6 +117,7 @@ export class FilterToy extends BaseComponent{
         this.search.autocomplete = 'off';
         this.search.addEventListener('input', async ()=>{
             this.arrFiltered = await this.doSearch(this.search.value);
+            this.arrFiltered = await this.doFilter(this.arrFiltered);
             this.showToys(this.arrFiltered);
         })
         
@@ -231,7 +232,7 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
@@ -245,7 +246,7 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
@@ -259,21 +260,21 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
     filterCountHandler = async () => {
         this.filters.count.min = this.filterCount.minValue;
         this.filters.count.max = this.filterCount.maxValue;
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
 
     filterYearHandler = async () => {
         this.filters.years.min = this.filterYear.minValue;
         this.filters.years.max = this.filterYear.maxValue;
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
 
@@ -286,13 +287,13 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        this.arrFiltered = await this.doFilter();
+        this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
-    async doFilter():Promise<Toy[]>{
+    async doFilter(arrayToys:Toy[]):Promise<Toy[]>{
         return new Promise((resolve)=>{
-            const arrToy = this.arrayToys.filter((itemToy) => {
+            const arrToy = arrayToys.filter((itemToy) => {
                 if (this.filters.size.length){
                     if (!this.filters.size.find((value) => value === itemToy.getSize())){
                         return false;
