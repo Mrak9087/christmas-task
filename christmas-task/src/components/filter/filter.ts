@@ -14,8 +14,14 @@ export class FilterToy extends BaseComponent{
     private filters:IFilterObj;
     private filterCountItem:HTMLDivElement;
     private filterYearsItem:HTMLDivElement;
+    private selectSort: HTMLSelectElement;
+    private search: HTMLInputElement;
     private filterCount:FilterRange;
     private filterYear:FilterRange;
+    
+    private sortValue:string;
+    private arrFiltered:Toy[];
+
     constructor(arrayToys: Toy[]){
         super('filter_container');
         this.arrayToys = arrayToys;
@@ -36,7 +42,7 @@ export class FilterToy extends BaseComponent{
     }
 
     async init(){
-
+        this.arrFiltered = this.arrayToys.slice(0);
         this.filterShapeDiv = document.createElement('div');
         this.filterShapeDiv.className = 'filter_item_val';
         this.filterShapeDiv.innerHTML = '<span>Форма:</span>'
@@ -60,8 +66,8 @@ export class FilterToy extends BaseComponent{
         
         this.boxToys = document.createElement('div');
         this.boxToys.className = 'box_toys';
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
 
         this.filterCountItem = document.createElement('div');
         this.filterCountItem.className = 'filter_item_val range_item';
@@ -92,8 +98,30 @@ export class FilterToy extends BaseComponent{
         //     this.showToys(arrFiltered);
         // };
 
+        this.selectSort = document.createElement('select');
+        this.selectSort.className = 'sort_select';
+        this.selectSort.innerHTML = `<option selected="" value="sort-name-max">По названию от «А» до «Я»</option>
+        <option value="sort-name-min">По названию от «Я» до «А»</option>
+        <option value="sort-count-max">По количеству по возрастанию</option>
+        <option value="sort-count-min">По количеству по убыванию</option>`;
+        this.sortValue = this.selectSort.value;
+
+        this.selectSort.addEventListener('change',()=>{
+            this.sortValue = this.selectSort.value;
+            this.sortToy(this.arrFiltered);
+            this.showToys(this.arrFiltered);
+        })
+
+        this.search = document.createElement('input');
+        this.search.className = 'search';
+        this.search.autocomplete = 'off';
+        this.search.addEventListener('input', async ()=>{
+            this.arrFiltered = await this.doSearch(this.search.value);
+            this.showToys(this.arrFiltered);
+        })
+        
         this.node.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv,
-            this.filterCountItem, this.filterYearsItem, this.boxToys);
+            this.filterCountItem, this.filterYearsItem, this.selectSort, this.search, this.boxToys);
     }
 
     createBtnFilterSize():void{
@@ -203,8 +231,8 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
     }
 
     async filterColorHandler(btn:HTMLElement){
@@ -217,8 +245,8 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
     }
 
     async filterShapeHandler(btn:HTMLElement){
@@ -231,22 +259,22 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
     }
 
     filterCountHandler = async () => {
         this.filters.count.min = this.filterCount.minValue;
         this.filters.count.max = this.filterCount.maxValue;
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
     };
 
     filterYearHandler = async () => {
         this.filters.years.min = this.filterYear.minValue;
         this.filters.years.max = this.filterYear.maxValue;
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
     };
 
     async filterFavoriteHandler(btn:HTMLElement){
@@ -258,8 +286,8 @@ export class FilterToy extends BaseComponent{
             btn.classList.add('active');
         }
         
-        const arrFiltered = await this.doFilter();
-        this.showToys(arrFiltered);
+        this.arrFiltered = await this.doFilter();
+        this.showToys(this.arrFiltered);
     }
 
     async doFilter():Promise<Toy[]>{
@@ -304,21 +332,57 @@ export class FilterToy extends BaseComponent{
             });
             resolve(arrToy);
         })
-        
+    }
+
+    async doSearch(nameToy:string):Promise<Toy[]>{
+        return new Promise((resolve)=>{
+            const arrToy = this.arrayToys.filter((itemToy) => {
+                if (itemToy.getName().toLowerCase().indexOf(nameToy.toLowerCase()) > -1) {
+                    return true
+                }
+                return false
+            });
+            resolve(arrToy);
+        })
     }
 
     showToys(toys:Toy[]):void{
-        toys = toys.sort((toyA:Toy, toyB:Toy)=>{
-            let lowerA:string = toyA.getName().toLowerCase();
-            let lowerB:string = toyB.getName().toLowerCase();
-            if (lowerA < lowerB) return -1;
-            if (lowerA > lowerB) return 1;
-            return 0;
-        })
+        this.sortToy(toys);
         this.boxToys.innerHTML = '';
         toys.forEach((item) => {
             this.boxToys.append(item.node);
         })
+    }
+
+    sortToy(toys:Toy[]):void{
+        if (this.sortValue === 'sort-name-max'){
+            toys.sort((toyA:Toy, toyB:Toy)=>{
+                let lowerA:string = toyA.getName().toLowerCase();
+                let lowerB:string = toyB.getName().toLowerCase();
+                if (lowerA < lowerB) return -1;
+                if (lowerA > lowerB) return 1;
+                return 0;
+            })
+        }
+        if (this.sortValue === 'sort-name-min'){
+            toys.sort((toyA:Toy, toyB:Toy)=>{
+                let lowerA:string = toyA.getName().toLowerCase();
+                let lowerB:string = toyB.getName().toLowerCase();
+                if (lowerA > lowerB) return -1;
+                if (lowerA < lowerB) return 1;
+                return 0;
+            })
+        }
+        if (this.sortValue === 'sort-count-max'){
+            toys.sort((toyA:Toy, toyB:Toy)=>{
+                return toyA.getCount() - toyB.getCount();
+            })
+        }
+        if (this.sortValue === 'sort-count-min'){
+            toys.sort((toyA:Toy, toyB:Toy)=>{
+                return toyB.getCount() - toyA.getCount();
+            })
+        }
     }
     
 }

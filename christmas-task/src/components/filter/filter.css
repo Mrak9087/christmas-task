@@ -147,3 +147,51 @@
 .btn_favor{
     background-color: #278D9F;
 }
+
+.sort_select {
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    width: 380px;
+    height: 40px;
+    padding: 5px 25px;
+    margin: 10px 0;
+    margin-bottom: 125px;
+    background-color: rgba(31, 112, 127, .3);
+    background-image: url('../../assets/svg/arrow-down.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 340px center;
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    border: 1px solid #278D9F;
+    font-size: 20px;
+    line-height: 28px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sort_select option {
+    color: inherit;
+    background-color: #183E42;
+}
+
+.search {
+    width: 380px;
+    height: 40px;
+    padding: 5px 25px;
+    margin: 10px 0;
+    margin-right: 30px;
+    border-radius: 20px;
+    border: 1px solid #278D9F;
+    color: #fff;
+    font-size: 18px;
+    background-color: rgba(31, 112, 127, .3);
+    background-image: url('../../assets/svg/search.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 330px center;
+    backdrop-filter: blur(6px);
+    outline: none;
+}
