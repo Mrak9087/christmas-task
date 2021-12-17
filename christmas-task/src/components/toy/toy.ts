@@ -11,6 +11,7 @@ export class Toy extends BaseComponent {
     private color: string;
     private size: string;
     private favorite: boolean;
+    private isSelect: boolean = false;
 
     private divName: HTMLDivElement;
     private divImg: HTMLDivElement;
@@ -20,6 +21,7 @@ export class Toy extends BaseComponent {
     private divColor: HTMLDivElement;
     private divSize: HTMLDivElement;
     private divFavorite: HTMLDivElement;
+    private selectDiv: HTMLDivElement;
     constructor(toyInfo:IToy){
         super('toy');
         this.numImage = +toyInfo.num;
@@ -64,9 +66,21 @@ export class Toy extends BaseComponent {
         this.divFavorite = document.createElement('div');
         this.divFavorite.className = 'font_info';
         this.divFavorite.innerHTML =`Любимая: ${(this.favorite) ? 'да': 'нет'}`
+
+        this.selectDiv = document.createElement('div');
+        this.selectDiv.className = 'select';
+
+        this.node.addEventListener('click',()=>{
+            this.isSelect = !this.isSelect;
+            if (this.isSelect) {
+                this.node.classList.add('active');
+            } else {
+                this.node.classList.remove('active');
+            }
+        })
         
         this.node.append(this.divName, this.divImg, this.divCount, this.divYear,
-            this.divShape, this.divColor, this.divSize,this.divFavorite);
+            this.divShape, this.divColor, this.divSize,this.divFavorite,this.selectDiv);
     }
 
     changeFavorite():void{
@@ -99,6 +113,10 @@ export class Toy extends BaseComponent {
 
     getName():string{
         return this.name;
+    }
+
+    getSelect():boolean{
+        return this.isSelect;
     }
 }
 
