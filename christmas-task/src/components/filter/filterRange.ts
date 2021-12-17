@@ -140,4 +140,13 @@ export class FilterRange extends BaseComponent{
         this.funcFilter()
         // console.log(this.inputRightHid.value)
     }
+
+    setDefault(){
+        this.minValue = this.minRange;
+        this.maxValue = this.maxRange;
+        this.inputLeftHid.value = this.minValue.toString();
+        this.inputRightHid.value = this.maxValue.toString();
+        this.setLeftValue();
+        this.setRightValue()
+    }
 }

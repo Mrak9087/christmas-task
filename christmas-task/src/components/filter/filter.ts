@@ -22,12 +22,13 @@ export class FilterToy extends BaseComponent{
     private search: HTMLInputElement;
     private filterCount:FilterRange;
     private filterYear:FilterRange;
+    private resetBtn: HTMLButtonElement;
     
     private sortValue:string;
     private arrFiltered:Toy[];
 
     constructor(arrayToys: Toy[]){
-        super('filter_toys');
+        super('page filter_toys');
         this.arrayToys = arrayToys;
         this.filters = {
             size:Array<string>(),
@@ -50,14 +51,17 @@ export class FilterToy extends BaseComponent{
         filterContainer.className = 'filter_container';
         const filterForValue = document.createElement('div');
         filterForValue.className = 'filter_item';
+        filterForValue.innerHTML = '<h2>Фильтры по значению</h2>';
         const filterForRange = document.createElement('div');
         filterForRange.className = 'filter_item';
+        filterForRange.innerHTML = '<h2>Фильтры по диапазону</h2>';
         const sortAndFind = document.createElement('div');
         sortAndFind.className = 'filter_item';
+        sortAndFind.innerHTML = '<h2>Сортировка и поиск</h2>';
         this.arrFiltered = this.arrayToys.slice(0);
         this.filterShapeDiv = document.createElement('div');
         this.filterShapeDiv.className = 'filter_item_val';
-        this.filterShapeDiv.innerHTML = '<span>Форма:</span>'
+        this.filterShapeDiv.innerHTML = '<span>Форма:</span>';
         this.createBtnFilterShape();
 
         this.filterColorDiv = document.createElement('div');
@@ -132,7 +136,14 @@ export class FilterToy extends BaseComponent{
             this.showToys(this.arrFiltered);
         })
 
-        sortAndFind.append(this.selectSort,this.search);
+        this.resetBtn = document.createElement('button');
+        this.resetBtn.className = 'reset';
+        this.resetBtn.innerText = 'Сброс фильтров';
+        this.resetBtn.addEventListener('click', ()=>{
+            this.clearFilter();
+        })
+
+        sortAndFind.append(this.selectSort, this.search, this.resetBtn);
 
         filterContainer.append(filterForValue, filterForRange, sortAndFind);
         
@@ -376,6 +387,39 @@ export class FilterToy extends BaseComponent{
                 return toyB.getCount() - toyA.getCount();
             })
         }
+    }
+
+    async clearFilter(){
+        this.filters = {
+            size:Array<string>(),
+            shape:Array<string>(),
+            color:Array<string>(),
+            favor:false,
+            count:{
+                min:1,
+                max:12,
+            },
+            years:{
+                min:1940,
+                max:2020,
+            }
+        }
+        this.sizeFilterBtns.forEach((item)=>{
+            item.classList.remove('active')
+        })
+        this.colorFilterBtns.forEach((item)=>{
+            item.classList.remove('active')
+        })
+        this.shapeFilterBtns.forEach((item)=>{
+            item.classList.remove('active')
+        })
+        this.favoriteFilterBtn.classList.remove('active');
+        this.filterYear.setDefault();
+        this.filterCount.setDefault();
+        this.selectSort.selectedIndex = 0;
+        this.search.value = '';
+        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.showToys(this.arrFiltered);
     }
     
 }
