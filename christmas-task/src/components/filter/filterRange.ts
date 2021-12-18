@@ -26,7 +26,9 @@ export class FilterRange extends BaseComponent{
         this.minValue = minRange;
         this.maxValue = maxRange;
         this.step = step;
-        this.funcFilter = ()=>{ };
+        this.funcFilter = ()=>{
+            // ни чего неделает
+        };
     }
 
     init():void{
@@ -116,7 +118,7 @@ export class FilterRange extends BaseComponent{
     
         this.thumbLeft.style.left = percent + "%";
         this.range.style.left = percent + "%";
-        this.funcFilter()
+        this.funcFilter();
         // console.log(this.inputLeftHid.value);
 
     }

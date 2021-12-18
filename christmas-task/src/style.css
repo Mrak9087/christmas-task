@@ -13,6 +13,10 @@ body{
     color: #fff;
 }
 
+/* .none{
+    display: none !important;
+} */
+
 .page {
     min-width: 100%;
     min-height: calc(100vh - 140px);
@@ -20,3 +24,4 @@ body{
     background-size: cover;
     background-attachment: fixed;
 }
+

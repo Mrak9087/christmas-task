@@ -30,7 +30,8 @@ export class App extends BaseComponent{
         this.header.className = 'header';
 
         this.filterToy = new FilterToy(this.toy);
-        this.filterToy.init()
+        this.filterToy.init();
+        this.filterToy.node.classList.add('none');
         this.footer = document.createElement('footer');
         this.footer.className = 'footer';
 
@@ -49,6 +50,9 @@ export class App extends BaseComponent{
         this.divToy = document.createElement('div');
         this.divToy.className = 'item_menu';
         this.divToy.innerHTML = 'игрушки';
+        this.divToy.addEventListener('click', ()=>{
+            this.filterToy.node.classList.remove('none');
+        })
         this.divChristmasTree = document.createElement('div')
         this.divChristmasTree.className = 'item_menu';
         this.divChristmasTree.innerHTML = 'елка';
