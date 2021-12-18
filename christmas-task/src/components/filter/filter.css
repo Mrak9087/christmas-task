@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    padding: 20px 10px;
 }
 
 .filter_container{
@@ -16,12 +17,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    row-gap: 15px;
+    row-gap: 5px;
     padding: 10px 20px;
     border-radius: 10px;
     max-width: 430px;
     width: 100%;
-    height: 360px;
+    height: 320px;
     background-color: rgba(31, 112, 127, .3);
     backdrop-filter: blur(6px);
 }
