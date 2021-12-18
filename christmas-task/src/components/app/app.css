@@ -4,3 +4,45 @@
     width: 100%;
     min-height: 100vh;
 }
+
+.header, .footer{
+    display: flex;
+    justify-content: space-between;
+    background-color: #121C1E;
+    padding: 0 10px 0 10px;
+}
+
+.header_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1600px;
+    height: 70px;
+    margin: 0 auto;
+}
+
+.logo{
+    width: 48px;
+    height: 60px;
+    background-image: url('../../assets/svg/tree.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item_menu{
+    font-size: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px;
+    transition: .3s;
+    cursor: pointer;
+}
