@@ -11,7 +11,7 @@ export class Toy extends BaseComponent {
     private color: string;
     private size: string;
     private favorite: boolean;
-    private isSelect: boolean = false;
+    private isSelect: boolean;
 
     private divName: HTMLDivElement;
     private divImg: HTMLDivElement;
@@ -32,6 +32,7 @@ export class Toy extends BaseComponent {
         this.color = toyInfo.color;
         this.size = toyInfo.size;
         this.favorite = toyInfo.favorite;
+        this.isSelect = false;
     }
 
     init():void{

@@ -254,7 +254,7 @@ export class FilterToy extends BaseComponent{
     }
 
     async filterHandler(btn:HTMLElement, filters:string[]){
-        let idx: number = filters.findIndex((item) => item === btn.dataset.filterValue);
+        const idx = filters.findIndex((item) => item === btn.dataset.filterValue);
         if (idx > -1) {
             filters.splice(idx,1);
             btn.classList.remove('active');
@@ -361,8 +361,8 @@ export class FilterToy extends BaseComponent{
     sortToy(toys:Toy[]):void{
         if (this.sortValue === 'sort-name-max'){
             toys.sort((toyA:Toy, toyB:Toy)=>{
-                let lowerA:string = toyA.getName().toLowerCase();
-                let lowerB:string = toyB.getName().toLowerCase();
+                const lowerA:string = toyA.getName().toLowerCase();
+                const lowerB:string = toyB.getName().toLowerCase();
                 if (lowerA < lowerB) return -1;
                 if (lowerA > lowerB) return 1;
                 return 0;
@@ -370,8 +370,8 @@ export class FilterToy extends BaseComponent{
         }
         if (this.sortValue === 'sort-name-min'){
             toys.sort((toyA:Toy, toyB:Toy)=>{
-                let lowerA:string = toyA.getName().toLowerCase();
-                let lowerB:string = toyB.getName().toLowerCase();
+                const lowerA:string = toyA.getName().toLowerCase();
+                const lowerB:string = toyB.getName().toLowerCase();
                 if (lowerA > lowerB) return -1;
                 if (lowerA < lowerB) return 1;
                 return 0;

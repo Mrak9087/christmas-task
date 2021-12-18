@@ -102,8 +102,8 @@ export class FilterRange extends BaseComponent{
 
     setLeftValue = () => {
         
-        let min:number = this.minRange;
-        let max:number = this.maxRange;
+        const min:number = this.minRange;
+        const max:number = this.maxRange;
     
         this.minValue = Math.min(parseInt(this.inputLeftHid.value), 
                                     parseInt(this.inputRightHid.value));
@@ -112,7 +112,7 @@ export class FilterRange extends BaseComponent{
         this.inputLeftHid.value = this.minValue.toString();
         
     
-        let percent = ((parseInt(this.inputLeftHid.value) - min) / (max - min)) * 100;
+        const percent = ((parseInt(this.inputLeftHid.value) - min) / (max - min)) * 100;
     
         this.thumbLeft.style.left = percent + "%";
         this.range.style.left = percent + "%";
@@ -123,8 +123,8 @@ export class FilterRange extends BaseComponent{
 
     setRightValue = () => {
         
-        let min:number = this.minRange;
-        let max:number = this.maxRange;
+        const min:number = this.minRange;
+        const max:number = this.maxRange;
     
         this.maxValue = Math.max(parseInt(this.inputRightHid.value), 
                                     parseInt(this.inputLeftHid.value));
@@ -133,7 +133,7 @@ export class FilterRange extends BaseComponent{
         
         this.inputRightHid.value = this.maxValue.toString();
     
-        let percent = ((parseInt(this.inputRightHid.value) - min) / (max - min)) * 100;
+        const percent = ((parseInt(this.inputRightHid.value) - min) / (max - min)) * 100;
     
         this.thumbRight.style.right = (100 - percent) + "%";
         this.range.style.right = (100 - percent) + "%";
