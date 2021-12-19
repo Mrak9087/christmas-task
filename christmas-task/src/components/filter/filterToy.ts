@@ -130,6 +130,7 @@ export class FilterToy extends BaseComponent{
         this.search = document.createElement('input');
         this.search.className = 'search';
         this.search.autocomplete = 'off';
+        this.search.placeholder = 'Название игрушки';
         this.search.addEventListener('input', async ()=>{
             this.arrFiltered = await this.doSearch(this.search.value);
             this.arrFiltered = await this.doFilter(this.arrFiltered);

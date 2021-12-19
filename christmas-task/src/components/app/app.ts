@@ -5,13 +5,16 @@ import {data} from '../data';
 import { Toy } from '../toy/toy';
 import { IToy } from '../generalTypes/general';
 
+
 export class App extends BaseComponent{
 
     private toy: Toy[] = [];
+    private countSelectToy:number;
 
     private header: HTMLElement;
     private footer: HTMLElement;
     private startPage: HTMLDivElement;
+    private counterSelectDiv: HTMLDivElement;
     private startPageBtn: HTMLButtonElement;
     private filterToy: FilterToy;
     private logo: HTMLDivElement;
@@ -23,8 +26,12 @@ export class App extends BaseComponent{
         data.forEach((item) => {
             const toyLoc:Toy = new Toy(<IToy>item)
             toyLoc.init()
+            toyLoc.node.addEventListener('click',()=>{
+                this.handlerToyClick(toyLoc);
+            })
             this.toy.push(toyLoc)
         })
+        this.countSelectToy = 0;
     }
 
     init(parent:HTMLElement){
@@ -84,12 +91,28 @@ export class App extends BaseComponent{
         nav.className = 'nav';
         nav.append(this.logo, this.divToy, this.divChristmasTree);
 
+        this.counterSelectDiv = document.createElement('div');
+        this.counterSelectDiv.className = 'selectCount';
+        this.counterSelectDiv.innerHTML = `<span>${this.countSelectToy}</span>`;
         headerContainer.append(nav);
-        this.header.append(headerContainer)
+        this.header.append(headerContainer, this.counterSelectDiv)
     }
 
     startGame = () => {
         this.startPage.classList.add('none');
         this.filterToy.node.classList.remove('none');
+    }
+
+    handlerToyClick(toy:Toy){
+        toy.isSelect = !toy.isSelect;
+        if (toy.isSelect) {
+            toy.node.classList.add('active');
+            this.countSelectToy++;
+        } else {
+            toy.node.classList.remove('active');
+            this.countSelectToy--;
+            this.countSelectToy = (this.countSelectToy < 0) ? 0: this.countSelectToy;
+        }
+        this.counterSelectDiv.innerHTML = `<span>${this.countSelectToy}</span>`;
     }
 }

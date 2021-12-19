@@ -37,6 +37,29 @@
     align-items: center;
 }
 
+.selectCount{
+    width: 48px;
+    height: 60px;
+    background-image: url('../../assets/svg/ball-2.svg');
+    background-size: 48px 60px;
+    background-position: left -8px;
+    background-repeat: no-repeat;
+    transition: .3s;
+}
+
+.selectCount span {
+    display: inline-block;
+    min-width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 4px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    background-color: #278D9F;
+}
+
 .item_menu{
     font-size: 20px;
     color: #fff;
@@ -122,6 +145,10 @@
     color: #fff;
 }
 
+.github:hover{
+    color: #278D9F;
+}
+
 .rss {
     display: block;
     position: relative;
@@ -142,4 +169,8 @@
     line-height: 0.9;
     font-weight: bold;
     transition: 0.3s;
+}
+
+.rss:hover{
+    filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg) brightness(89%) contrast(90%);
 }

@@ -3,6 +3,8 @@ import {IToy}  from '../generalTypes/general';
 import './toy.css'
 
 export class Toy extends BaseComponent {
+    public isSelect: boolean;
+    
     private numImage: number;
     private name: string;
     private count: number;
@@ -11,7 +13,7 @@ export class Toy extends BaseComponent {
     private color: string;
     private size: string;
     private favorite: boolean;
-    private isSelect: boolean;
+    
 
     private divName: HTMLDivElement;
     private divImg: HTMLDivElement;
@@ -71,14 +73,14 @@ export class Toy extends BaseComponent {
         this.selectDiv = document.createElement('div');
         this.selectDiv.className = 'select';
 
-        this.node.addEventListener('click',()=>{
-            this.isSelect = !this.isSelect;
-            if (this.isSelect) {
-                this.node.classList.add('active');
-            } else {
-                this.node.classList.remove('active');
-            }
-        })
+        // this.node.addEventListener('click',()=>{
+        //     this.isSelect = !this.isSelect;
+        //     if (this.isSelect) {
+        //         this.node.classList.add('active');
+        //     } else {
+        //         this.node.classList.remove('active');
+        //     }
+        // })
         
         this.node.append(this.divName, this.divImg, this.divCount, this.divYear,
             this.divShape, this.divColor, this.divSize,this.divFavorite,this.selectDiv);
