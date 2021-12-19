@@ -122,10 +122,17 @@ export class FilterToy extends BaseComponent{
         <option value="sort-name-min">По названию от «Я» до «А»</option>
         <option value="sort-count-max">По количеству по возрастанию</option>
         <option value="sort-count-min">По количеству по убыванию</option>`;
-        this.sortValue = this.selectSort.value;
+        this.sortValue = localStorage.getItem('christmasSort') || this.selectSort.value;
+        for (let i = 0; i < this.selectSort.options.length; i++){
+            if (this.selectSort.options[i].value === this.sortValue){
+                this.selectSort.options[i].selected = true;
+            }
+        }
+        
 
         this.selectSort.addEventListener('change',()=>{
             this.sortValue = this.selectSort.value;
+            localStorage.setItem('christmasSort', this.sortValue);
             this.sortToy(this.arrFiltered);
             this.showToys(this.arrFiltered);
         })
