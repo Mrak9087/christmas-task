@@ -30,7 +30,7 @@ export class FilterToy extends BaseComponent{
     constructor(arrayToys: Toy[]){
         super('page filter_toys');
         this.arrayToys = arrayToys;
-        this.filters = {
+        this.filters = JSON.parse(localStorage.getItem('christmasFilter')) || {
             size:Array<string>(),
             shape:Array<string>(),
             color:Array<string>(),
@@ -72,7 +72,6 @@ export class FilterToy extends BaseComponent{
         this.filterSizeDiv = document.createElement('div');
         this.filterSizeDiv.className = 'filter_item_val';
         this.filterSizeDiv.innerHTML = '<span>Размер:</span>'
-        // const fltSizeContainer: HTMLDivElement = document.createElement('div');
         this.createBtnFilterSize();
 
         this.filterFavoriteDiv = document.createElement('div');
@@ -98,15 +97,19 @@ export class FilterToy extends BaseComponent{
         
         
 
-        this.filterCount = new FilterRange(this.filters.count.min,this.filters.count.max,1);
+        this.filterCount = new FilterRange(1,12,1);
         this.filterCount.init();
+        this.filterCount.setMinVal(this.filters.count.min);
+        this.filterCount.setMaxVal(this.filters.count.max);
 
         this.filterCount.funcFilter = this.filterCountHandler;
 
         this.filterCountItem.append(this.filterCount.node);
 
-        this.filterYear = new FilterRange(this.filters.years.min,this.filters.years.max,10);
+        this.filterYear = new FilterRange(1940,2020,10);
         this.filterYear.init();
+        this.filterYear.setMinVal(this.filters.years.min);
+        this.filterYear.setMaxVal(this.filters.years.max);
 
         this.filterYear.funcFilter = this.filterYearHandler;
         this.filterYearsItem.append(this.filterYear.node);
@@ -149,6 +152,9 @@ export class FilterToy extends BaseComponent{
         filterContainer.append(filterForValue, filterForRange, sortAndFind);
         
         this.node.append(filterContainer, this.boxToys);
+        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.sortToy(this.arrFiltered);
+        this.showToys(this.arrFiltered);
     }
 
     createBtnFilterSize():void{
@@ -162,8 +168,10 @@ export class FilterToy extends BaseComponent{
             if (item === 'малый'){
                 btn.classList.add('small');
             }
+            if (this.filters.size.find((val)=> val === item)){
+                btn.classList.add('active');
+            }
             btn.addEventListener('click', () => {
-                // this.filterSizeHandler(btn);
                 this.filterHandler(btn, this.filters.size);
             })
             this.sizeFilterBtns.push(btn);
@@ -197,6 +205,9 @@ export class FilterToy extends BaseComponent{
                     btn.classList.add('clGreen');
                     break;
                 }
+            }
+            if (this.filters.color.find((val)=> val === item)){
+                btn.classList.add('active');
             }
             
             btn.addEventListener('click', () => {
@@ -235,9 +246,11 @@ export class FilterToy extends BaseComponent{
                     break;
                 }
             }
+            if (this.filters.shape.find((val)=> val === item)){
+                btn.classList.add('active');
+            }
             
             btn.addEventListener('click', () => {
-                // this.filterShapeHandler(btn);
                 this.filterHandler(btn, this.filters.shape)
             })
             this.shapeFilterBtns.push(btn);
@@ -251,6 +264,9 @@ export class FilterToy extends BaseComponent{
         this.favoriteFilterBtn.addEventListener('click', () => {
             this.filterFavoriteHandler(this.favoriteFilterBtn);
         })
+        if (this.filters.favor){
+            this.favoriteFilterBtn.classList.add('active');
+        }
         this.filterFavoriteDiv.append(this.favoriteFilterBtn);
     }
 
@@ -263,7 +279,7 @@ export class FilterToy extends BaseComponent{
             filters.push(btn.dataset.filterValue);
             btn.classList.add('active');
         }
-        
+        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
@@ -271,6 +287,7 @@ export class FilterToy extends BaseComponent{
     filterCountHandler = async () => {
         this.filters.count.min = this.filterCount.minValue;
         this.filters.count.max = this.filterCount.maxValue;
+        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
@@ -278,6 +295,7 @@ export class FilterToy extends BaseComponent{
     filterYearHandler = async () => {
         this.filters.years.min = this.filterYear.minValue;
         this.filters.years.max = this.filterYear.maxValue;
+        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
@@ -290,7 +308,7 @@ export class FilterToy extends BaseComponent{
             this.filters.favor = true;
             btn.classList.add('active');
         }
-        
+        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
@@ -405,6 +423,7 @@ export class FilterToy extends BaseComponent{
                 max:2020,
             }
         }
+        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
         this.sizeFilterBtns.forEach((item)=>{
             item.classList.remove('active')
         })

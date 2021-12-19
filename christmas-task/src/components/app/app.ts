@@ -104,7 +104,10 @@ export class App extends BaseComponent{
     }
 
     handlerToyClick(toy:Toy){
-        toy.isSelect = !toy.isSelect;
+        if (this.countSelectToy<20){
+            toy.isSelect = !toy.isSelect;
+        }
+        
         if (toy.isSelect) {
             toy.node.classList.add('active');
             this.countSelectToy++;

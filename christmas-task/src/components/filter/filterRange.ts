@@ -27,7 +27,7 @@ export class FilterRange extends BaseComponent{
         this.maxValue = maxRange;
         this.step = step;
         this.funcFilter = ()=>{
-            // ни чего неделает
+            // ничего не делает
         };
     }
 
@@ -150,5 +150,15 @@ export class FilterRange extends BaseComponent{
         this.inputRightHid.value = this.maxValue.toString();
         this.setLeftValue();
         this.setRightValue()
+    }
+
+    setMinVal(val:number){
+        this.inputLeftHid.value = val.toString();
+        this.setLeftValue();
+    }
+
+    setMaxVal(val:number){
+        this.inputRightHid.value = val.toString();
+        this.setRightValue();
     }
 }
