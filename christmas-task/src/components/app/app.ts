@@ -97,8 +97,8 @@ export class App extends BaseComponent{
         this.counterSelectDiv = document.createElement('div');
         this.counterSelectDiv.className = 'selectCount';
         this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
-        headerContainer.append(nav);
-        this.header.append(headerContainer, this.counterSelectDiv)
+        headerContainer.append(nav,this.counterSelectDiv);
+        this.header.append(headerContainer)
     }
 
     startGame = () => {
