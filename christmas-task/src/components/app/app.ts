@@ -19,6 +19,7 @@ export class App extends BaseComponent{
     private logo: HTMLDivElement;
     private divToy: HTMLDivElement;
     private divChristmasTree: HTMLDivElement;
+    private message:HTMLDivElement;
 
     constructor(){
         super('app');
@@ -64,8 +65,17 @@ export class App extends BaseComponent{
                     </a>
                 </div>`;
 
-        this.node.append(this.header, this.startPage, this.filterToy.node,this.footer);
+        this.message = document.createElement('div');
+        this.message.className = 'ovr_container';
+        this.message.innerHTML = '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>'
+        this.message.addEventListener('click', ()=>{
+            this.message.classList.remove('show');
+        })
+        this.node.append(this.header, this.startPage, this.filterToy.node,this.footer, 
+            this.message);
         this.createHeaderContent();
+        
+
         parent.append(this.node);
     }
 
@@ -126,7 +136,7 @@ export class App extends BaseComponent{
                 this.arrSelect.splice(toy.getIndex(),1)
                 toy.setIndex(-1);
             } else {
-                alert('незя');
+                this.message.classList.add('show');
             }
         }
         localStorage.setItem('mrk90_christmasSel',JSON.stringify(this.arrSelect));
