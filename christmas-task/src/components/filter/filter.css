@@ -205,12 +205,19 @@
     background-color: #183E42;
 }
 
-.search {
+.search_container{
+    display: flex;
+    align-items: center;
     width: 380px;
+
+}
+
+.search {
+    width: 300px;
     height: 40px;
     padding: 5px 25px;
     margin: 10px 0;
-    margin-right: 30px;
+    /* margin-right: 30px; */
     border-radius: 20px;
     border: 1px solid #278D9F;
     color: #fff;
@@ -219,9 +226,27 @@
     background-image: url('../../assets/svg/search.svg');
     background-size: 20px;
     background-repeat: no-repeat;
-    background-position: 330px center;
+    background-position: right 10px center;
     backdrop-filter: blur(6px);
     outline: none;
+}
+
+.rst_search{
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    background-image: url('../../assets/svg/cross.svg');
+    background-size: cover;
+    background-position: center;
+    outline: none;
+    border: none;
+    margin: 10px 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.rst_search.show{
+    opacity: 1;
 }
 
 .reset {

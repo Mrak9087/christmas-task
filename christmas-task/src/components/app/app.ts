@@ -114,6 +114,7 @@ export class App extends BaseComponent{
     startGame = () => {
         this.startPage.classList.add('none');
         this.filterToy.node.classList.remove('none');
+        this.filterToy.setFocus();
     }
 
     handlerToyClick(toy:Toy){

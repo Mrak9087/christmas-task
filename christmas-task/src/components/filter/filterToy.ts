@@ -136,16 +136,34 @@ export class FilterToy extends BaseComponent{
             this.sortToy(this.arrFiltered);
             this.showToys(this.arrFiltered);
         })
-
+        const searchContainer = document.createElement('div');
+        searchContainer.className = 'search_container';
+        const clearSearch = document.createElement('button');
+        clearSearch.type = 'button';
+        clearSearch.className = 'rst_search';
+        clearSearch.addEventListener('click', async () => {
+            this.search.value = '';
+            clearSearch.classList.remove('show');
+            this.arrFiltered = await this.doSearch(this.search.value);
+            this.arrFiltered = await this.doFilter(this.arrFiltered);
+            this.showToys(this.arrFiltered);
+        })
         this.search = document.createElement('input');
         this.search.className = 'search';
         this.search.autocomplete = 'off';
         this.search.placeholder = 'Название игрушки';
         this.search.addEventListener('input', async ()=>{
+            if (this.search.value.length){
+                clearSearch.classList.add('show');
+            } else {
+                clearSearch.classList.remove('show');
+            }
             this.arrFiltered = await this.doSearch(this.search.value);
             this.arrFiltered = await this.doFilter(this.arrFiltered);
             this.showToys(this.arrFiltered);
         })
+
+        searchContainer.append(this.search, clearSearch);
 
         this.resetBtn = document.createElement('button');
         this.resetBtn.className = 'reset';
@@ -154,7 +172,7 @@ export class FilterToy extends BaseComponent{
             this.clearFilter();
         })
 
-        sortAndFind.append(this.selectSort, this.search, this.resetBtn);
+        sortAndFind.append(this.selectSort, searchContainer, this.resetBtn);
 
         filterContainer.append(filterForValue, filterForRange, sortAndFind);
         
@@ -449,4 +467,7 @@ export class FilterToy extends BaseComponent{
         this.showToys(this.arrFiltered);
     }
     
+    setFocus(){
+        this.search.focus();
+    }
 }
