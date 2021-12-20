@@ -65,6 +65,29 @@ body{
     align-items: center;
 }
 
+.selectCount{
+    width: 48px;
+    height: 60px;
+    background-image: url(assets/ball-2-6b23321234f5537c6b7d..svg);
+    background-size: 48px 60px;
+    background-position: left -8px;
+    background-repeat: no-repeat;
+    transition: .3s;
+}
+
+.selectCount span {
+    display: inline-block;
+    min-width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 4px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    background-color: #278D9F;
+}
+
 .item_menu{
     font-size: 20px;
     color: #fff;
@@ -150,6 +173,10 @@ body{
     color: #fff;
 }
 
+.github:hover{
+    color: #278D9F;
+}
+
 .rss {
     display: block;
     position: relative;
@@ -171,6 +198,11 @@ body{
     font-weight: bold;
     transition: 0.3s;
 }
+
+.rss:hover{
+    filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg) brightness(89%) contrast(90%);
+}
+
 
 .filter_toys{
     display: flex;
