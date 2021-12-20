@@ -9,8 +9,7 @@ import { IToy } from '../generalTypes/general';
 export class App extends BaseComponent{
 
     private toy: Toy[] = [];
-    private countSelectToy:number;
-
+    private arrSelect:number[];
     private header: HTMLElement;
     private footer: HTMLElement;
     private startPage: HTMLDivElement;
@@ -23,15 +22,19 @@ export class App extends BaseComponent{
 
     constructor(){
         super('app');
+        this.arrSelect = JSON.parse(localStorage.getItem('mrk90_christmasSel')) || [];
         data.forEach((item) => {
             const toyLoc:Toy = new Toy(<IToy>item)
             toyLoc.init()
+            if (this.arrSelect.findIndex((item) => item === toyLoc.getNumImage()) > -1){
+                toyLoc.isSelect = true;
+                toyLoc.node.classList.add('active');
+            }
             toyLoc.node.addEventListener('click',()=>{
                 this.handlerToyClick(toyLoc);
             })
             this.toy.push(toyLoc)
         })
-        this.countSelectToy = 0;
     }
 
     init(parent:HTMLElement){
@@ -93,7 +96,7 @@ export class App extends BaseComponent{
 
         this.counterSelectDiv = document.createElement('div');
         this.counterSelectDiv.className = 'selectCount';
-        this.counterSelectDiv.innerHTML = `<span>${this.countSelectToy}</span>`;
+        this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
         headerContainer.append(nav);
         this.header.append(headerContainer, this.counterSelectDiv)
     }
@@ -104,18 +107,29 @@ export class App extends BaseComponent{
     }
 
     handlerToyClick(toy:Toy){
-        if (this.countSelectToy<20){
-            toy.isSelect = !toy.isSelect;
-        }
-        
-        if (toy.isSelect) {
-            toy.node.classList.add('active');
-            this.countSelectToy++;
+        if (this.arrSelect.length<20){        
+            if (toy.isSelect) {
+                toy.node.classList.remove('active');
+                toy.isSelect = false;
+                this.arrSelect.splice(toy.getIndex(),1)
+                toy.setIndex(-1);
+            } else {
+                toy.node.classList.add('active');
+                this.arrSelect.push(toy.getNumImage());
+                toy.isSelect = true;
+                toy.setIndex(this.arrSelect.length-1);
+            }            
         } else {
-            toy.node.classList.remove('active');
-            this.countSelectToy--;
-            this.countSelectToy = (this.countSelectToy < 0) ? 0: this.countSelectToy;
+            if (toy.isSelect) {
+                toy.node.classList.remove('active');
+                toy.isSelect = false;
+                this.arrSelect.splice(toy.getIndex(),1)
+                toy.setIndex(-1);
+            } else {
+                alert('незя');
+            }
         }
-        this.counterSelectDiv.innerHTML = `<span>${this.countSelectToy}</span>`;
+        localStorage.setItem('mrk90_christmasSel',JSON.stringify(this.arrSelect));
+        this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
     }
 }

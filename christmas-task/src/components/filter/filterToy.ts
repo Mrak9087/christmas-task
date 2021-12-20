@@ -30,7 +30,7 @@ export class FilterToy extends BaseComponent{
     constructor(arrayToys: Toy[]){
         super('page filter_toys');
         this.arrayToys = arrayToys;
-        this.filters = JSON.parse(localStorage.getItem('christmasFilter')) || {
+        this.filters = JSON.parse(localStorage.getItem('mrk90_christmasFilter')) || {
             size:Array<string>(),
             shape:Array<string>(),
             color:Array<string>(),
@@ -122,7 +122,7 @@ export class FilterToy extends BaseComponent{
         <option value="sort-name-min">По названию от «Я» до «А»</option>
         <option value="sort-count-max">По количеству по возрастанию</option>
         <option value="sort-count-min">По количеству по убыванию</option>`;
-        this.sortValue = localStorage.getItem('christmasSort') || this.selectSort.value;
+        this.sortValue = localStorage.getItem('mrk90_christmasSort') || this.selectSort.value;
         for (let i = 0; i < this.selectSort.options.length; i++){
             if (this.selectSort.options[i].value === this.sortValue){
                 this.selectSort.options[i].selected = true;
@@ -132,7 +132,7 @@ export class FilterToy extends BaseComponent{
 
         this.selectSort.addEventListener('change',()=>{
             this.sortValue = this.selectSort.value;
-            localStorage.setItem('christmasSort', this.sortValue);
+            localStorage.setItem('mrk90_christmasSort', this.sortValue);
             this.sortToy(this.arrFiltered);
             this.showToys(this.arrFiltered);
         })
@@ -286,7 +286,7 @@ export class FilterToy extends BaseComponent{
             filters.push(btn.dataset.filterValue);
             btn.classList.add('active');
         }
-        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
+        localStorage.setItem('mrk90_christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
@@ -294,7 +294,7 @@ export class FilterToy extends BaseComponent{
     filterCountHandler = async () => {
         this.filters.count.min = this.filterCount.minValue;
         this.filters.count.max = this.filterCount.maxValue;
-        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
+        localStorage.setItem('mrk90_christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
@@ -302,7 +302,7 @@ export class FilterToy extends BaseComponent{
     filterYearHandler = async () => {
         this.filters.years.min = this.filterYear.minValue;
         this.filters.years.max = this.filterYear.maxValue;
-        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
+        localStorage.setItem('mrk90_christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
@@ -315,7 +315,7 @@ export class FilterToy extends BaseComponent{
             this.filters.favor = true;
             btn.classList.add('active');
         }
-        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
+        localStorage.setItem('mrk90_christmasFilter',JSON.stringify(this.filters));
         this.arrFiltered = await this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
@@ -429,8 +429,8 @@ export class FilterToy extends BaseComponent{
                 min:1940,
                 max:2020,
             }
-        }
-        localStorage.setItem('christmasFilter',JSON.stringify(this.filters));
+        };
+        localStorage.setItem('mrk90_christmasFilter',JSON.stringify(this.filters));
         this.sizeFilterBtns.forEach((item)=>{
             item.classList.remove('active')
         })

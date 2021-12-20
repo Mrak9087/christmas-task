@@ -13,6 +13,7 @@ export class Toy extends BaseComponent {
     private color: string;
     private size: string;
     private favorite: boolean;
+    private indexSelect:number;
     
 
     private divName: HTMLDivElement;
@@ -120,6 +121,18 @@ export class Toy extends BaseComponent {
 
     getSelect():boolean{
         return this.isSelect;
+    }
+
+    getNumImage():number{
+        return this.numImage;
+    }
+
+    getIndex():number{
+        return this.indexSelect;
+    }
+
+    setIndex(index:number){
+        this.indexSelect = index;
     }
 }
 
