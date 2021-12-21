@@ -1,6 +1,7 @@
 import './app.css';
 import {BaseComponent} from '../baseComponent/baseComponent';
 import { FilterToy } from '../filter/filterToy';
+import { TreeGame } from '../tree/treeGame';
 import {data} from '../data';
 import { Toy } from '../toy/toy';
 import { IToy } from '../generalTypes/general';
@@ -16,6 +17,7 @@ export class App extends BaseComponent{
     private counterSelectDiv: HTMLDivElement;
     private startPageBtn: HTMLButtonElement;
     private filterToy: FilterToy;
+    private treeGame:TreeGame;
     private logo: HTMLDivElement;
     private divToy: HTMLDivElement;
     private divChristmasTree: HTMLDivElement;
@@ -54,7 +56,10 @@ export class App extends BaseComponent{
         this.startPage.append(this.startPageBtn);
         this.filterToy = new FilterToy(this.toy);
         this.filterToy.init();
+        this.treeGame = new TreeGame();
+        this.treeGame.init()
         this.filterToy.node.classList.add('none');
+        this.treeGame.node.classList.add('none');
         this.footer = document.createElement('footer');
         this.footer.className = 'footer';
         this.footer.innerHTML = `<div class="footer_container">
@@ -71,7 +76,9 @@ export class App extends BaseComponent{
         this.message.addEventListener('click', ()=>{
             this.message.classList.remove('show');
         })
-        this.node.append(this.header, this.startPage, this.filterToy.node,this.footer, 
+
+
+        this.node.append(this.header, this.startPage, this.filterToy.node,this.treeGame.node,this.footer, 
             this.message);
         this.createHeaderContent();
         
@@ -99,6 +106,9 @@ export class App extends BaseComponent{
         this.divChristmasTree = document.createElement('div')
         this.divChristmasTree.className = 'item_menu';
         this.divChristmasTree.innerHTML = 'елка';
+        this.divChristmasTree.addEventListener('click', ()=>{
+            this.showTree()
+        })
 
         const nav = document.createElement('nav');
         nav.className = 'nav';
@@ -113,8 +123,17 @@ export class App extends BaseComponent{
 
     startGame = () => {
         this.startPage.classList.add('none');
+        this.treeGame.node.classList.add('none');
         this.filterToy.node.classList.remove('none');
         this.filterToy.setFocus();
+    }
+
+    showTree = () => {
+        this.startPage.classList.add('none');
+        this.filterToy.node.classList.add('none');
+        this.treeGame.node.classList.remove('none');
+        
+        
     }
 
     handlerToyClick(toy:Toy){
