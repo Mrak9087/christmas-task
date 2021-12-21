@@ -1,3 +1,7 @@
+export interface INodeElement{
+    node:HTMLElement;
+}
+
 export interface IToy{
     num: string,
     name: string,
