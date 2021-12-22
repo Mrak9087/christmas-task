@@ -1,5 +1,10 @@
+.tree_game{
+    display: flex;
+}
+
 .tree_container{
     display: flex;
+    min-height: 100%;
 }
 
 .setting{
@@ -19,4 +24,37 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.view_game{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    max-width: 800px;
+    width: 100%;
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.tree_card_map, .tree_card_map area{
+    display: inline;
+}
+
+area{
+    position: relative;
+    cursor: pointer;
+}
+
+img{
+    vertical-align: top;
+    border-style: none;
+}
+
+.tree_img{
+    display: block;
+    width: 500px;
+    height: 714px;
 }
