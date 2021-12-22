@@ -4,8 +4,10 @@ import {Toy} from '../toy/toy';
 import {INodeElement,treeImages,backgrounds} from '../generalTypes/general';
 import { ThumbTree } from './thumbTree/thumbTree';
 import { ThumbBg } from './thumbBackground/thumbBg';
+import {ToyCell} from './toyCell/toyCell';
 
 export class TreeGame extends BaseComponent{
+    private toys:Toy[] = [];
     private thumbTrees:ThumbTree[] = [];
     private thumbBgs:ThumbBg[] = [];
     private containerDiv:HTMLDivElement;
@@ -14,7 +16,9 @@ export class TreeGame extends BaseComponent{
     private viewGameDiv:HTMLDivElement;
     private mapElement:HTMLMapElement;
     private areaElement:HTMLAreaElement;
+    private toyContainer: HTMLDivElement;
     private imageTree:HTMLImageElement;
+    private toyCells: ToyCell[] = [];
     constructor(){
         super('page tree_game');
     }
@@ -25,9 +29,10 @@ export class TreeGame extends BaseComponent{
         
         this.createSetting();
         this.createViewGame();
+        this.createToyTree();
         
 
-        this.containerDiv.append(this.settingDiv,this.viewGameDiv)
+        this.containerDiv.append(this.settingDiv,this.viewGameDiv,this.toyTreeDiv)
         this.node.append(this.containerDiv);
     }
 
@@ -71,6 +76,15 @@ export class TreeGame extends BaseComponent{
         this.areaElement = document.createElement('area');
         this.areaElement.coords = '365,699,189,706,113,683,31,608,2,555,2,539,18,437,73,351,106,224,161,134,243,-1,306,75,353,144,399,221,424,359,452,459,496,550,444,664';
         this.areaElement.shape = 'poly';
+        this.areaElement.addEventListener('dragover', (e)=>{
+            e.preventDefault()
+        })
+        this.areaElement.addEventListener('drop', (e)=>{
+            
+            let param = this.areaElement.getBoundingClientRect();
+            let tp = e.clientY - param.top;
+            let lft = e.clientX - param.left;
+        })
         this.mapElement.append(this.areaElement);
         this.imageTree = document.createElement('img');
         this.imageTree.className = 'tree_img';
@@ -84,5 +98,26 @@ export class TreeGame extends BaseComponent{
     createToyTree(){
         this.toyTreeDiv = document.createElement('div');
         this.toyTreeDiv.className = 'toy_tree';
+        const toyContent = document.createElement('div');
+        toyContent.className = 'toy_content';
+        toyContent.innerHTML = '<h2>Игрушки</h2>'
+        this.toyContainer = document.createElement('div');
+        this.toyContainer.className = 'toy_container';
+        toyContent.append(this.toyContainer);
+        this.toyTreeDiv.append(toyContent);
+    }
+
+    createToyCells(){
+        this.toys.forEach((item)=>{
+            const toyCell = new ToyCell(item);
+            toyCell.init();
+            this.toyCells.push(toyCell);
+            this.toyContainer.append(toyCell.node);
+        })
+    }
+
+    setToys(toys:Toy[]){
+        this.toys = toys.slice(0);
+        this.createToyCells();
     }
 }

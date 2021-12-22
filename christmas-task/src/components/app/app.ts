@@ -9,7 +9,7 @@ import { IToy } from '../generalTypes/general';
 
 export class App extends BaseComponent{
 
-    private toy: Toy[] = [];
+    private toys: Toy[] = [];
     private arrSelect:number[];
     private header: HTMLElement;
     private footer: HTMLElement;
@@ -36,7 +36,7 @@ export class App extends BaseComponent{
             toyLoc.node.addEventListener('click',()=>{
                 this.handlerToyClick(toyLoc);
             })
-            this.toy.push(toyLoc)
+            this.toys.push(toyLoc)
         })
     }
 
@@ -54,7 +54,7 @@ export class App extends BaseComponent{
             this.startGame();
         })
         this.startPage.append(this.startPageBtn);
-        this.filterToy = new FilterToy(this.toy);
+        this.filterToy = new FilterToy(this.toys);
         this.filterToy.init();
         this.treeGame = new TreeGame();
         this.treeGame.init()
@@ -131,6 +131,7 @@ export class App extends BaseComponent{
     showTree = () => {
         this.startPage.classList.add('none');
         this.filterToy.node.classList.add('none');
+        this.treeGame.setToys(this.toys.slice(0,20))
         this.treeGame.node.classList.remove('none');
         
         
