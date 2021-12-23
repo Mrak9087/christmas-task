@@ -131,7 +131,6 @@ export class TreeGame extends BaseComponent{
 
     handleDragStart = (e:DragEvent,element:HTMLImageElement) => {
             e.dataTransfer.setData('id',element.id);
-            console.log(element.id)
     }
 
     handleDragEnd = (e:DragEvent,element:HTMLImageElement,toyCell:ToyCell, parent:HTMLElement) => {
@@ -144,12 +143,9 @@ export class TreeGame extends BaseComponent{
                 toyCell.node.append(element)
             }
         } else {
-            // if (element.parentNode == parent) {
-            //     return; 
-            // }
             let param = parent.getBoundingClientRect();
-            let tp = e.clientY - param.top - (element.width / 2);
-            let lft = e.clientX - param.left - (element.height / 2);
+            let tp = e.clientY - param.top - (element.offsetWidth / 2);
+            let lft = e.clientX - param.left - (element.offsetHeight / 2);
             element.style.top = `${tp}px`; 
             element.style.left = `${lft}px`; 
             element.parentNode.removeChild(element);

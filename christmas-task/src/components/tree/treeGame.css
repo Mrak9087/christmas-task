@@ -3,12 +3,25 @@
 }
 
 .tree_container{
-    display: flex;
+    display: grid;
     min-height: 100%;
+    justify-content: center;
+    grid-template-areas: "setting view toy";
+    grid-template-columns: 0.8fr 1.4fr 0.8fr;
+    gap: 10px;
+    padding: 0 10px;
 }
 
-.setting, .toy_tree{
-    max-width: 400px;
+.setting{
+    grid-area: setting;
+    max-width: 380px;
+    width: 100%;
+    padding: 10px;
+}
+
+.toy_tree{
+    grid-area: toy;
+    max-width: 420px;
     width: 100%;
     padding: 10px;
 }
@@ -23,20 +36,25 @@
 .st_item_container{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
 }
 
 .view_game{
+    grid-area: view;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     max-width: 800px;
-    min-width: 500px;
+    min-width: 570px;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    min-height: 750px;
+
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    padding: 0 5px;
     overflow: hidden;
 }
 
@@ -66,4 +84,35 @@ img{
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    height:475px;
+    border: 3px solid #237E8F;
+    border-radius: 10px;
+    overflow-y: scroll;
+    padding: 5px;
+}
+
+.toy_container::-webkit-scrollbar {	
+    width: 10px;
+    border-radius: 5px;
+      background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(6px);
+}
+
+.toy_container::-webkit-scrollbar-thumb {
+    background-color: #237E8F;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media screen and (max-width:1230px ) {
+    .tree_container{
+        grid-template-areas:
+        "setting setting  setting"
+        "view view toy";
+    }
+
+    .setting{
+        max-width: 100%;
+
+    }
 }
