@@ -27,10 +27,15 @@ export class ToyCell extends BaseComponent{
             img.src = `./assets/toys/${this.numImg}.png`
             img.alt = 'toy';
             img.draggable = true;
+            img.id = `${this.numImg}-${i}`;
             img.dataset.imgNum = this.numImg.toString();
             this.imageArr.push(img);
             this.node.append(img);
         }
         this.node.append(this.toyCountP);
+    }
+
+    updateCount(){
+        this.toyCountP.innerHTML = `${this.node.childNodes.length-1}`
     }
 }

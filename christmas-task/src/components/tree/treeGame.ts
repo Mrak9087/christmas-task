@@ -79,12 +79,12 @@ export class TreeGame extends BaseComponent{
         this.areaElement.addEventListener('dragover', (e)=>{
             e.preventDefault()
         })
-        this.areaElement.addEventListener('drop', (e)=>{
+        // this.areaElement.addEventListener('drop', (e)=>{
             
-            let param = this.areaElement.getBoundingClientRect();
-            let tp = e.clientY - param.top;
-            let lft = e.clientX - param.left;
-        })
+        //     let param = this.areaElement.getBoundingClientRect();
+        //     let tp = e.clientY - param.top;
+        //     let lft = e.clientX - param.left;
+        // })
         this.mapElement.append(this.areaElement);
         this.imageTree = document.createElement('img');
         this.imageTree.className = 'tree_img';
@@ -107,10 +107,18 @@ export class TreeGame extends BaseComponent{
         this.toyTreeDiv.append(toyContent);
     }
 
-    createToyCells(){
+    createToyCells = ()=>{
         this.toys.forEach((item)=>{
             const toyCell = new ToyCell(item);
             toyCell.init();
+            toyCell.imageArr.forEach((item) =>{
+                item.addEventListener('dragstart', (e)=>{
+                    this.handleDragStart(e,item);     
+                })
+                item.addEventListener('dragend', (e)=>{
+                    this.handleDragEnd(e, item,toyCell,this.areaElement);
+                })
+            })
             this.toyCells.push(toyCell);
             this.toyContainer.append(toyCell.node);
         })
@@ -119,5 +127,36 @@ export class TreeGame extends BaseComponent{
     setToys(toys:Toy[]){
         this.toys = toys.slice(0);
         this.createToyCells();
+    }
+
+    handleDragStart = (e:DragEvent,element:HTMLImageElement) => {
+            e.dataTransfer.setData('id',element.id);
+            console.log(element.id)
+    }
+
+    handleDragEnd = (e:DragEvent,element:HTMLImageElement,toyCell:ToyCell, parent:HTMLElement) => {
+        if (e.dataTransfer.dropEffect === 'none'){
+            if (element.parentNode == toyCell.node) {
+                return; 
+            } else {
+                element.parentNode.removeChild(element);
+                element.removeAttribute('style');
+                toyCell.node.append(element)
+            }
+        } else {
+            // if (element.parentNode == parent) {
+            //     return; 
+            // }
+            let param = parent.getBoundingClientRect();
+            let tp = e.clientY - param.top - (element.width / 2);
+            let lft = e.clientX - param.left - (element.height / 2);
+            element.style.top = `${tp}px`; 
+            element.style.left = `${lft}px`; 
+            element.parentNode.removeChild(element);
+            parent.append(element);
+        }
+
+        toyCell.updateCount();
+        
     }
 }
