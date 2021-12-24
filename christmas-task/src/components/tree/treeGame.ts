@@ -45,12 +45,18 @@ export class TreeGame extends BaseComponent{
         this.settingDiv.className = 'setting';
         treeImages.forEach((item)=>{
             const thumb = new ThumbTree(item);
+            thumb.node.addEventListener('click', ()=>{
+                this.handleTreeClick(thumb);
+            })
             this.thumbTrees.push(thumb);
         })
         const settingTree = this.createSettingItem('Выберите елку',this.thumbTrees)
         
         backgrounds.forEach((item)=>{
             const thumb = new ThumbBg(item);
+            thumb.node.addEventListener('click', ()=>{
+                this.handleBackgroundClick(thumb);
+            })
             this.thumbBgs.push(thumb);
         })
         const settingBg = this.createSettingItem('Выберите фон',this.thumbBgs);
@@ -87,12 +93,7 @@ export class TreeGame extends BaseComponent{
         this.areaElement.addEventListener('dragover', (e)=>{
             e.preventDefault()
         })
-        // this.areaElement.addEventListener('drop', (e)=>{
-            
-        //     let param = this.areaElement.getBoundingClientRect();
-        //     let tp = e.clientY - param.top;
-        //     let lft = e.clientX - param.left;
-        // })
+        
         this.mapElement.append(this.areaElement);
         this.imageTree = document.createElement('img');
         this.imageTree.className = 'tree_img';
@@ -163,5 +164,13 @@ export class TreeGame extends BaseComponent{
 
         toyCell.updateCount();
         
+    }
+
+    handleBackgroundClick(thumbBg:ThumbBg){
+        this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${thumbBg.getBgImage()}.jpg)`;
+    }
+
+    handleTreeClick(thumbTree:ThumbTree){
+        this.imageTree.src = `./assets/tree/${thumbTree.getBgImage()}.png`
     }
 }
