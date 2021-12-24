@@ -5,11 +5,13 @@ import {INodeElement,treeImages,backgrounds} from '../generalTypes/general';
 import { ThumbTree } from './thumbTree/thumbTree';
 import { ThumbBg } from './thumbBackground/thumbBg';
 import {ToyCell} from './toyCell/toyCell';
+import {Snow} from './snow/snow';
 
 export class TreeGame extends BaseComponent{
     private toys:Toy[] = [];
     private thumbTrees:ThumbTree[] = [];
     private thumbBgs:ThumbBg[] = [];
+    private snow: Snow;
     private containerDiv:HTMLDivElement;
     private settingDiv:HTMLDivElement;
     private toyTreeDiv:HTMLDivElement;
@@ -26,11 +28,13 @@ export class TreeGame extends BaseComponent{
     init(){
         this.containerDiv = document.createElement('div');
         this.containerDiv.className = 'container tree_container';
-        
+        this.snow = new Snow();
+        this.snow.createSnowFlake();
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
-        
+        this.viewGameDiv.prepend(this.snow.node);
+
 
         this.containerDiv.append(this.settingDiv,this.viewGameDiv,this.toyTreeDiv)
         this.node.append(this.containerDiv);
@@ -49,8 +53,11 @@ export class TreeGame extends BaseComponent{
             const thumb = new ThumbBg(item);
             this.thumbBgs.push(thumb);
         })
-        const settingBg = this.createSettingItem('Выберите фон',this.thumbBgs)
-        this.settingDiv.append(settingTree,settingBg);
+        const settingBg = this.createSettingItem('Выберите фон',this.thumbBgs);
+        const settingControl = document.createElement('div');
+        settingControl.className = 'st_control';
+        settingControl.append(this.snow.startSnowBtn);
+        this.settingDiv.append(settingControl, settingTree, settingBg);
     }
 
     createSettingItem(headTxt:string, thumbArray:INodeElement[]):HTMLDivElement{
@@ -69,6 +76,7 @@ export class TreeGame extends BaseComponent{
     createViewGame(){
         this.viewGameDiv = document.createElement('div');
         this.viewGameDiv.className = 'view_game';
+        
         this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.thumbBgs[0].getBgImage()}.jpg)`;
         this.mapElement = document.createElement('map');
         this.mapElement.className = 'tree_card_map';
@@ -125,6 +133,7 @@ export class TreeGame extends BaseComponent{
     }
 
     setToys(toys:Toy[]){
+        this.toyContainer.innerHTML = '';
         this.toys = toys.slice(0);
         this.createToyCells();
     }

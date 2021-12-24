@@ -470,4 +470,8 @@ export class FilterToy extends BaseComponent{
     setFocus(){
         this.search.focus();
     }
+
+    getArrToys():Toy[]{
+        return this.arrayToys;
+    }
 }

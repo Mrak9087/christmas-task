@@ -131,7 +131,11 @@ export class App extends BaseComponent{
     showTree = () => {
         this.startPage.classList.add('none');
         this.filterToy.node.classList.add('none');
-        this.treeGame.setToys(this.toys.slice(0,20))
+        if (this.arrSelect.length){
+            this.treeGame.setToys(this.toys.filter((item)=>item.isSelect));
+        } else {
+            this.treeGame.setToys(this.toys.slice(0,20));
+        }
         this.treeGame.node.classList.remove('none');
         
         
