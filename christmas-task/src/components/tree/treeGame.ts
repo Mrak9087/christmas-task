@@ -6,12 +6,14 @@ import { ThumbTree } from './thumbTree/thumbTree';
 import { ThumbBg } from './thumbBackground/thumbBg';
 import {ToyCell} from './toyCell/toyCell';
 import {Snow} from './snow/snow';
+import {AudioControl} from './audio/audioControl';
 
 export class TreeGame extends BaseComponent{
     private toys:Toy[] = [];
     private thumbTrees:ThumbTree[] = [];
     private thumbBgs:ThumbBg[] = [];
     private snow: Snow;
+    private player: AudioControl;
     private containerDiv:HTMLDivElement;
     private settingDiv:HTMLDivElement;
     private toyTreeDiv:HTMLDivElement;
@@ -28,8 +30,7 @@ export class TreeGame extends BaseComponent{
     init(){
         this.containerDiv = document.createElement('div');
         this.containerDiv.className = 'container tree_container';
-        this.snow = new Snow();
-        this.snow.createSnowFlake();
+        
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
@@ -41,6 +42,9 @@ export class TreeGame extends BaseComponent{
     }
 
     createSetting(){
+        this.snow = new Snow();
+        this.player = new AudioControl();
+        this.snow.createSnowFlake();
         this.settingDiv = document.createElement('div');
         this.settingDiv.className = 'setting';
         treeImages.forEach((item)=>{
@@ -62,7 +66,7 @@ export class TreeGame extends BaseComponent{
         const settingBg = this.createSettingItem('Выберите фон',this.thumbBgs);
         const settingControl = document.createElement('div');
         settingControl.className = 'st_control';
-        settingControl.append(this.snow.startSnowBtn);
+        settingControl.append(this.player.node, this.snow.startSnowBtn);
         this.settingDiv.append(settingControl, settingTree, settingBg);
     }
 

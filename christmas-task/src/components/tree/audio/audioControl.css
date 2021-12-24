@@ -1,0 +1,10 @@
+.audio{
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../../../assets/svg/audio.svg');
+    cursor: pointer;
+}
