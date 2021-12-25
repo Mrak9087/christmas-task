@@ -7,6 +7,7 @@ import { ThumbBg } from './thumbBackground/thumbBg';
 import {ToyCell} from './toyCell/toyCell';
 import {Snow} from './snow/snow';
 import {AudioControl} from './audio/audioControl';
+import {Garland} from './garland/garland';
 
 export class TreeGame extends BaseComponent{
     private toys:Toy[] = [];
@@ -14,6 +15,7 @@ export class TreeGame extends BaseComponent{
     private thumbBgs:ThumbBg[] = [];
     private snow: Snow;
     private player: AudioControl;
+    private garland: Garland;
     private containerDiv:HTMLDivElement;
     private settingDiv:HTMLDivElement;
     private toyTreeDiv:HTMLDivElement;
@@ -34,7 +36,7 @@ export class TreeGame extends BaseComponent{
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
-        this.viewGameDiv.prepend(this.snow.node);
+        this.viewGameDiv.prepend(this.snow.node, this.garland.node);
 
 
         this.containerDiv.append(this.settingDiv,this.viewGameDiv,this.toyTreeDiv)
@@ -67,7 +69,9 @@ export class TreeGame extends BaseComponent{
         const settingControl = document.createElement('div');
         settingControl.className = 'st_control';
         settingControl.append(this.player.node, this.snow.startSnowBtn);
-        this.settingDiv.append(settingControl, settingTree, settingBg);
+        this.garland = new Garland();
+        this.garland.init();
+        this.settingDiv.append(settingControl, settingTree, settingBg, this.garland.panelGarland);
     }
 
     createSettingItem(headTxt:string, thumbArray:INodeElement[]):HTMLDivElement{

@@ -3,7 +3,6 @@ import {BaseComponent} from '../../baseComponent/baseComponent';
 
 export class Snow extends BaseComponent{
     public startSnowBtn: HTMLButtonElement;
-    private intervalId:NodeJS.Timer;
     private isStart:boolean = false;
     constructor(){
         super('snowflakes snow_hide');
