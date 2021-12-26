@@ -1,0 +1,29 @@
+.history_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 30px;
+    width: 100%;
+}
+
+.history{
+    display: flex;
+    gap: 10px;
+    height: 140px;
+    width: 400px;
+    overflow-x: auto;
+}
+
+.history::-webkit-scrollbar {	
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(6px);}
+  
+.history::-webkit-scrollbar-thumb {
+    background-color: #237E8F;
+    border-radius: 5px;
+    cursor: pointer;
+}

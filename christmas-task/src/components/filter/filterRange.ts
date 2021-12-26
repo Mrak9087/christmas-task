@@ -8,10 +8,10 @@ export class FilterRange extends BaseComponent{
     maxValue:number;
     step:number;
     funcFilter:(e?:Event) => void;
-    private inputLeftHid:HTMLInputElement;
-    private inputRightHid:HTMLInputElement;
-    private slider:HTMLDivElement;
-    private track:HTMLDivElement;
+    private inputLeftHid: HTMLInputElement;
+    private inputRightHid: HTMLInputElement;
+    private slider: HTMLDivElement;
+    private track: HTMLDivElement;
     private range:HTMLDivElement;
     private thumbLeft:HTMLDivElement;
     private thumbRight:HTMLDivElement;

@@ -8,6 +8,8 @@ import {ToyCell} from './toyCell/toyCell';
 import {Snow} from './snow/snow';
 import {AudioControl} from './audio/audioControl';
 import {Garland} from './garland/garland';
+import {History} from './history/history';
+import {Snapshot} from './snapshot/snapshot';
 
 export class TreeGame extends BaseComponent{
     private toys:Toy[] = [];
@@ -16,6 +18,8 @@ export class TreeGame extends BaseComponent{
     private snow: Snow;
     private player: AudioControl;
     private garland: Garland;
+    private snapshot: Snapshot;
+    private history: History;
     private containerDiv:HTMLDivElement;
     private settingDiv:HTMLDivElement;
     private toyTreeDiv:HTMLDivElement;
@@ -32,12 +36,12 @@ export class TreeGame extends BaseComponent{
     init(){
         this.containerDiv = document.createElement('div');
         this.containerDiv.className = 'container tree_container';
-        
+        this.snapshot = new Snapshot();
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
+        
         this.viewGameDiv.prepend(this.snow.node, this.garland.node);
-
 
         this.containerDiv.append(this.settingDiv,this.viewGameDiv,this.toyTreeDiv)
         this.node.append(this.containerDiv);
@@ -121,7 +125,9 @@ export class TreeGame extends BaseComponent{
         this.toyContainer = document.createElement('div');
         this.toyContainer.className = 'toy_container';
         toyContent.append(this.toyContainer);
-        this.toyTreeDiv.append(toyContent);
+        this.history = new History();
+        this.history.init();
+        this.toyTreeDiv.append(toyContent, this.history.node);
     }
 
     createToyCells = ()=>{
@@ -137,6 +143,7 @@ export class TreeGame extends BaseComponent{
                 })
             })
             this.toyCells.push(toyCell);
+            
             this.toyContainer.append(toyCell.node);
         })
     }
@@ -180,5 +187,6 @@ export class TreeGame extends BaseComponent{
 
     handleTreeClick(thumbTree:ThumbTree){
         this.imageTree.src = `./assets/tree/${thumbTree.getBgImage()}.png`
+        this.snapshot.createSnapsot(this.viewGameDiv);
     }
 }
