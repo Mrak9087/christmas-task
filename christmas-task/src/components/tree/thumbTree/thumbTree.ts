@@ -2,14 +2,14 @@ import './thumbTree.css';
 import {BaseComponent} from '../../baseComponent/baseComponent';
 
 export class ThumbTree extends BaseComponent{
-    private bgImage:string;
-    constructor(bgImage:string){
+    private treeImage:string;
+    constructor(treeImage:string){
         super('tree_thumb_container');
-        this.bgImage = bgImage;
-        this.node.style.cssText = `background-image: url(./assets/tree/${this.bgImage}.png)`;
+        this.treeImage = treeImage;
+        this.node.style.cssText = `background-image: url(./assets/tree/${this.treeImage}.png)`;
     }
 
-    getBgImage():string{
-        return this.bgImage;
+    getTreeImage():string{
+        return this.treeImage;
     }
 }

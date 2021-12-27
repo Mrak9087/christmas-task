@@ -114,10 +114,18 @@ export class App extends BaseComponent{
         nav.className = 'nav';
         nav.append(this.logo, this.divToy, this.divChristmasTree);
 
+        const btnClearStorage = document.createElement('button');
+        btnClearStorage.className = 'btn';
+        btnClearStorage.type = 'button';
+        btnClearStorage.innerHTML = 'Clear localStorage'
+        btnClearStorage.addEventListener('click', () => {
+            localStorage.clear();
+        })
+
         this.counterSelectDiv = document.createElement('div');
         this.counterSelectDiv.className = 'selectCount';
         this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
-        headerContainer.append(nav,this.counterSelectDiv);
+        headerContainer.append(nav,btnClearStorage,this.counterSelectDiv);
         this.header.append(headerContainer)
     }
 

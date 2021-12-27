@@ -51,7 +51,7 @@
     justify-content: center;
     align-items: flex-end;
     max-width: 800px;
-    min-width: 570px;
+    min-width: 520px;
     width: 100%;
     height: 100%;
     min-height: 750px;
@@ -60,7 +60,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     padding: 0 5px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .tree_card_map, .tree_card_map area{

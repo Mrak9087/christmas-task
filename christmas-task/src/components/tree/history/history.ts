@@ -12,7 +12,7 @@ export class History extends BaseComponent {
 
     init(){
         this.btnSave = document.createElement('button');
-        this.btnSave.className = 'btn';
+        this.btnSave.className = 'btn btn_history';
         this.btnSave.innerHTML = 'Сохранить';
         const head = document.createElement('h2');
         head.innerHTML = 'Вы нарядили'

@@ -32,6 +32,17 @@ export type FilterObjType = {
         min:number,
         max:number,
     }
-    
-    
+}
+
+export type ImgInfo = {
+    numImg: string,
+    top:string,
+    left:string,
+    id:string,
+}
+
+export type SaveObj = {
+    bgNum: string;
+    treeNum: string;
+    imgArr: ImgInfo[];
 }

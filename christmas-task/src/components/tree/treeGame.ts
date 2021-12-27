@@ -1,7 +1,7 @@
 import './treeGame.css';
 import {BaseComponent} from '../baseComponent/baseComponent';
 import {Toy} from '../toy/toy';
-import {INodeElement,treeImages,backgrounds} from '../generalTypes/general';
+import {INodeElement, SaveObj, ImgInfo, treeImages, backgrounds} from '../generalTypes/general';
 import { ThumbTree } from './thumbTree/thumbTree';
 import { ThumbBg } from './thumbBackground/thumbBg';
 import {ToyCell} from './toyCell/toyCell';
@@ -20,15 +20,19 @@ export class TreeGame extends BaseComponent{
     private garland: Garland;
     private snapshot: Snapshot;
     private history: History;
-    private containerDiv:HTMLDivElement;
-    private settingDiv:HTMLDivElement;
-    private toyTreeDiv:HTMLDivElement;
-    private viewGameDiv:HTMLDivElement;
-    private mapElement:HTMLMapElement;
-    private areaElement:HTMLAreaElement;
+    private containerDiv: HTMLDivElement;
+    private settingDiv: HTMLDivElement;
+    private toyTreeDiv: HTMLDivElement;
+    private viewGameDiv: HTMLDivElement;
+    private mapElement: HTMLMapElement;
+    private areaElement: HTMLAreaElement;
     private toyContainer: HTMLDivElement;
-    private imageTree:HTMLImageElement;
+    private imageTree: HTMLImageElement;
     private toyCells: ToyCell[] = [];
+
+    private activeBg: string = '1';
+    private activeTree: string = '1';
+    private saveArrTree:SaveObj[] = [];
     constructor(){
         super('page tree_game');
     }
@@ -111,7 +115,7 @@ export class TreeGame extends BaseComponent{
         this.imageTree.className = 'tree_img';
         this.imageTree.alt = 'tree';
         this.imageTree.useMap = '#tree_map';
-        this.imageTree.src = `./assets/tree/${this.thumbTrees[0].getBgImage()}.png`
+        this.imageTree.src = `./assets/tree/${this.thumbTrees[0].getTreeImage()}.png`
 
         this.viewGameDiv.append(this.mapElement,this.imageTree)
     }
@@ -127,6 +131,14 @@ export class TreeGame extends BaseComponent{
         toyContent.append(this.toyContainer);
         this.history = new History();
         this.history.init();
+        this.history.getThumbTrees().forEach((item)=>{
+            item.node.addEventListener('click', () => {
+                this.handleLoadClick(item);
+            })
+        })
+        this.history.btnSave.addEventListener('click', ()=>{
+            this.handleSaveClick()
+        })
         this.toyTreeDiv.append(toyContent, this.history.node);
     }
 
@@ -160,12 +172,13 @@ export class TreeGame extends BaseComponent{
 
     handleDragEnd = (e:DragEvent,element:HTMLImageElement,toyCell:ToyCell, parent:HTMLElement) => {
         if (e.dataTransfer.dropEffect === 'none'){
-            if (element.parentNode == toyCell.node) {
+            if (element.parentNode == toyCell?.node) {
                 return; 
             } else {
                 element.parentNode.removeChild(element);
                 element.removeAttribute('style');
-                toyCell.node.append(element)
+                // element.dataset.parent = '';
+                toyCell?.node.append(element)
             }
         } else {
             let param = parent.getBoundingClientRect();
@@ -174,19 +187,82 @@ export class TreeGame extends BaseComponent{
             element.style.top = `${tp}px`; 
             element.style.left = `${lft}px`; 
             element.parentNode.removeChild(element);
+            // element.dataset.parent = 'tree';
             parent.append(element);
         }
 
-        toyCell.updateCount();
+        toyCell?.updateCount();
         
     }
 
     handleBackgroundClick(thumbBg:ThumbBg){
-        this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${thumbBg.getBgImage()}.jpg)`;
+        this.activeBg = thumbBg.getBgImage();
+        this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
     }
 
     handleTreeClick(thumbTree:ThumbTree){
-        this.imageTree.src = `./assets/tree/${thumbTree.getBgImage()}.png`
-        this.snapshot.createSnapsot(this.viewGameDiv);
+        this.activeTree = thumbTree.getTreeImage();
+        this.imageTree.src = `./assets/tree/${this.activeTree}.png`
+    }
+
+    handleSaveClick(){
+        const obj = this.saveArrTree.find((item)=>item.treeNum === this.activeTree);
+        const imgArr:ImgInfo[] = [];
+        this.areaElement.querySelectorAll('img').forEach((item)=>{
+            const imgElem:ImgInfo = {
+                numImg: item.dataset.imgNum,
+                top: item.style.top,
+                left:item.style.left,
+                id:item.id,
+            }
+            imgArr.push(imgElem);
+        })
+        const svObj: SaveObj = {
+            bgNum:this.activeBg,
+            treeNum:this.activeTree,
+            imgArr: imgArr,
+        }
+        if (obj){
+            obj.bgNum = svObj.bgNum;
+            obj.treeNum = svObj.treeNum;
+            obj.imgArr = svObj.imgArr;
+        } else{
+            this.saveArrTree.push(svObj);
+        }
+        
+        localStorage.setItem('mrk90_savetree', JSON.stringify(this.saveArrTree));
+
+    }
+
+    handleLoadClick(tree:ThumbTree){
+        const imgArr:SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
+        if (imgArr){
+            const obj = imgArr.find((item)=>item.treeNum === tree.getTreeImage());
+            if (obj) {
+                this.activeBg = obj.bgNum;
+                this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
+                this.activeTree = obj.treeNum;
+                this.imageTree.src = `./assets/tree/${this.activeTree}.png`
+                this.areaElement.innerHTML = '';
+                obj.imgArr.forEach((item) => {
+                    const img = new Image();
+                    img.className = 'img_toy';
+                    img.src = `./assets/toys/${item.numImg}.png`
+                    img.alt = 'toy';
+                    img.draggable = true;
+                    img.style.top = item.top;
+                    img.style.left = item.left;
+                    img.id = item.id;
+                    img.dataset.imgNum = item.numImg;
+                    img.addEventListener('dragstart', (e)=>{
+                        this.handleDragStart(e,img);     
+                    })
+                    img.addEventListener('dragend', (e)=>{
+                        this.handleDragEnd(e, img,null,this.areaElement);
+                    })
+                    this.areaElement.append(img)
+                })
+            }
+        }
     }
 }
