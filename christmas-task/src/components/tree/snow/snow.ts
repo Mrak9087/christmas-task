@@ -14,8 +14,8 @@ export class Snow extends BaseComponent{
         this.createSnowFlake();
         this.isStart = (localStorage.getItem('mrk90_snow') === 'true') ? true : false;
         console.log('snow',this.isStart)
-        if (!this.isStart){
-            this.handleStartStopSnow();
+        if (this.isStart){
+            this.node.classList.remove('snow_hide');
         }
     }
 
@@ -27,7 +27,7 @@ export class Snow extends BaseComponent{
             this.isStart = false;
             this.node.classList.add('snow_hide');
         }
-        localStorage.setItem('mrk90_snow', (!this.isStart).toString());
+        localStorage.setItem('mrk90_snow', this.isStart.toString());
     }
 
     createSnowFlake() {
