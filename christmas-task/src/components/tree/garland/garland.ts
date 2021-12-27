@@ -48,7 +48,10 @@ export class Garland extends BaseComponent{
         check.name = 'onoffswitch';
         check.className = 'onoffswitch-checkbox';
         check.id = 'myonoffswitch';
-        check.checked  = false;
+        check.checked  = (localStorage.getItem('mrk90_garland') === 'true') ? true : false;
+        if (check.checked){
+            this.node.classList.remove('garland_hide');
+        }
         check.addEventListener('change', () => {
             this.handleCheck(check.checked);
         })
@@ -106,5 +109,6 @@ export class Garland extends BaseComponent{
         } else {
             this.node.classList.add('garland_hide');
         }
+        localStorage.setItem('mrk90_garland', (isShow).toString());
     }
 }

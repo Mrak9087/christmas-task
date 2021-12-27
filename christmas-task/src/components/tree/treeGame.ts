@@ -9,7 +9,6 @@ import {Snow} from './snow/snow';
 import {AudioControl} from './audio/audioControl';
 import {Garland} from './garland/garland';
 import {History} from './history/history';
-import {Snapshot} from './snapshot/snapshot';
 
 export class TreeGame extends BaseComponent{
     private toys:Toy[] = [];
@@ -18,7 +17,6 @@ export class TreeGame extends BaseComponent{
     private snow: Snow;
     private player: AudioControl;
     private garland: Garland;
-    private snapshot: Snapshot;
     private history: History;
     private containerDiv: HTMLDivElement;
     private settingDiv: HTMLDivElement;
@@ -38,9 +36,10 @@ export class TreeGame extends BaseComponent{
     }
 
     init(){
+        this.activeTree = localStorage.getItem('mrk90_chr_tree') || '1';
+        this.activeBg = localStorage.getItem('mrk90_chr_bg') || '1';
         this.containerDiv = document.createElement('div');
         this.containerDiv.className = 'container tree_container';
-        this.snapshot = new Snapshot();
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
@@ -99,7 +98,7 @@ export class TreeGame extends BaseComponent{
         this.viewGameDiv = document.createElement('div');
         this.viewGameDiv.className = 'view_game';
         
-        this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.thumbBgs[0].getBgImage()}.jpg)`;
+        this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
         this.mapElement = document.createElement('map');
         this.mapElement.className = 'tree_card_map';
         this.mapElement.name = 'tree_map';
@@ -115,7 +114,7 @@ export class TreeGame extends BaseComponent{
         this.imageTree.className = 'tree_img';
         this.imageTree.alt = 'tree';
         this.imageTree.useMap = '#tree_map';
-        this.imageTree.src = `./assets/tree/${this.thumbTrees[0].getTreeImage()}.png`
+        this.imageTree.src = `./assets/tree/${this.activeTree}.png`
 
         this.viewGameDiv.append(this.mapElement,this.imageTree)
     }
@@ -177,7 +176,6 @@ export class TreeGame extends BaseComponent{
             } else {
                 element.parentNode.removeChild(element);
                 element.removeAttribute('style');
-                // element.dataset.parent = '';
                 toyCell?.node.append(element)
             }
         } else {
@@ -187,7 +185,6 @@ export class TreeGame extends BaseComponent{
             element.style.top = `${tp}px`; 
             element.style.left = `${lft}px`; 
             element.parentNode.removeChild(element);
-            // element.dataset.parent = 'tree';
             parent.append(element);
         }
 
@@ -197,11 +194,13 @@ export class TreeGame extends BaseComponent{
 
     handleBackgroundClick(thumbBg:ThumbBg){
         this.activeBg = thumbBg.getBgImage();
+        localStorage.setItem('mrk90_chr_bg', this.activeBg);
         this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
     }
 
     handleTreeClick(thumbTree:ThumbTree){
         this.activeTree = thumbTree.getTreeImage();
+        localStorage.setItem('mrk90_chr_tree', this.activeBg);
         this.imageTree.src = `./assets/tree/${this.activeTree}.png`
     }
 
@@ -264,5 +263,17 @@ export class TreeGame extends BaseComponent{
                 })
             }
         }
+    }
+
+    clearTree(){
+        this.toyCells?.forEach((item)=>{
+            item.imageArr.forEach((imgItem)=>{
+                imgItem.remove()
+            })
+        })
+    }
+
+    playSound(){
+        this.player.handleClick();
     }
 }

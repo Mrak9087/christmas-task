@@ -3,7 +3,7 @@ import {BaseComponent} from '../../baseComponent/baseComponent';
 
 export class Snow extends BaseComponent{
     public startSnowBtn: HTMLButtonElement;
-    private isStart:boolean = false;
+    private isStart:Boolean = false;
     constructor(){
         super('snowflakes snow_hide');
         this.startSnowBtn = document.createElement('button');
@@ -12,6 +12,11 @@ export class Snow extends BaseComponent{
             this.handleStartStopSnow();
         })
         this.createSnowFlake();
+        this.isStart = (localStorage.getItem('mrk90_snow') === 'true') ? true : false;
+        console.log('snow',this.isStart)
+        if (!this.isStart){
+            this.handleStartStopSnow();
+        }
     }
 
     handleStartStopSnow = ()=>{
@@ -22,7 +27,7 @@ export class Snow extends BaseComponent{
             this.isStart = false;
             this.node.classList.add('snow_hide');
         }
-        
+        localStorage.setItem('mrk90_snow', (!this.isStart).toString());
     }
 
     createSnowFlake() {

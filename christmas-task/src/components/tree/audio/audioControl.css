@@ -8,3 +8,7 @@
     background-image: url('../../../assets/svg/audio.svg');
     cursor: pointer;
 }
+
+.play{
+    background-image: url('../../../assets/svg/off.svg');
+}

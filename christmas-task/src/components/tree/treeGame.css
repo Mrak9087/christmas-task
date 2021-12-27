@@ -60,7 +60,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     padding: 0 5px;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .tree_card_map, .tree_card_map area{
@@ -127,6 +127,6 @@ img{
 
     .setting{
         max-width: 100%;
-
+        align-items: center;
     }
 }

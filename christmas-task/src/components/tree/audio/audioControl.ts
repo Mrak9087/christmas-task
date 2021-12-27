@@ -21,10 +21,13 @@ export class AudioControl extends BaseComponent{
             this.player.play();
             
             this.isPlayed = true;
+            this.node.classList.add('play');
         } else{
             this.player.pause();
             this.player.currentTime = 0;
             this.isPlayed = false;
+            this.node.classList.remove('play');
         }
+        localStorage.setItem('mrk90_audPlay', this.isPlayed.toString());
     }
 }

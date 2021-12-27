@@ -41,6 +41,7 @@ export class App extends BaseComponent{
     }
 
     init(parent:HTMLElement){
+        const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true'? true : false;
         this.header = document.createElement('header');
         this.header.className = 'header';
 
@@ -82,7 +83,11 @@ export class App extends BaseComponent{
             this.message);
         this.createHeaderContent();
         
-
+        if (isPlayer){
+            this.node.addEventListener('click', ()=>{
+                this.treeGame.playSound()
+            },{once:true})
+        }
         parent.append(this.node);
     }
 
@@ -115,7 +120,7 @@ export class App extends BaseComponent{
         nav.append(this.logo, this.divToy, this.divChristmasTree);
 
         const btnClearStorage = document.createElement('button');
-        btnClearStorage.className = 'btn';
+        btnClearStorage.className = 'btn clear_btn';
         btnClearStorage.type = 'button';
         btnClearStorage.innerHTML = 'Clear localStorage'
         btnClearStorage.addEventListener('click', () => {
@@ -139,6 +144,7 @@ export class App extends BaseComponent{
     showTree = () => {
         this.startPage.classList.add('none');
         this.filterToy.node.classList.add('none');
+        this.treeGame.clearTree();
         if (this.arrSelect.length){
             this.treeGame.setToys(this.toys.filter((item)=>item.isSelect));
         } else {
