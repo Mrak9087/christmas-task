@@ -44,5 +44,6 @@ export type ImgInfo = {
 export type SaveObj = {
     bgNum: string;
     treeNum: string;
+    dataUrl:string;
     imgArr: ImgInfo[];
 }

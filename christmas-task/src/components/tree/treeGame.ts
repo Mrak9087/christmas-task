@@ -1,3 +1,5 @@
+import html2canvas from 'html2canvas';
+
 import './treeGame.css';
 import {BaseComponent} from '../baseComponent/baseComponent';
 import {Toy} from '../toy/toy';
@@ -138,6 +140,7 @@ export class TreeGame extends BaseComponent{
         this.history.btnSave.addEventListener('click', ()=>{
             this.handleSaveClick()
         })
+        this.setBgThumbHistory();
         this.toyTreeDiv.append(toyContent, this.history.node);
     }
 
@@ -200,12 +203,12 @@ export class TreeGame extends BaseComponent{
 
     handleTreeClick(thumbTree:ThumbTree){
         this.activeTree = thumbTree.getTreeImage();
-        localStorage.setItem('mrk90_chr_tree', this.activeBg);
+        localStorage.setItem('mrk90_chr_tree', this.activeTree);
         this.imageTree.src = `./assets/tree/${this.activeTree}.png`
     }
 
-    handleSaveClick(){
-        const obj = this.saveArrTree.find((item)=>item.treeNum === this.activeTree);
+    async handleSaveClick(){
+        const obj = this.saveArrTree.find((item)=>item.treeNum === this.activeTree) || null;
         const imgArr:ImgInfo[] = [];
         this.areaElement.querySelectorAll('img').forEach((item)=>{
             const imgElem:ImgInfo = {
@@ -216,9 +219,13 @@ export class TreeGame extends BaseComponent{
             }
             imgArr.push(imgElem);
         })
+        
+        const cnv = await html2canvas(this.viewGameDiv);
+        let dataU = cnv.toDataURL("image/jpeg", .9);
         const svObj: SaveObj = {
             bgNum:this.activeBg,
             treeNum:this.activeTree,
+            dataUrl:dataU,
             imgArr: imgArr,
         }
         if (obj){
@@ -230,7 +237,7 @@ export class TreeGame extends BaseComponent{
         }
         
         localStorage.setItem('mrk90_savetree', JSON.stringify(this.saveArrTree));
-
+        this.setBgThumbHistory();
     }
 
     handleLoadClick(tree:ThumbTree){
@@ -262,6 +269,19 @@ export class TreeGame extends BaseComponent{
                     this.areaElement.append(img)
                 })
             }
+        }
+    }
+
+    setBgThumbHistory(){
+        const imgArr:SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
+        if (imgArr){
+            this.history.getThumbTrees().forEach((itemTh)=>{
+                const obj = imgArr.find((item)=>item.treeNum === itemTh.getTreeImage());
+                if (obj){
+                    itemTh.node.style.cssText = `background-size: cover; background-image: url(${obj.dataUrl})`
+                }
+            })
+            
         }
     }
 

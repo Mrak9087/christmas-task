@@ -1,6 +1,6 @@
 import './history.css';
 import {BaseComponent} from '../../baseComponent/baseComponent';
-import {treeImages} from '../../generalTypes/general';
+import {SaveObj,treeImages} from '../../generalTypes/general';
 import { ThumbTree } from '../thumbTree/thumbTree';
 
 export class History extends BaseComponent {
@@ -16,7 +16,7 @@ export class History extends BaseComponent {
         this.btnSave.innerHTML = 'Сохранить';
         const head = document.createElement('h2');
         head.innerHTML = 'Вы нарядили'
-
+        
         const history = document.createElement('div');
         history.className = 'history';
         treeImages.forEach((item)=>{
