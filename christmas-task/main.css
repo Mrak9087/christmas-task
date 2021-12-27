@@ -1,3 +1,11 @@
+@import url(https://fonts.googleapis.com/css?family=Muli&display=swap);
+@font-face{
+    font-family: "Christmas";
+    src: url(assets/christmas_on_crack-a77bfbb15b94d1ba85eb..ttf);
+    font-weight: normal; /*400*/
+	font-style: normal;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -11,6 +19,7 @@ body{
     font-family: 'Open Sans', sans-serif;
     line-height: 1.5;
     color: #fff;
+    /* overflow-x: hidden; */
 }
 
 /* .none{
@@ -25,12 +34,19 @@ body{
     background-attachment: fixed;
 }
 
+.container{
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
 
 
 
 .app{
     width: 100%;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 .header, .footer{
@@ -104,6 +120,7 @@ body{
     justify-content: center;
     row-gap: 80px;
     align-items: center;
+    padding: 10px;
 }
 
 .start_page_title{
@@ -130,7 +147,7 @@ body{
     width: 100%;
 }
 
-.start_btn{
+.btn, .start_btn{
     width: 320px;
     height: 60px;
     border: 3px solid #278D9F;
@@ -149,9 +166,16 @@ body{
     transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.start_btn:hover{
+.btn:hover, .start_btn:hover{
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 15px;
+}
+
+.clear_btn{
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    border-width: 1px;
 }
 
 .footer_container {
@@ -221,6 +245,17 @@ body{
 .show{
     left: 0;
     cursor: pointer;
+}
+
+.cnt_header{
+    display: flex;
+    column-gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.item_menu.active{
+    border-bottom: 8px solid #278D9F;
 }
 
 
@@ -596,6 +631,601 @@ body{
 	-webkit-appearance: none;
 	cursor:  pointer;
 
+}
+.tree_game{
+    display: flex;
+}
+
+.tree_container{
+    display: grid;
+    min-height: 100%;
+    justify-content: center;
+    grid-template-areas: "setting view toy";
+    grid-template-columns: 0.8fr 1.4fr 0.8fr;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.setting{
+    grid-area: setting;
+    max-width: 380px;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: flex-start;
+}
+
+.toy_tree{
+    grid-area: toy;
+    max-width: 420px;
+    width: 100%;
+    padding: 10px;
+}
+
+.setting_item, .toy_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.st_item_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.view_game{
+    grid-area: view;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    max-width: 800px;
+    min-width: 520px;
+    width: 100%;
+    height: 100%;
+    min-height: 750px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0 5px;
+    overflow: hidden;
+}
+
+.tree_card_map, .tree_card_map area{
+    display: inline;
+}
+
+area{
+    cursor: pointer;
+    position: relative;
+    min-height: 714px;
+}
+
+img{
+    vertical-align: top;
+    border-style: none;
+}
+
+.tree_img{
+    display: block;
+    width: 500px;
+    height: 714px;
+}
+
+.toy_container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    height:475px;
+    border: 3px solid #237E8F;
+    border-radius: 10px;
+    overflow-y: scroll;
+    padding: 5px;
+}
+
+.toy_container::-webkit-scrollbar {	
+    width: 10px;
+    border-radius: 5px;
+      background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(6px);
+}
+
+.toy_container::-webkit-scrollbar-thumb {
+    background-color: #237E8F;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.st_control{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+@media screen and (max-width:1230px ) {
+    .tree_container{
+        grid-template-areas:
+        "setting setting  setting"
+        "view view toy";
+    }
+
+    .setting{
+        max-width: 100%;
+        align-items: center;
+    }
+}
+.tree_thumb_container{
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    background-size: auto 110px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(255,255,255,.5);
+    cursor: pointer;
+}
+.bg_container{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(255,255,255,.5);
+    cursor: pointer;
+}
+.toy_cell{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 84px;
+    min-height: 84px;
+    height: 84px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .5);
+}
+
+.toy_count{
+    z-index: 10;
+    align-self: flex-end;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    margin-left: 60px;
+    border-radius: 10px;
+    background-color: #24C5DB;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.img_toy{
+    display: block;
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    cursor: move;
+}
+.snowflakes {
+    overflow: hidden;
+    position: absolute;
+    top: -70px;
+    left: 0;
+    height: calc(100% + 70px);
+    width: 800px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.snow_hide{
+    display: none;
+}
+
+.snow_btn{
+    border: none;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(assets/snowflake-f032c52c7f6b0bcc7f82..svg);
+    cursor: pointer;
+}
+
+i,
+i:after,
+i:before {
+    background: white;
+    pointer-events: none;
+}
+i {
+    display: inline-block;
+    animation: snowflakes 3s linear 2s 20;
+    position: relative;
+}
+i:after,
+i:before {
+    height: 100%;
+    width: 100%;
+    content: '.';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transform: rotate(120deg);
+}
+i:before {
+    transform: rotate(240deg);
+}
+@keyframes snowflakes {
+0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+}
+100% {
+    transform: translate3d(15px, 1200px, 0px) rotate(360deg) scale(0.6);
+}
+}
+.snowflakes i:nth-child(3n) {
+    width: 16px;
+    height: 4px;
+    animation-duration: 4s;
+    animation-iteration-count: 30;
+    transform-origin: right -45px;
+}
+.snowflakes i:nth-child(3n + 1) {
+    width: 24px;
+    height: 6px;
+    animation-duration: 6s;
+    animation-iteration-count: 45;
+    transform-origin: right -30px;
+}
+.snowflakes i:nth-child(3n + 2) {
+    width: 32px;
+    height: 8px;
+    animation-duration: 8s;
+    animation-iteration-count: 60;
+    transform-origin: right -15px;
+}
+
+.snowflakes i:nth-child(7n) {
+    opacity: 0.3;
+    animation-delay: 0s;
+    animation-timing-function: ease-in;
+}
+.snowflakes i:nth-child(7n + 1) {
+    opacity: 0.4;
+    animation-delay: 1s;
+    animation-timing-function: ease-out;
+}
+.snowflakes i:nth-child(7n + 2) {
+    opacity: 0.5;
+    animation-delay: 1.5s;
+    animation-timing-function: linear;
+}
+.snowflakes i:nth-child(7n + 3) {
+    opacity: 0.6;
+    animation-delay: 2s;
+    animation-timing-function: ease-in;
+}
+.snowflakes i:nth-child(7n + 4) {
+    opacity: 0.7;
+    animation-delay: 2.5s;
+    animation-timing-function: linear;
+}
+.snowflakes i:nth-child(7n + 5) {
+    opacity: 0.8;
+    animation-delay: 3s;
+    animation-timing-function: ease-out;
+}
+.snowflakes i:nth-child(7n + 6) {
+    opacity: 0.9;
+    animation-delay: 3.5s;
+    animation-timing-function: ease-in;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(105vh);
+    }
+}
+.audio{
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(assets/audio-1eecc4fca630f9e97974..svg);
+    cursor: pointer;
+}
+
+.play{
+    background-image: url(assets/off-5a044e6f31193c7df223..svg);
+}
+.garland{
+    display: flex;
+    justify-content: center;
+    height: 714px;
+    width: 100%;
+    position: absolute;
+    bottom: 55px;
+    pointer-events: none;
+    z-index: 90;
+    overflow: hidden;
+}
+
+.garland_hide{
+    display: none;
+}
+
+.lightrope {
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    border-radius: 50%;
+    padding: 0;
+    list-style: none;
+    margin: 50px auto 0;
+}
+
+.lightrope li {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin: -5px;
+    animation-name: red;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+}
+
+.lightrope li:nth-child(2n + 1) {
+    animation-duration: 1.8s;
+}
+
+.lightrope li:nth-child(4n + 2) {
+    animation-duration: 1.1s;
+}
+
+.lightrope li:nth-child(3n + 1) {
+    animation-duration: 1.4s;
+}
+
+.lightrope li.red { animation-name: red; }
+.lightrope li.green { animation-name: green; }
+.lightrope li.blue { animation-name: blue; }
+.lightrope li.yellow { animation-name: yellow; }
+
+.lightrope li.multicolor:nth-child(1n + 1) { animation-name: red; }
+.lightrope li:nth-child(2n + 2).multicolor { animation-name: green; }
+.lightrope li:nth-child(3n + 3).multicolor { animation-name: blue; }
+.lightrope li:nth-child(4n + 4).multicolor { animation-name: yellow; }
+
+.garland-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 360px;
+    height: 110px;
+}
+
+.color-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.multicolor-btn {
+    background: linear-gradient(
+124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8);
+    box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #441313 0 -1px 9px, #ccc 0 2px 12px;
+}
+
+.red-btn {
+    background-color: #F00;
+    box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgb(255 0 0 / 50%) 0 2px 12px;
+}
+
+.blue-btn {
+    background-color: #24E0FF;
+    box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
+}
+
+.yellow-btn {
+    background-color: #FF0;
+    box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
+}
+
+.green-btn {
+    background-color: #ABFF00;
+    box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+}
+
+.onoffswitch {
+    position: relative;
+    width: 85px;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #999999;
+    border-radius: 20px;
+}
+.onoffswitch-inner {
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+    float: left;
+    width: 50%;
+    height: 30px;
+    padding: 0;
+    line-height: 30px;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "Вкл";
+    padding-left: 12px;
+    background-color: #237E8F;
+    color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "Выкл";
+    padding-right: 10px;
+    background-color: #EEEEEE;
+    color: #666;
+    text-align: right;
+}
+.onoffswitch-switch {
+    width: 26px;
+    margin: 2px;
+    background: #FFFFFF;
+    border: 2px solid #999999;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 55px;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
+
+
+@keyframes green {
+    0%,
+    100% {
+        background: rgba(0, 247, 165, 1);
+        box-shadow: 0px 2px 12px 2px rgba(0, 247, 165, 1);
+    }
+    50% {
+        background: rgba(0, 247, 165, 0.4);
+        box-shadow: 0px 2px 12px 2px rgba(0, 247, 165, 0.2);
+    }
+}
+@keyframes blue {
+    0%,
+    100% {
+        background: rgba(0, 255, 255, 1);
+        box-shadow: 0px 2px 12px 2px rgba(0, 255, 255, 1);
+    }
+    50% {
+        background: rgba(0, 255, 255, 0.4);
+        box-shadow: 0px 2px 12px 2px rgba(0, 255, 255, 0.2);
+    }
+}
+@keyframes red {
+    0%,
+    100% {
+        background: rgba(247, 0, 118, 1);
+        box-shadow: 0px 2px 12px 2px rgba(247, 0, 118, 1);
+    }
+    50% {
+        background: rgba(247, 0, 118, 0.4);
+        box-shadow: 0px 2px 12px 2px rgba(247, 0, 118, 0.2);
+    }
+}
+@keyframes yellow {
+    0%,
+    100% {
+        background: rgba(255, 255, 0, 1);
+        box-shadow: 0px 2px 12px 2px rgba(255, 255, 0, 1);
+    }
+    50% {
+        background: rgba(255, 255, 0, 0.4);
+        box-shadow: 0px 2px 12px 2px rgba(255, 255, 0, 0.2);
+    }
+}
+.history_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 30px;
+    max-width: 400px;
+    width: 100%;
+    overflow-x: hidden;
+    padding-left: 5px;
+    padding-bottom: 20px;
+}
+
+.history_container h2{
+    font-size: 20px;
+}
+
+.history{
+    display: flex;
+    gap: 10px;
+    height: 140px;
+    width: 400px;
+    overflow-x: auto;
+}
+
+.history::-webkit-scrollbar {	
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(6px);}
+  
+.history::-webkit-scrollbar-thumb {
+    background-color: #237E8F;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn_history{
+    max-width: 150px;
+    height: 50px;
+    border-width: 1px;
+}
+
+@media screen and (max-width: 1230px){
+    .history_container{
+        max-width: 200px;
+        width: 100%;
+    }
 }
 .toy{
     width: 225px;
