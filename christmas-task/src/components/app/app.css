@@ -204,3 +204,14 @@
     cursor: pointer;
 }
 
+.cnt_header{
+    display: flex;
+    column-gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.item_menu.active{
+    border-bottom: 8px solid #278D9F;
+}
+

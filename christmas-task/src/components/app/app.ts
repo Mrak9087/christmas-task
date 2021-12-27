@@ -98,8 +98,7 @@ export class App extends BaseComponent{
         this.logo = document.createElement('div');
         this.logo.className = 'logo'
         this.logo.addEventListener('click', ()=>{
-            this.filterToy.node.classList.add('none');
-            this.startPage.classList.remove('none');
+            this.showStartPage();
         })
 
         this.divToy = document.createElement('div');
@@ -119,6 +118,8 @@ export class App extends BaseComponent{
         nav.className = 'nav';
         nav.append(this.logo, this.divToy, this.divChristmasTree);
 
+        const content = document.createElement('div');
+        content.className = 'cnt_header'
         const btnClearStorage = document.createElement('button');
         btnClearStorage.className = 'btn clear_btn';
         btnClearStorage.type = 'button';
@@ -130,18 +131,31 @@ export class App extends BaseComponent{
         this.counterSelectDiv = document.createElement('div');
         this.counterSelectDiv.className = 'selectCount';
         this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
-        headerContainer.append(nav,btnClearStorage,this.counterSelectDiv);
+        content.append(btnClearStorage, this.counterSelectDiv)
+        headerContainer.append(nav, content);
         this.header.append(headerContainer)
     }
 
+    showStartPage(){
+        this.divToy.classList.remove('active')
+        this.divChristmasTree.classList.remove('active')
+        this.filterToy.node.classList.add('none');
+        this.treeGame.node.classList.add('none');
+        this.startPage.classList.remove('none');
+    }
+
     startGame = () => {
+        this.divToy.classList.add('active')
+        this.divChristmasTree.classList.remove('active')
         this.startPage.classList.add('none');
         this.treeGame.node.classList.add('none');
-        this.filterToy.node.classList.remove('none');
         this.filterToy.setFocus();
+        this.filterToy.node.classList.remove('none');
     }
 
     showTree = () => {
+        this.divChristmasTree.classList.add('active');
+        this.divToy.classList.remove('active')
         this.startPage.classList.add('none');
         this.filterToy.node.classList.add('none');
         this.treeGame.clearTree();
