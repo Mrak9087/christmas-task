@@ -1,21 +1,21 @@
 import html2canvas from './html2canvas';
 
 import './treeGame.css';
-import {BaseComponent} from '../baseComponent/baseComponent';
-import {Toy} from '../toy/toy';
-import {INodeElement, SaveObj, ImgInfo, treeImages, backgrounds} from '../generalTypes/general';
+import { BaseComponent } from '../baseComponent/baseComponent';
+import { Toy } from '../toy/toy';
+import { INodeElement, SaveObj, ImgInfo, treeImages, backgrounds } from '../generalTypes/general';
 import { ThumbTree } from './thumbTree/thumbTree';
 import { ThumbBg } from './thumbBackground/thumbBg';
-import {ToyCell} from './toyCell/toyCell';
-import {Snow} from './snow/snow';
-import {AudioControl} from './audio/audioControl';
-import {Garland} from './garland/garland';
-import {History} from './history/history';
+import { ToyCell } from './toyCell/toyCell';
+import { Snow } from './snow/snow';
+import { AudioControl } from './audio/audioControl';
+import { Garland } from './garland/garland';
+import { History } from './history/history';
 
-export class TreeGame extends BaseComponent{
-    private toys:Toy[] = [];
-    private thumbTrees:ThumbTree[] = [];
-    private thumbBgs:ThumbBg[] = [];
+export class TreeGame extends BaseComponent {
+    private toys: Toy[] = [];
+    private thumbTrees: ThumbTree[] = [];
+    private thumbBgs: ThumbBg[] = [];
     private snow: Snow;
     private player: AudioControl;
     private garland: Garland;
@@ -30,14 +30,14 @@ export class TreeGame extends BaseComponent{
     private imageTree: HTMLImageElement;
     private toyCells: ToyCell[] = [];
 
-    private activeBg: string = '1';
-    private activeTree: string = '1';
-    private saveArrTree:SaveObj[] = [];
-    constructor(){
+    private activeBg = '1';
+    private activeTree = '1';
+    private saveArrTree: SaveObj[] = [];
+    constructor() {
         super('page tree_game');
     }
 
-    init(){
+    init() {
         this.activeTree = localStorage.getItem('mrk90_chr_tree') || '1';
         this.activeBg = localStorage.getItem('mrk90_chr_bg') || '1';
         this.containerDiv = document.createElement('div');
@@ -45,36 +45,36 @@ export class TreeGame extends BaseComponent{
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
-        
+
         this.viewGameDiv.prepend(this.snow.node, this.garland.node);
 
-        this.containerDiv.append(this.settingDiv,this.viewGameDiv,this.toyTreeDiv)
+        this.containerDiv.append(this.settingDiv, this.viewGameDiv, this.toyTreeDiv);
         this.node.append(this.containerDiv);
     }
 
-    createSetting(){
+    createSetting() {
         this.snow = new Snow();
         this.player = new AudioControl();
         this.snow.createSnowFlake();
         this.settingDiv = document.createElement('div');
         this.settingDiv.className = 'setting';
-        treeImages.forEach((item)=>{
+        treeImages.forEach((item) => {
             const thumb = new ThumbTree(item);
-            thumb.node.addEventListener('click', ()=>{
+            thumb.node.addEventListener('click', () => {
                 this.handleTreeClick(thumb);
-            })
+            });
             this.thumbTrees.push(thumb);
-        })
-        const settingTree = this.createSettingItem('Выберите елку',this.thumbTrees)
-        
-        backgrounds.forEach((item)=>{
+        });
+        const settingTree = this.createSettingItem('Выберите елку', this.thumbTrees);
+
+        backgrounds.forEach((item) => {
             const thumb = new ThumbBg(item);
-            thumb.node.addEventListener('click', ()=>{
+            thumb.node.addEventListener('click', () => {
                 this.handleBackgroundClick(thumb);
-            })
+            });
             this.thumbBgs.push(thumb);
-        })
-        const settingBg = this.createSettingItem('Выберите фон',this.thumbBgs);
+        });
+        const settingBg = this.createSettingItem('Выберите фон', this.thumbBgs);
         const settingControl = document.createElement('div');
         settingControl.className = 'st_control';
         settingControl.append(this.player.node, this.snow.startSnowBtn);
@@ -83,217 +83,216 @@ export class TreeGame extends BaseComponent{
         this.settingDiv.append(settingControl, settingTree, settingBg, this.garland.panelGarland);
     }
 
-    createSettingItem(headTxt:string, thumbArray:INodeElement[]):HTMLDivElement{
+    createSettingItem(headTxt: string, thumbArray: INodeElement[]): HTMLDivElement {
         const item = document.createElement('div');
         item.className = 'setting_item';
-        item.innerHTML = `<h2>${headTxt}</h2>`
+        item.innerHTML = `<h2>${headTxt}</h2>`;
         const itemContainer = document.createElement('div');
         itemContainer.className = 'st_item_container';
-        thumbArray.forEach((item)=>{
+        thumbArray.forEach((item) => {
             itemContainer.append(item.node);
-        })
+        });
         item.append(itemContainer);
-        return item
+        return item;
     }
 
-    createViewGame(){
+    createViewGame() {
         this.viewGameDiv = document.createElement('div');
         this.viewGameDiv.className = 'view_game';
-        
+
         this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
         this.mapElement = document.createElement('map');
         this.mapElement.className = 'tree_card_map';
         this.mapElement.name = 'tree_map';
         this.areaElement = document.createElement('area');
-        this.areaElement.coords = '365,699,189,706,113,683,31,608,2,555,2,539,18,437,73,351,106,224,161,134,243,-1,306,75,353,144,399,221,424,359,452,459,496,550,444,664';
+        this.areaElement.coords =
+            '365,699,189,706,113,683,31,608,2,555,2,539,18,437,73,351,106,224,161,134,243,-1,306,75,353,144,399,221,424,359,452,459,496,550,444,664';
         this.areaElement.shape = 'poly';
-        this.areaElement.addEventListener('dragover', (e)=>{
-            e.preventDefault()
-        })
-        
+        this.areaElement.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
         this.mapElement.append(this.areaElement);
         this.imageTree = document.createElement('img');
         this.imageTree.className = 'tree_img';
         this.imageTree.alt = 'tree';
         this.imageTree.useMap = '#tree_map';
-        this.imageTree.src = `./assets/tree/${this.activeTree}.png`
+        this.imageTree.src = `./assets/tree/${this.activeTree}.png`;
 
-        this.viewGameDiv.append(this.mapElement,this.imageTree)
+        this.viewGameDiv.append(this.mapElement, this.imageTree);
     }
 
-    createToyTree(){
+    createToyTree() {
         this.toyTreeDiv = document.createElement('div');
         this.toyTreeDiv.className = 'toy_tree';
         const toyContent = document.createElement('div');
         toyContent.className = 'toy_content';
-        toyContent.innerHTML = '<h2>Игрушки</h2>'
+        toyContent.innerHTML = '<h2>Игрушки</h2>';
         this.toyContainer = document.createElement('div');
         this.toyContainer.className = 'toy_container';
         toyContent.append(this.toyContainer);
         this.history = new History();
         this.history.init();
-        this.history.getThumbTrees().forEach((item)=>{
+        this.history.getThumbTrees().forEach((item) => {
             item.node.addEventListener('click', () => {
                 this.handleLoadClick(item);
-            })
-        })
-        this.history.btnSave.addEventListener('click', ()=>{
-            this.handleSaveClick()
-        })
+            });
+        });
+        this.history.btnSave.addEventListener('click', () => {
+            this.handleSaveClick();
+        });
         this.setBgThumbHistory();
         this.toyTreeDiv.append(toyContent, this.history.node);
     }
 
-    createToyCells = ()=>{
-        this.toys.forEach((item)=>{
+    createToyCells = () => {
+        this.toys.forEach((item) => {
             const toyCell = new ToyCell(item);
             toyCell.init();
-            toyCell.imageArr.forEach((item) =>{
-                item.addEventListener('dragstart', (e)=>{
-                    this.handleDragStart(e,item);     
-                })
-                item.addEventListener('dragend', (e)=>{
-                    this.handleDragEnd(e, item,toyCell,this.areaElement);
-                })
-            })
+            toyCell.imageArr.forEach((item) => {
+                item.addEventListener('dragstart', (e) => {
+                    this.handleDragStart(e, item);
+                });
+                item.addEventListener('dragend', (e) => {
+                    this.handleDragEnd(e, item, toyCell, this.areaElement);
+                });
+            });
             this.toyCells.push(toyCell);
-            
-            this.toyContainer.append(toyCell.node);
-        })
-    }
 
-    setToys(toys:Toy[]){
+            this.toyContainer.append(toyCell.node);
+        });
+    };
+
+    setToys(toys: Toy[]) {
         this.toyContainer.innerHTML = '';
         this.toys = toys.slice(0);
         this.createToyCells();
     }
 
-    handleDragStart = (e:DragEvent,element:HTMLImageElement) => {
-            e.dataTransfer.setData('id',element.id);
-    }
+    handleDragStart = (e: DragEvent, element: HTMLImageElement) => {
+        e.dataTransfer.setData('id', element.id);
+    };
 
-    handleDragEnd = (e:DragEvent,element:HTMLImageElement,toyCell:ToyCell, parent:HTMLElement) => {
-        if (e.dataTransfer.dropEffect === 'none'){
+    handleDragEnd = (e: DragEvent, element: HTMLImageElement, toyCell: ToyCell, parent: HTMLElement) => {
+        if (e.dataTransfer.dropEffect === 'none') {
             if (element.parentNode == toyCell?.node) {
-                return; 
+                return;
             } else {
                 element.parentNode.removeChild(element);
                 element.removeAttribute('style');
-                toyCell?.node.append(element)
+                toyCell?.node.append(element);
             }
         } else {
-            let param = parent.getBoundingClientRect();
-            let tp = e.clientY - param.top - (element.offsetWidth / 2);
-            let lft = e.clientX - param.left - (element.offsetHeight / 2);
-            element.style.top = `${tp}px`; 
-            element.style.left = `${lft}px`; 
+            const param = parent.getBoundingClientRect();
+            const tp = e.clientY - param.top - element.offsetWidth / 2;
+            const lft = e.clientX - param.left - element.offsetHeight / 2;
+            element.style.top = `${tp}px`;
+            element.style.left = `${lft}px`;
             element.parentNode.removeChild(element);
             parent.append(element);
         }
 
         toyCell?.updateCount();
-        
-    }
+    };
 
-    handleBackgroundClick(thumbBg:ThumbBg){
+    handleBackgroundClick(thumbBg: ThumbBg) {
         this.activeBg = thumbBg.getBgImage();
         localStorage.setItem('mrk90_chr_bg', this.activeBg);
         this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
     }
 
-    handleTreeClick(thumbTree:ThumbTree){
+    handleTreeClick(thumbTree: ThumbTree) {
         this.activeTree = thumbTree.getTreeImage();
         localStorage.setItem('mrk90_chr_tree', this.activeTree);
-        this.imageTree.src = `./assets/tree/${this.activeTree}.png`
+        this.imageTree.src = `./assets/tree/${this.activeTree}.png`;
     }
 
-    async handleSaveClick(){
-        const obj = this.saveArrTree.find((item)=>item.treeNum === this.activeTree) || null;
-        const imgArr:ImgInfo[] = [];
-        this.areaElement.querySelectorAll('img').forEach((item)=>{
-            const imgElem:ImgInfo = {
+    async handleSaveClick() {
+        const obj = this.saveArrTree.find((item) => item.treeNum === this.activeTree) || null;
+        const imgArr: ImgInfo[] = [];
+        this.areaElement.querySelectorAll('img').forEach((item) => {
+            const imgElem: ImgInfo = {
                 numImg: item.dataset.imgNum,
                 top: item.style.top,
-                left:item.style.left,
-                id:item.id,
-            }
+                left: item.style.left,
+                id: item.id,
+            };
             imgArr.push(imgElem);
-        })
-        
+        });
+
         const cnv = await html2canvas(this.viewGameDiv);
-        let dataU = cnv.toDataURL("image/jpeg", .9);
+        const dataU = cnv.toDataURL('image/jpeg', 0.9);
         const svObj: SaveObj = {
-            bgNum:this.activeBg,
-            treeNum:this.activeTree,
-            dataUrl:dataU,
+            bgNum: this.activeBg,
+            treeNum: this.activeTree,
+            dataUrl: dataU,
             imgArr: imgArr,
-        }
-        if (obj){
+        };
+        if (obj) {
             obj.bgNum = svObj.bgNum;
             obj.treeNum = svObj.treeNum;
             obj.imgArr = svObj.imgArr;
-        } else{
+        } else {
             this.saveArrTree.push(svObj);
         }
-        
+
         localStorage.setItem('mrk90_savetree', JSON.stringify(this.saveArrTree));
         this.setBgThumbHistory();
     }
 
-    handleLoadClick(tree:ThumbTree){
-        const imgArr:SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
-        if (imgArr){
-            const obj = imgArr.find((item)=>item.treeNum === tree.getTreeImage());
+    handleLoadClick(tree: ThumbTree) {
+        const imgArr: SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
+        if (imgArr) {
+            const obj = imgArr.find((item) => item.treeNum === tree.getTreeImage());
             if (obj) {
                 this.activeBg = obj.bgNum;
                 this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
                 this.activeTree = obj.treeNum;
-                this.imageTree.src = `./assets/tree/${this.activeTree}.png`
+                this.imageTree.src = `./assets/tree/${this.activeTree}.png`;
                 this.areaElement.innerHTML = '';
                 obj.imgArr.forEach((item) => {
                     const img = new Image();
                     img.className = 'img_toy';
-                    img.src = `./assets/toys/${item.numImg}.png`
+                    img.src = `./assets/toys/${item.numImg}.png`;
                     img.alt = 'toy';
                     img.draggable = true;
                     img.style.top = item.top;
                     img.style.left = item.left;
                     img.id = item.id;
                     img.dataset.imgNum = item.numImg;
-                    img.addEventListener('dragstart', (e)=>{
-                        this.handleDragStart(e,img);     
-                    })
-                    img.addEventListener('dragend', (e)=>{
-                        this.handleDragEnd(e, img,null,this.areaElement);
-                    })
-                    this.areaElement.append(img)
-                })
+                    img.addEventListener('dragstart', (e) => {
+                        this.handleDragStart(e, img);
+                    });
+                    img.addEventListener('dragend', (e) => {
+                        this.handleDragEnd(e, img, null, this.areaElement);
+                    });
+                    this.areaElement.append(img);
+                });
             }
         }
     }
 
-    setBgThumbHistory(){
-        const imgArr:SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
-        if (imgArr){
-            this.history.getThumbTrees().forEach((itemTh)=>{
-                const obj = imgArr.find((item)=>item.treeNum === itemTh.getTreeImage());
-                if (obj){
-                    itemTh.node.style.cssText = `background-size: cover; background-image: url(${obj.dataUrl})`
+    setBgThumbHistory() {
+        const imgArr: SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
+        if (imgArr) {
+            this.history.getThumbTrees().forEach((itemTh) => {
+                const obj = imgArr.find((item) => item.treeNum === itemTh.getTreeImage());
+                if (obj) {
+                    itemTh.node.style.cssText = `background-size: cover; background-image: url(${obj.dataUrl})`;
                 }
-            })
-            
+            });
         }
     }
 
-    clearTree(){
-        this.toyCells?.forEach((item)=>{
-            item.imageArr.forEach((imgItem)=>{
-                imgItem.remove()
-            })
-        })
+    clearTree() {
+        this.toyCells?.forEach((item) => {
+            item.imageArr.forEach((imgItem) => {
+                imgItem.remove();
+            });
+        });
     }
 
-    playSound(){
+    playSound() {
         this.player.handleClick();
     }
 }

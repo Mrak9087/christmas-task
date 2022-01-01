@@ -1,33 +1,33 @@
 import './history.css';
-import {BaseComponent} from '../../baseComponent/baseComponent';
-import {SaveObj,treeImages} from '../../generalTypes/general';
+import { BaseComponent } from '../../baseComponent/baseComponent';
+import { treeImages } from '../../generalTypes/general';
 import { ThumbTree } from '../thumbTree/thumbTree';
 
 export class History extends BaseComponent {
-    private thumbTrees:ThumbTree[] = [];
+    private thumbTrees: ThumbTree[] = [];
     btnSave: HTMLButtonElement;
-    constructor(){
+    constructor() {
         super('history_container');
     }
 
-    init(){
+    init() {
         this.btnSave = document.createElement('button');
         this.btnSave.className = 'btn btn_history';
         this.btnSave.innerHTML = 'Сохранить';
         const head = document.createElement('h2');
-        head.innerHTML = 'Вы нарядили'
-        
+        head.innerHTML = 'Вы нарядили';
+
         const history = document.createElement('div');
         history.className = 'history';
-        treeImages.forEach((item)=>{
+        treeImages.forEach((item) => {
             const thumb = new ThumbTree(item);
             history.append(thumb.node);
             this.thumbTrees.push(thumb);
-        })
+        });
         this.node.append(head, history, this.btnSave);
     }
 
-    getThumbTrees():ThumbTree[] {
-        return this.thumbTrees
+    getThumbTrees(): ThumbTree[] {
+        return this.thumbTrees;
     }
 }

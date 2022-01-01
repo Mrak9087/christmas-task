@@ -1,30 +1,31 @@
 import './toyCell.css';
 
-import {BaseComponent} from '../../baseComponent/baseComponent';
-import {Toy} from '../../toy/toy';
+import { BaseComponent } from '../../baseComponent/baseComponent';
+import { Toy } from '../../toy/toy';
 
-export class ToyCell extends BaseComponent{
-    private toy:Toy;
-    private toyCountP:HTMLParagraphElement;
+export class ToyCell extends BaseComponent {
+    private toy: Toy;
+    private toyCountP: HTMLParagraphElement;
 
-    numImg:number;
-    countToy:number = 0;
+    numImg: number;
+    countToy: number;
     imageArr: HTMLImageElement[] = [];
-    constructor(toy:Toy){
+    constructor(toy: Toy) {
         super('toy_cell');
+        this.countToy = 0;
         this.toy = toy;
         this.numImg = this.toy.getNumImage();
         this.countToy = this.toy.getCount();
     }
 
-    init(){
+    init() {
         this.toyCountP = document.createElement('p');
         this.toyCountP.className = 'toy_count';
         this.toyCountP.innerHTML = this.countToy.toString();
-        for(let i = 0; i < this.countToy; i++){
+        for (let i = 0; i < this.countToy; i++) {
             const img = new Image();
             img.className = 'img_toy';
-            img.src = `./assets/toys/${this.numImg}.png`
+            img.src = `./assets/toys/${this.numImg}.png`;
             img.alt = 'toy';
             img.draggable = true;
             img.id = `${this.numImg}-${i}`;
@@ -35,7 +36,7 @@ export class ToyCell extends BaseComponent{
         this.node.append(this.toyCountP);
     }
 
-    updateCount(){
-        this.toyCountP.innerHTML = `${this.node.childNodes.length-1}`
+    updateCount() {
+        this.toyCountP.innerHTML = `${this.node.childNodes.length - 1}`;
     }
 }

@@ -1,4 +1,4 @@
-.garland{
+.garland {
     display: flex;
     justify-content: center;
     height: 714px;
@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.garland_hide{
+.garland_hide {
     display: none;
 }
 
@@ -57,15 +57,31 @@
     animation-duration: 1.4s;
 }
 
-.lightrope li.red { animation-name: red; }
-.lightrope li.green { animation-name: green; }
-.lightrope li.blue { animation-name: blue; }
-.lightrope li.yellow { animation-name: yellow; }
+.lightrope li.red {
+    animation-name: red;
+}
+.lightrope li.green {
+    animation-name: green;
+}
+.lightrope li.blue {
+    animation-name: blue;
+}
+.lightrope li.yellow {
+    animation-name: yellow;
+}
 
-.lightrope li.multicolor:nth-child(1n + 1) { animation-name: red; }
-.lightrope li:nth-child(2n + 2).multicolor { animation-name: green; }
-.lightrope li:nth-child(3n + 3).multicolor { animation-name: blue; }
-.lightrope li:nth-child(4n + 4).multicolor { animation-name: yellow; }
+.lightrope li.multicolor:nth-child(1n + 1) {
+    animation-name: red;
+}
+.lightrope li:nth-child(2n + 2).multicolor {
+    animation-name: green;
+}
+.lightrope li:nth-child(3n + 3).multicolor {
+    animation-name: blue;
+}
+.lightrope li:nth-child(4n + 4).multicolor {
+    animation-name: yellow;
+}
 
 .garland-container {
     display: flex;
@@ -83,28 +99,27 @@
 }
 
 .multicolor-btn {
-    background: linear-gradient(
-124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8);
+    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8);
     box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #441313 0 -1px 9px, #ccc 0 2px 12px;
 }
 
 .red-btn {
-    background-color: #F00;
+    background-color: #f00;
     box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgb(255 0 0 / 50%) 0 2px 12px;
 }
 
 .blue-btn {
-    background-color: #24E0FF;
+    background-color: #24e0ff;
     box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
 }
 
 .yellow-btn {
-    background-color: #FF0;
+    background-color: #ff0;
     box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
 }
 
 .green-btn {
-    background-color: #ABFF00;
+    background-color: #abff00;
     box-shadow: rgb(0 0 0 / 20%) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
 }
 
@@ -140,22 +155,22 @@
     box-sizing: border-box;
 }
 .onoffswitch-inner:before {
-    content: "Вкл";
+    content: 'Вкл';
     padding-left: 12px;
-    background-color: #237E8F;
-    color: #FFFFFF;
+    background-color: #237e8f;
+    color: #ffffff;
 }
 .onoffswitch-inner:after {
-    content: "Выкл";
+    content: 'Выкл';
     padding-right: 10px;
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
     color: #666;
     text-align: right;
 }
 .onoffswitch-switch {
     width: 26px;
     margin: 2px;
-    background: #FFFFFF;
+    background: #ffffff;
     border: 2px solid #999999;
     border-radius: 20px;
     position: absolute;
@@ -170,8 +185,6 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
-
-
 
 @keyframes green {
     0%,

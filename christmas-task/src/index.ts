@@ -1,5 +1,5 @@
 import './style.css';
-import {App} from './components/app/app';
+import { App } from './components/app/app';
 import './none.css';
 
 const app = new App();

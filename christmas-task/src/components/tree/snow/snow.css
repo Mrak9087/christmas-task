@@ -11,11 +11,11 @@
     pointer-events: none;
 }
 
-.snow_hide{
+.snow_hide {
     display: none;
 }
 
-.snow_btn{
+.snow_btn {
     border: none;
     outline: none;
     width: 40px;
@@ -53,12 +53,12 @@ i:before {
     transform: rotate(240deg);
 }
 @keyframes snowflakes {
-0% {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
-}
-100% {
-    transform: translate3d(15px, 1200px, 0px) rotate(360deg) scale(0.6);
-}
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+    }
+    100% {
+        transform: translate3d(15px, 1200px, 0px) rotate(360deg) scale(0.6);
+    }
 }
 .snowflakes i:nth-child(3n) {
     width: 16px;

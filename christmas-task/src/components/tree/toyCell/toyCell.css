@@ -1,4 +1,4 @@
-.toy_cell{
+.toy_cell {
     position: relative;
     display: flex;
     justify-content: center;
@@ -7,10 +7,10 @@
     min-height: 84px;
     height: 84px;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, .5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
-.toy_count{
+.toy_count {
     z-index: 10;
     align-self: flex-end;
     width: 25px;
@@ -21,12 +21,12 @@
     margin: 0;
     margin-left: 60px;
     border-radius: 10px;
-    background-color: #24C5DB;
+    background-color: #24c5db;
     font-size: 14px;
     font-weight: 900;
 }
 
-.img_toy{
+.img_toy {
     display: block;
     position: absolute;
     height: 60px;

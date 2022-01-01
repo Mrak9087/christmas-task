@@ -1,10 +1,10 @@
-import {BaseComponent} from '../baseComponent/baseComponent';
-import {IToy}  from '../generalTypes/general';
-import './toy.css'
+import { BaseComponent } from '../baseComponent/baseComponent';
+import { IToy } from '../generalTypes/general';
+import './toy.css';
 
 export class Toy extends BaseComponent {
     public isSelect: boolean;
-    
+
     private numImage: number;
     private name: string;
     private count: number;
@@ -13,8 +13,7 @@ export class Toy extends BaseComponent {
     private color: string;
     private size: string;
     private favorite: boolean;
-    private indexSelect:number;
-    
+    private indexSelect: number;
 
     private divName: HTMLDivElement;
     private divImg: HTMLDivElement;
@@ -25,7 +24,7 @@ export class Toy extends BaseComponent {
     private divSize: HTMLDivElement;
     private divFavorite: HTMLDivElement;
     private selectDiv: HTMLDivElement;
-    constructor(toyInfo:IToy){
+    constructor(toyInfo: IToy) {
         super('toy');
         this.numImage = +toyInfo.num;
         this.name = toyInfo.name;
@@ -38,15 +37,15 @@ export class Toy extends BaseComponent {
         this.isSelect = false;
     }
 
-    init():void{
+    init(): void {
         this.divName = document.createElement('div');
         this.divName.className = 'font_name';
         this.divName.innerHTML = this.name;
-        
+
         this.divImg = document.createElement('div');
         this.divImg.className = 'toy_picture';
         this.divImg.style.backgroundImage = `url(./assets/toys/${this.numImage}.png)`;
-        
+
         this.divCount = document.createElement('div');
         this.divCount.className = 'font_info';
         this.divCount.innerHTML = `Количество: ${this.count}`;
@@ -57,11 +56,11 @@ export class Toy extends BaseComponent {
 
         this.divShape = document.createElement('div');
         this.divShape.className = 'font_info';
-        this.divShape.innerHTML = `Форма игрушки: ${this.shape}`
+        this.divShape.innerHTML = `Форма игрушки: ${this.shape}`;
 
         this.divColor = document.createElement('div');
         this.divColor.className = 'font_info';
-        this.divColor.innerHTML = `Цвет игрушки: ${this.color}`
+        this.divColor.innerHTML = `Цвет игрушки: ${this.color}`;
 
         this.divSize = document.createElement('div');
         this.divSize.className = 'font_info';
@@ -69,7 +68,7 @@ export class Toy extends BaseComponent {
 
         this.divFavorite = document.createElement('div');
         this.divFavorite.className = 'font_info';
-        this.divFavorite.innerHTML =`Любимая: ${(this.favorite) ? 'да': 'нет'}`
+        this.divFavorite.innerHTML = `Любимая: ${this.favorite ? 'да' : 'нет'}`;
 
         this.selectDiv = document.createElement('div');
         this.selectDiv.className = 'select';
@@ -82,57 +81,65 @@ export class Toy extends BaseComponent {
         //         this.node.classList.remove('active');
         //     }
         // })
-        
-        this.node.append(this.divName, this.divImg, this.divCount, this.divYear,
-            this.divShape, this.divColor, this.divSize,this.divFavorite,this.selectDiv);
+
+        this.node.append(
+            this.divName,
+            this.divImg,
+            this.divCount,
+            this.divYear,
+            this.divShape,
+            this.divColor,
+            this.divSize,
+            this.divFavorite,
+            this.selectDiv
+        );
     }
 
-    changeFavorite():void{
+    changeFavorite(): void {
         this.favorite = !this.favorite;
     }
 
-    getSize():string{
+    getSize(): string {
         return this.size;
     }
 
-    getColor():string{
+    getColor(): string {
         return this.color;
     }
 
-    getShape():string{
+    getShape(): string {
         return this.shape;
     }
 
-    getFavorite():boolean{
+    getFavorite(): boolean {
         return this.favorite;
     }
 
-    getCount():number{
+    getCount(): number {
         return this.count;
     }
 
-    getYear():number{
+    getYear(): number {
         return this.year;
     }
 
-    getName():string{
+    getName(): string {
         return this.name;
     }
 
-    getSelect():boolean{
+    getSelect(): boolean {
         return this.isSelect;
     }
 
-    getNumImage():number{
+    getNumImage(): number {
         return this.numImage;
     }
 
-    getIndex():number{
+    getIndex(): number {
         return this.indexSelect;
     }
 
-    setIndex(index:number){
+    setIndex(index: number) {
         this.indexSelect = index;
     }
 }
-

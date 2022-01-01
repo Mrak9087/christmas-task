@@ -1,10 +1,10 @@
-.bg_container{
+.bg_container {
     width: 60px;
     height: 60px;
     border-radius: 10px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: rgba(255,255,255,.5);
+    background-color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }

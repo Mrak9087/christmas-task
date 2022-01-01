@@ -1,4 +1,4 @@
-.toy{
+.toy {
     width: 225px;
     height: 342px;
     border-radius: 5px;
@@ -12,28 +12,28 @@
     cursor: pointer;
 }
 
-.toy_picture{
+.toy_picture {
     width: 85px;
     height: 106px;
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.font_info{
+.font_info {
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
     line-height: 12px;
 }
 
-.font_name{
+.font_name {
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 20px;
 }
 
-.select{
+.select {
     position: absolute;
     width: 40px;
     height: 40px;
@@ -46,6 +46,6 @@
     transition: all 0.5s ease;
 }
 
-.active .select{
+.active .select {
     opacity: 1;
 }

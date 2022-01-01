@@ -1,64 +1,62 @@
 import './app.css';
-import {BaseComponent} from '../baseComponent/baseComponent';
+import { BaseComponent } from '../baseComponent/baseComponent';
 import { FilterToy } from '../filter/filterToy';
 import { TreeGame } from '../tree/treeGame';
-import {data} from '../data';
+import { data } from '../data';
 import { Toy } from '../toy/toy';
 import { IToy } from '../generalTypes/general';
 
-
-export class App extends BaseComponent{
-
+export class App extends BaseComponent {
     private toys: Toy[] = [];
-    private arrSelect:number[];
+    private arrSelect: number[];
     private header: HTMLElement;
     private footer: HTMLElement;
     private startPage: HTMLDivElement;
     private counterSelectDiv: HTMLDivElement;
     private startPageBtn: HTMLButtonElement;
     private filterToy: FilterToy;
-    private treeGame:TreeGame;
+    private treeGame: TreeGame;
     private logo: HTMLDivElement;
     private divToy: HTMLDivElement;
     private divChristmasTree: HTMLDivElement;
-    private message:HTMLDivElement;
+    private message: HTMLDivElement;
 
-    constructor(){
+    constructor() {
         super('app');
         this.arrSelect = JSON.parse(localStorage.getItem('mrk90_christmasSel')) || [];
         data.forEach((item) => {
-            const toyLoc:Toy = new Toy(<IToy>item)
-            toyLoc.init()
-            if (this.arrSelect.findIndex((item) => item === toyLoc.getNumImage()) > -1){
+            const toyLoc: Toy = new Toy(<IToy>item);
+            toyLoc.init();
+            if (this.arrSelect.findIndex((item) => item === toyLoc.getNumImage()) > -1) {
                 toyLoc.isSelect = true;
                 toyLoc.node.classList.add('active');
             }
-            toyLoc.node.addEventListener('click',()=>{
+            toyLoc.node.addEventListener('click', () => {
                 this.handlerToyClick(toyLoc);
-            })
-            this.toys.push(toyLoc)
-        })
+            });
+            this.toys.push(toyLoc);
+        });
     }
 
-    init(parent:HTMLElement){
-        const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true'? true : false;
+    init(parent: HTMLElement) {
+        const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true' ? true : false;
         this.header = document.createElement('header');
         this.header.className = 'header';
 
         this.startPage = document.createElement('div');
         this.startPage.className = 'page start_page';
-        this.startPage.innerHTML = '<h1 class="start_page_title">Новогодняя игра<span>«Наряди ёлку»</span></h1>'
+        this.startPage.innerHTML = '<h1 class="start_page_title">Новогодняя игра<span>«Наряди ёлку»</span></h1>';
         this.startPageBtn = document.createElement('button');
         this.startPageBtn.className = 'start_btn';
         this.startPageBtn.innerHTML = 'Начать';
-        this.startPageBtn.addEventListener('click', ()=>{
+        this.startPageBtn.addEventListener('click', () => {
             this.startGame();
-        })
+        });
         this.startPage.append(this.startPageBtn);
         this.filterToy = new FilterToy(this.toys);
         this.filterToy.init();
         this.treeGame = new TreeGame();
-        this.treeGame.init()
+        this.treeGame.init();
         this.filterToy.node.classList.add('none');
         this.treeGame.node.classList.add('none');
         this.footer = document.createElement('footer');
@@ -73,126 +71,133 @@ export class App extends BaseComponent{
 
         this.message = document.createElement('div');
         this.message.className = 'ovr_container';
-        this.message.innerHTML = '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>'
-        this.message.addEventListener('click', ()=>{
+        this.message.innerHTML = '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>';
+        this.message.addEventListener('click', () => {
             this.message.classList.remove('show');
-        })
+        });
 
-
-        this.node.append(this.header, this.startPage, this.filterToy.node,this.treeGame.node,this.footer, 
-            this.message);
+        this.node.append(
+            this.header,
+            this.startPage,
+            this.filterToy.node,
+            this.treeGame.node,
+            this.footer,
+            this.message
+        );
         this.createHeaderContent();
-        
-        if (isPlayer){
-            this.node.addEventListener('click', ()=>{
-                this.treeGame.playSound()
-            },{once:true})
+
+        if (isPlayer) {
+            this.node.addEventListener(
+                'click',
+                () => {
+                    this.treeGame.playSound();
+                },
+                { once: true }
+            );
         }
         parent.append(this.node);
     }
 
-    createHeaderContent(){
+    createHeaderContent() {
         const headerContainer = document.createElement('div');
-        headerContainer.className = 'header_container'
+        headerContainer.className = 'header_container';
 
         this.logo = document.createElement('div');
-        this.logo.className = 'logo'
-        this.logo.addEventListener('click', ()=>{
+        this.logo.className = 'logo';
+        this.logo.addEventListener('click', () => {
             this.showStartPage();
-        })
+        });
 
         this.divToy = document.createElement('div');
         this.divToy.className = 'item_menu';
         this.divToy.innerHTML = 'игрушки';
-        this.divToy.addEventListener('click', ()=>{
-            this.startGame()
-        })
-        this.divChristmasTree = document.createElement('div')
+        this.divToy.addEventListener('click', () => {
+            this.startGame();
+        });
+        this.divChristmasTree = document.createElement('div');
         this.divChristmasTree.className = 'item_menu';
         this.divChristmasTree.innerHTML = 'елка';
-        this.divChristmasTree.addEventListener('click', ()=>{
-            this.showTree()
-        })
+        this.divChristmasTree.addEventListener('click', () => {
+            this.showTree();
+        });
 
         const nav = document.createElement('nav');
         nav.className = 'nav';
         nav.append(this.logo, this.divToy, this.divChristmasTree);
 
         const content = document.createElement('div');
-        content.className = 'cnt_header'
+        content.className = 'cnt_header';
         const btnClearStorage = document.createElement('button');
         btnClearStorage.className = 'btn clear_btn';
         btnClearStorage.type = 'button';
-        btnClearStorage.innerHTML = 'Clear localStorage'
+        btnClearStorage.innerHTML = 'Clear localStorage';
         btnClearStorage.addEventListener('click', () => {
             localStorage.clear();
-        })
+        });
 
         this.counterSelectDiv = document.createElement('div');
         this.counterSelectDiv.className = 'selectCount';
         this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
-        content.append(btnClearStorage, this.counterSelectDiv)
+        content.append(btnClearStorage, this.counterSelectDiv);
         headerContainer.append(nav, content);
-        this.header.append(headerContainer)
+        this.header.append(headerContainer);
     }
 
-    showStartPage(){
-        this.divToy.classList.remove('active')
-        this.divChristmasTree.classList.remove('active')
+    showStartPage() {
+        this.divToy.classList.remove('active');
+        this.divChristmasTree.classList.remove('active');
         this.filterToy.node.classList.add('none');
         this.treeGame.node.classList.add('none');
         this.startPage.classList.remove('none');
     }
 
     startGame = () => {
-        this.divToy.classList.add('active')
-        this.divChristmasTree.classList.remove('active')
+        this.divToy.classList.add('active');
+        this.divChristmasTree.classList.remove('active');
         this.startPage.classList.add('none');
         this.treeGame.node.classList.add('none');
         this.filterToy.setFocus();
         this.filterToy.node.classList.remove('none');
-    }
+    };
 
     showTree = () => {
         this.divChristmasTree.classList.add('active');
-        this.divToy.classList.remove('active')
+        this.divToy.classList.remove('active');
         this.startPage.classList.add('none');
         this.filterToy.node.classList.add('none');
         this.treeGame.clearTree();
-        if (this.arrSelect.length){
-            this.treeGame.setToys(this.toys.filter((item)=>item.isSelect));
+        if (this.arrSelect.length) {
+            this.treeGame.setToys(this.toys.filter((item) => item.isSelect));
         } else {
-            this.treeGame.setToys(this.toys.slice(0,20));
+            this.treeGame.setToys(this.toys.slice(0, 20));
         }
         this.treeGame.node.classList.remove('none');
-        
-        
-    }
+    };
 
-    handlerToyClick(toy:Toy){
-        if (this.arrSelect.length<20){        
+    handlerToyClick(toy: Toy) {
+        if (this.arrSelect.length < 20) {
             if (toy.isSelect) {
                 toy.node.classList.remove('active');
                 toy.isSelect = false;
-                this.arrSelect.splice(toy.getIndex(),1)
+                this.arrSelect.splice(toy.getIndex(), 1);
                 toy.setIndex(-1);
             } else {
                 toy.node.classList.add('active');
                 this.arrSelect.push(toy.getNumImage());
                 toy.isSelect = true;
-                toy.setIndex(this.arrSelect.length-1);
-            }            
+                toy.setIndex(this.arrSelect.length - 1);
+            }
         } else {
             if (toy.isSelect) {
                 toy.node.classList.remove('active');
                 toy.isSelect = false;
-                this.arrSelect.splice(toy.getIndex(),1)
+                this.arrSelect.splice(toy.getIndex(), 1);
                 toy.setIndex(-1);
             } else {
                 this.message.classList.add('show');
             }
         }
-        localStorage.setItem('mrk90_christmasSel',JSON.stringify(this.arrSelect));
+        localStorage.setItem('mrk90_christmasSel', JSON.stringify(this.arrSelect));
         this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
     }
 }

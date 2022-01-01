@@ -1,4 +1,4 @@
-.audio{
+.audio {
     width: 40px;
     height: 40px;
     background-color: transparent;
@@ -9,6 +9,6 @@
     cursor: pointer;
 }
 
-.play{
+.play {
     background-image: url('../../../assets/svg/off.svg');
 }
