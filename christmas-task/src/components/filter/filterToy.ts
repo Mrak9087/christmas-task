@@ -4,17 +4,13 @@ import { BaseComponent } from '../baseComponent/baseComponent';
 import { FilterRange } from './filterRange';
 import { FilterSize } from './filterSize';
 import { FilterColor } from './filterColor';
+import { FilterShape } from './filterShape';
 import { FilterObjType } from '../generalTypes/general';
-import { filterColor, filterShape } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
 
 export class FilterToy extends BaseComponent {
     private readonly arrayToys: Toy[];
-    private shapeFilterBtns: HTMLButtonElement[] = [];
-    // private colorFilterBtns: HTMLButtonElement[] = [];
-    private sizeFilterBtns: HTMLButtonElement[] = [];
     private favoriteFilterBtn: HTMLButtonElement;
-    private filterShapeDiv: HTMLElement;
     private filterFavoriteDiv: HTMLElement;
     private boxToys: HTMLElement;
     private filters: FilterObjType;
@@ -28,6 +24,7 @@ export class FilterToy extends BaseComponent {
 
     private filterSize: FilterSize;
     private filterColor: FilterColor;
+    private filterShape: FilterShape;
 
     private sortValue: string;
     private arrFiltered: Toy[];
@@ -57,8 +54,9 @@ export class FilterToy extends BaseComponent {
         const filterForRange = createHTMLElement('div', 'filter_item', '<h2>Фильтры по диапазону</h2>');
         const sortAndFind = createHTMLElement('div', 'filter_item', '<h2>Сортировка и поиск</h2>');
         this.arrFiltered = this.arrayToys.slice(0);
-        this.filterShapeDiv = createHTMLElement('div', 'filter_item_val', '<span>Форма:</span>');
-        this.createBtnFilterShape();
+        
+        this.filterShape = new FilterShape();
+        this.filterShape.init(this.filters, this.filterHandler)
 
         this.filterColor = new FilterColor();
         this.filterColor.init(this.filters, this.filterHandler)
@@ -69,7 +67,7 @@ export class FilterToy extends BaseComponent {
         this.filterFavoriteDiv = createHTMLElement('div', 'filter_item_val', '<span>Только любимые:</span>');
         this.createBtnFilterFavorite();
 
-        filterForValue.append(this.filterShapeDiv, this.filterColor.node, this.filterSize.node, this.filterFavoriteDiv);
+        filterForValue.append(this.filterShape.node, this.filterColor.node, this.filterSize.node, this.filterFavoriteDiv);
 
         this.boxToys = createHTMLElement('div', 'box_toys');
         this.arrFiltered = this.doFilter(this.arrayToys);
@@ -161,46 +159,6 @@ export class FilterToy extends BaseComponent {
         this.arrFiltered = this.doFilter(this.arrayToys);
         this.sortToy(this.arrFiltered);
         this.showToys(this.arrFiltered);
-    }
-
-
-    createBtnFilterShape(): void {
-        filterShape.forEach((item) => {
-            const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_shape');
-            btn.type = 'button';
-            btn.dataset.filterValue = item;
-            switch (item) {
-                case 'шар': {
-                    btn.classList.add('clBall');
-                    break;
-                }
-                case 'колокольчик': {
-                    btn.classList.add('clBell');
-                    break;
-                }
-                case 'шишка': {
-                    btn.classList.add('clCone');
-                    break;
-                }
-                case 'снежинка': {
-                    btn.classList.add('clSnow');
-                    break;
-                }
-                case 'фигурка': {
-                    btn.classList.add('clToy');
-                    break;
-                }
-            }
-            if (this.filters.shape.find((val) => val === item)) {
-                btn.classList.add('active');
-            }
-
-            btn.addEventListener('click', () => {
-                this.filterHandler(btn, this.filters.shape);
-            });
-            this.shapeFilterBtns.push(btn);
-            this.filterShapeDiv.append(btn);
-        });
     }
 
     createBtnFilterFavorite(): void {
@@ -364,9 +322,7 @@ export class FilterToy extends BaseComponent {
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
         this.filterSize.clear();
         this.filterColor.clear();
-        this.shapeFilterBtns.forEach((item) => {
-            item.classList.remove('active');
-        });
+        this.filterShape.clear();
         this.favoriteFilterBtn.classList.remove('active');
         this.filterYear.setDefault();
         this.filterCount.setDefault();
