@@ -2,7 +2,8 @@ import './filter.css';
 import { Toy } from '../toy/toy';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { FilterRange } from './filterRange';
-import { filterSize, filterColor, filterShape, FilterObjType } from '../generalTypes/general';
+import { FilterObjType } from '../generalTypes/general';
+import { filterSize, filterColor, filterShape } from '../generalTypes/constants';
 
 export class FilterToy extends BaseComponent {
     private readonly arrayToys: Toy[];

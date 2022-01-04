@@ -1,6 +1,6 @@
 import './history.css';
 import { BaseComponent } from '../../baseComponent/baseComponent';
-import { treeImages } from '../../generalTypes/general';
+import { treeImages } from '../../generalTypes/constants';
 import { ThumbTree } from '../thumbTree/thumbTree';
 
 export class History extends BaseComponent {
