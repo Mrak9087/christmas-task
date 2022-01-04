@@ -2,6 +2,7 @@ import './filter.css';
 import { Toy } from '../toy/toy';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { FilterRange } from './filterRange';
+import { FilterSize } from './filterSize';
 import { FilterObjType } from '../generalTypes/general';
 import { filterSize, filterColor, filterShape } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
@@ -13,7 +14,6 @@ export class FilterToy extends BaseComponent {
     private sizeFilterBtns: HTMLButtonElement[] = [];
     private favoriteFilterBtn: HTMLButtonElement;
     private filterColorDiv: HTMLElement;
-    private filterSizeDiv: HTMLElement;
     private filterShapeDiv: HTMLElement;
     private filterFavoriteDiv: HTMLElement;
     private boxToys: HTMLElement;
@@ -25,6 +25,8 @@ export class FilterToy extends BaseComponent {
     private filterCount: FilterRange;
     private filterYear: FilterRange;
     private resetBtn: HTMLButtonElement;
+
+    private filterSize: FilterSize;
 
     private sortValue: string;
     private arrFiltered: Toy[];
@@ -60,13 +62,13 @@ export class FilterToy extends BaseComponent {
         this.filterColorDiv = createHTMLElement('div', 'filter_item_val', '<span>Цвет:</span>');
         this.createBtnFilterColor();
 
-        this.filterSizeDiv = createHTMLElement('div', 'filter_item_val', '<span>Размер:</span>');
-        this.createBtnFilterSize();
+        this.filterSize = new FilterSize();
+        this.filterSize.init(this.filters, this.filterHandler)
 
         this.filterFavoriteDiv = createHTMLElement('div', 'filter_item_val', '<span>Только любимые:</span>');
         this.createBtnFilterFavorite();
 
-        filterForValue.append(this.filterShapeDiv, this.filterColorDiv, this.filterSizeDiv, this.filterFavoriteDiv);
+        filterForValue.append(this.filterShapeDiv, this.filterColorDiv, this.filterSize.node, this.filterFavoriteDiv);
 
         this.boxToys = createHTMLElement('div', 'box_toys');
         this.arrFiltered = this.doFilter(this.arrayToys);
@@ -160,28 +162,6 @@ export class FilterToy extends BaseComponent {
         this.showToys(this.arrFiltered);
     }
 
-    createBtnFilterSize(): void {
-        filterSize.forEach((item) => {
-            const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_size');
-            btn.type = 'button';
-            btn.dataset.filterValue = item;
-            if (item === 'средний') {
-                btn.classList.add('middle');
-            }
-            if (item === 'малый') {
-                btn.classList.add('small');
-            }
-            if (this.filters.size.find((val) => val === item)) {
-                btn.classList.add('active');
-            }
-            btn.addEventListener('click', () => {
-                this.filterHandler(btn, this.filters.size);
-            });
-            this.sizeFilterBtns.push(btn);
-            this.filterSizeDiv.append(btn);
-        });
-    }
-
     createBtnFilterColor(): void {
         filterColor.forEach((item) => {
             const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_color');
@@ -272,7 +252,7 @@ export class FilterToy extends BaseComponent {
         this.filterFavoriteDiv.append(this.favoriteFilterBtn);
     }
 
-    filterHandler(btn: HTMLElement, filters: string[]) {
+    filterHandler = (btn: HTMLElement, filters: string[]) => {
         const idx = filters.findIndex((item) => item === btn.dataset.filterValue);
         if (idx > -1) {
             filters.splice(idx, 1);
