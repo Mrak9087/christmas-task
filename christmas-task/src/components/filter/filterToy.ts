@@ -11,7 +11,7 @@ import { createHTMLElement } from '../helpers/helpers';
 export class FilterToy extends BaseComponent {
     private readonly arrayToys: Toy[];
     private shapeFilterBtns: HTMLButtonElement[] = [];
-    private colorFilterBtns: HTMLButtonElement[] = [];
+    // private colorFilterBtns: HTMLButtonElement[] = [];
     private sizeFilterBtns: HTMLButtonElement[] = [];
     private favoriteFilterBtn: HTMLButtonElement;
     private filterShapeDiv: HTMLElement;
@@ -362,12 +362,8 @@ export class FilterToy extends BaseComponent {
             },
         };
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
-        this.sizeFilterBtns.forEach((item) => {
-            item.classList.remove('active');
-        });
-        this.colorFilterBtns.forEach((item) => {
-            item.classList.remove('active');
-        });
+        this.filterSize.clear();
+        this.filterColor.clear();
         this.shapeFilterBtns.forEach((item) => {
             item.classList.remove('active');
         });

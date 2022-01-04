@@ -31,4 +31,10 @@ export class FilterSize extends BaseComponent{
             this.node.append(btn);
         });
     }
+
+    clear(){
+        this.sizeFilterBtns.forEach((item) => {
+            item.classList.remove('active');
+        });
+    }
 }

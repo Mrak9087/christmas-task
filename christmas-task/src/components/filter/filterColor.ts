@@ -48,4 +48,10 @@ export class FilterColor extends BaseComponent{
             this.node.append(btn);
         });
     }
+
+    clear(){
+        this.colorFilterBtns.forEach((item) => {
+            item.classList.remove('active');
+        });
+    }
 }
