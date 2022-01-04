@@ -3,8 +3,9 @@ import { Toy } from '../toy/toy';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { FilterRange } from './filterRange';
 import { FilterSize } from './filterSize';
+import { FilterColor } from './filterColor';
 import { FilterObjType } from '../generalTypes/general';
-import { filterSize, filterColor, filterShape } from '../generalTypes/constants';
+import { filterColor, filterShape } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
 
 export class FilterToy extends BaseComponent {
@@ -13,7 +14,6 @@ export class FilterToy extends BaseComponent {
     private colorFilterBtns: HTMLButtonElement[] = [];
     private sizeFilterBtns: HTMLButtonElement[] = [];
     private favoriteFilterBtn: HTMLButtonElement;
-    private filterColorDiv: HTMLElement;
     private filterShapeDiv: HTMLElement;
     private filterFavoriteDiv: HTMLElement;
     private boxToys: HTMLElement;
@@ -27,6 +27,7 @@ export class FilterToy extends BaseComponent {
     private resetBtn: HTMLButtonElement;
 
     private filterSize: FilterSize;
+    private filterColor: FilterColor;
 
     private sortValue: string;
     private arrFiltered: Toy[];
@@ -59,8 +60,8 @@ export class FilterToy extends BaseComponent {
         this.filterShapeDiv = createHTMLElement('div', 'filter_item_val', '<span>Форма:</span>');
         this.createBtnFilterShape();
 
-        this.filterColorDiv = createHTMLElement('div', 'filter_item_val', '<span>Цвет:</span>');
-        this.createBtnFilterColor();
+        this.filterColor = new FilterColor();
+        this.filterColor.init(this.filters, this.filterHandler)
 
         this.filterSize = new FilterSize();
         this.filterSize.init(this.filters, this.filterHandler)
@@ -68,7 +69,7 @@ export class FilterToy extends BaseComponent {
         this.filterFavoriteDiv = createHTMLElement('div', 'filter_item_val', '<span>Только любимые:</span>');
         this.createBtnFilterFavorite();
 
-        filterForValue.append(this.filterShapeDiv, this.filterColorDiv, this.filterSize.node, this.filterFavoriteDiv);
+        filterForValue.append(this.filterShapeDiv, this.filterColor.node, this.filterSize.node, this.filterFavoriteDiv);
 
         this.boxToys = createHTMLElement('div', 'box_toys');
         this.arrFiltered = this.doFilter(this.arrayToys);
@@ -162,44 +163,6 @@ export class FilterToy extends BaseComponent {
         this.showToys(this.arrFiltered);
     }
 
-    createBtnFilterColor(): void {
-        filterColor.forEach((item) => {
-            const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_color');
-            btn.type = 'button';
-            btn.dataset.filterValue = item;
-            switch (item) {
-                case 'белый': {
-                    btn.classList.add('clWhite');
-                    break;
-                }
-                case 'желтый': {
-                    btn.classList.add('clYellow');
-                    break;
-                }
-                case 'красный': {
-                    btn.classList.add('clRed');
-                    break;
-                }
-                case 'синий': {
-                    btn.classList.add('clBlue');
-                    break;
-                }
-                case 'зелёный': {
-                    btn.classList.add('clGreen');
-                    break;
-                }
-            }
-            if (this.filters.color.find((val) => val === item)) {
-                btn.classList.add('active');
-            }
-
-            btn.addEventListener('click', () => {
-                this.filterHandler(btn, this.filters.color);
-            });
-            this.colorFilterBtns.push(btn);
-            this.filterColorDiv.append(btn);
-        });
-    }
 
     createBtnFilterShape(): void {
         filterShape.forEach((item) => {
