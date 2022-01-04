@@ -8,7 +8,7 @@ export class Snow extends BaseComponent {
     constructor() {
         super('snowflakes snow_hide');
         this.isStart = false;
-        this.startSnowBtn = createHTMLElement('button','snow_btn');
+        this.startSnowBtn = createHTMLElement('button', 'snow_btn');
         this.startSnowBtn.addEventListener('click', () => {
             this.handleStartStopSnow();
         });

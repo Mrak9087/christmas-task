@@ -39,20 +39,20 @@ export class Toy extends BaseComponent {
     }
 
     init(): void {
-        this.divName = createHTMLElement('div','font_name',this.name);
+        this.divName = createHTMLElement('div', 'font_name', this.name);
         this.divImg = createHTMLElement('div', 'toy_picture');
         this.divImg.style.backgroundImage = `url(./assets/toys/${this.numImage}.png)`;
-        this.divCount = createHTMLElement('div','font_info',`Количество: ${this.count}`);
-        this.divYear = createHTMLElement('div', 'font_info',`Год покупки: ${this.year} год`);
-        this.divShape = createHTMLElement('div','font_info', `Форма игрушки: ${this.shape}`);
+        this.divCount = createHTMLElement('div', 'font_info', `Количество: ${this.count}`);
+        this.divYear = createHTMLElement('div', 'font_info', `Год покупки: ${this.year} год`);
+        this.divShape = createHTMLElement('div', 'font_info', `Форма игрушки: ${this.shape}`);
 
-        this.divColor = createHTMLElement('div','font_info',`Цвет игрушки: ${this.color}`);
+        this.divColor = createHTMLElement('div', 'font_info', `Цвет игрушки: ${this.color}`);
 
-        this.divSize = createHTMLElement('div','font_info',`Размер игрушки: ${this.size}`);
+        this.divSize = createHTMLElement('div', 'font_info', `Размер игрушки: ${this.size}`);
 
-        this.divFavorite = createHTMLElement('div','font_info',`Любимая: ${this.favorite ? 'да' : 'нет'}`);
+        this.divFavorite = createHTMLElement('div', 'font_info', `Любимая: ${this.favorite ? 'да' : 'нет'}`);
 
-        this.selectDiv = createHTMLElement('div','select');
+        this.selectDiv = createHTMLElement('div', 'select');
 
         this.node.append(
             this.divName,

@@ -40,7 +40,7 @@ export class Garland extends BaseComponent {
     createPanelGarland() {
         this.panelGarland = createHTMLElement('div', 'garland-container');
         this.onOffGarland = createHTMLElement('div', 'onoffswitch');
-        const check = <HTMLInputElement>createHTMLElement('input','onoffswitch-checkbox');
+        const check = <HTMLInputElement>createHTMLElement('input', 'onoffswitch-checkbox');
         check.type = 'checkbox';
         check.name = 'onoffswitch';
         check.id = 'myonoffswitch';

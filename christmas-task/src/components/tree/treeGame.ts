@@ -12,6 +12,7 @@ import { Snow } from './snow/snow';
 import { AudioControl } from './audio/audioControl';
 import { Garland } from './garland/garland';
 import { History } from './history/history';
+import { createHTMLElement } from '../helpers/helpers';
 
 export class TreeGame extends BaseComponent {
     private toys: Toy[] = [];
@@ -21,13 +22,13 @@ export class TreeGame extends BaseComponent {
     private player: AudioControl;
     private garland: Garland;
     private history: History;
-    private containerDiv: HTMLDivElement;
-    private settingDiv: HTMLDivElement;
-    private toyTreeDiv: HTMLDivElement;
-    private viewGameDiv: HTMLDivElement;
+    private containerDiv: HTMLElement;
+    private settingDiv: HTMLElement;
+    private toyTreeDiv: HTMLElement;
+    private viewGameDiv: HTMLElement;
     private mapElement: HTMLMapElement;
     private areaElement: HTMLAreaElement;
-    private toyContainer: HTMLDivElement;
+    private toyContainer: HTMLElement;
     private imageTree: HTMLImageElement;
     private toyCells: ToyCell[] = [];
 
@@ -41,8 +42,7 @@ export class TreeGame extends BaseComponent {
     init() {
         this.activeTree = localStorage.getItem('mrk90_chr_tree') || '1';
         this.activeBg = localStorage.getItem('mrk90_chr_bg') || '1';
-        this.containerDiv = document.createElement('div');
-        this.containerDiv.className = 'container tree_container';
+        this.containerDiv = createHTMLElement('div', 'container tree_container');
         this.createSetting();
         this.createViewGame();
         this.createToyTree();
@@ -57,8 +57,7 @@ export class TreeGame extends BaseComponent {
         this.snow = new Snow();
         this.player = new AudioControl();
         this.snow.createSnowFlake();
-        this.settingDiv = document.createElement('div');
-        this.settingDiv.className = 'setting';
+        this.settingDiv = createHTMLElement('div', 'setting');
         treeImages.forEach((item) => {
             const thumb = new ThumbTree(item);
             thumb.node.addEventListener('click', () => {
@@ -76,20 +75,16 @@ export class TreeGame extends BaseComponent {
             this.thumbBgs.push(thumb);
         });
         const settingBg = this.createSettingItem('Выберите фон', this.thumbBgs);
-        const settingControl = document.createElement('div');
-        settingControl.className = 'st_control';
+        const settingControl = createHTMLElement('div', 'st_control');
         settingControl.append(this.player.node, this.snow.startSnowBtn);
         this.garland = new Garland();
         this.garland.init();
         this.settingDiv.append(settingControl, settingTree, settingBg, this.garland.panelGarland);
     }
 
-    createSettingItem(headTxt: string, thumbArray: INodeElement[]): HTMLDivElement {
-        const item = document.createElement('div');
-        item.className = 'setting_item';
-        item.innerHTML = `<h2>${headTxt}</h2>`;
-        const itemContainer = document.createElement('div');
-        itemContainer.className = 'st_item_container';
+    createSettingItem(headTxt: string, thumbArray: INodeElement[]): HTMLElement {
+        const item = createHTMLElement('div', 'setting_item', `<h2>${headTxt}</h2>`);
+        const itemContainer = createHTMLElement('div', 'st_item_container');
         thumbArray.forEach((item) => {
             itemContainer.append(item.node);
         });
@@ -98,8 +93,7 @@ export class TreeGame extends BaseComponent {
     }
 
     createViewGame() {
-        this.viewGameDiv = document.createElement('div');
-        this.viewGameDiv.className = 'view_game';
+        this.viewGameDiv = createHTMLElement('div', 'view_game');
 
         this.viewGameDiv.style.cssText = `background-image: url(./assets/bg/${this.activeBg}.jpg)`;
         this.mapElement = document.createElement('map');
@@ -124,13 +118,9 @@ export class TreeGame extends BaseComponent {
     }
 
     createToyTree() {
-        this.toyTreeDiv = document.createElement('div');
-        this.toyTreeDiv.className = 'toy_tree';
-        const toyContent = document.createElement('div');
-        toyContent.className = 'toy_content';
-        toyContent.innerHTML = '<h2>Игрушки</h2>';
-        this.toyContainer = document.createElement('div');
-        this.toyContainer.className = 'toy_container';
+        this.toyTreeDiv = createHTMLElement('div', 'toy_tree');
+        const toyContent = createHTMLElement('div', 'toy_content', '<h2>Игрушки</h2>');
+        this.toyContainer = createHTMLElement('div', 'toy_container');
         toyContent.append(this.toyContainer);
         this.history = new History();
         this.history.init();

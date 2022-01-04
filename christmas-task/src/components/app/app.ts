@@ -65,7 +65,11 @@ export class App extends BaseComponent {
                     </a>
                 </div>`;
 
-        this.message = createHTMLElement('div', 'ovr_container', '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>');
+        this.message = createHTMLElement(
+            'div',
+            'ovr_container',
+            '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>'
+        );
         this.message.addEventListener('click', () => {
             this.message.classList.remove('show');
         });

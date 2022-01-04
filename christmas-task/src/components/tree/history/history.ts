@@ -13,7 +13,7 @@ export class History extends BaseComponent {
 
     init() {
         this.btnSave = createHTMLElement('button', 'btn btn_history', 'Сохранить');
-        const head = createHTMLElement('h2','','Вы нарядили');
+        const head = createHTMLElement('h2', '', 'Вы нарядили');
 
         const history = createHTMLElement('div', 'history');
         treeImages.forEach((item) => {

@@ -72,7 +72,11 @@ export class FilterToy extends BaseComponent {
         this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
 
-        this.filterCountItem = createHTMLElement('div', 'filter_item_val range_item', '<span>Количество экземпляров:</span>');
+        this.filterCountItem = createHTMLElement(
+            'div',
+            'filter_item_val range_item',
+            '<span>Количество экземпляров:</span>'
+        );
 
         this.filterYearsItem = createHTMLElement('div', 'filter_item_val range_item', '<span>Год приобретения:</span>');
 

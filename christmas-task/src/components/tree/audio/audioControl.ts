@@ -4,7 +4,7 @@ import music from '../../../assets/audio/music.mp3';
 
 export class AudioControl extends BaseComponent {
     private player: HTMLAudioElement;
-    
+
     private isPlayed: boolean;
     constructor() {
         super('audio');

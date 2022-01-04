@@ -20,7 +20,7 @@ export class ToyCell extends BaseComponent {
     }
 
     init() {
-        this.toyCountP = createHTMLElement('p','toy_count',this.countToy.toString());
+        this.toyCountP = createHTMLElement('p', 'toy_count', this.countToy.toString());
         for (let i = 0; i < this.countToy; i++) {
             const img = new Image();
             img.className = 'img_toy';
