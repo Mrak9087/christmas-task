@@ -1,11 +1,12 @@
 import './garland.css';
 
 import { BaseComponent } from '../../baseComponent/baseComponent';
+import { createHTMLElement } from '../../helpers/helpers';
 
 export class Garland extends BaseComponent {
     private bulbs: Array<HTMLLIElement> = [];
-    private onOffGarland: HTMLDivElement;
-    panelGarland: HTMLDivElement;
+    private onOffGarland: HTMLElement;
+    panelGarland: HTMLElement;
     constructor() {
         super('garland garland_hide');
     }
@@ -23,13 +24,11 @@ export class Garland extends BaseComponent {
     }
 
     createGarlandItem(size: number, grad: number, shift: number, count: number) {
-        const ul = document.createElement('ul');
-        ul.className = 'lightrope';
+        const ul = createHTMLElement('ul', 'lightrope');
         ul.style.width = `${size}px`;
         ul.style.height = `${size}px`;
         for (let i = 0; i < count; i++) {
-            const li = document.createElement('li');
-            li.className = 'multicolor';
+            const li = <HTMLLIElement>createHTMLElement('li', 'multicolor');
             const rot = shift * i;
             li.style.transform = ` rotate(${grad + rot}deg) translate(${size / 2}px) rotate(-${grad + rot}deg)`;
             ul.append(li);
@@ -39,14 +38,11 @@ export class Garland extends BaseComponent {
     }
 
     createPanelGarland() {
-        this.panelGarland = document.createElement('div');
-        this.panelGarland.className = 'garland-container';
-        this.onOffGarland = document.createElement('div');
-        this.onOffGarland.className = 'onoffswitch';
-        const check = document.createElement('input');
+        this.panelGarland = createHTMLElement('div', 'garland-container');
+        this.onOffGarland = createHTMLElement('div', 'onoffswitch');
+        const check = <HTMLInputElement>createHTMLElement('input','onoffswitch-checkbox');
         check.type = 'checkbox';
         check.name = 'onoffswitch';
-        check.className = 'onoffswitch-checkbox';
         check.id = 'myonoffswitch';
         check.checked = localStorage.getItem('mrk90_garland') === 'true' ? true : false;
         if (check.checked) {
@@ -55,39 +51,33 @@ export class Garland extends BaseComponent {
         check.addEventListener('change', () => {
             this.handleCheck(check.checked);
         });
-        const lbl = document.createElement('label');
-        lbl.className = 'onoffswitch-label';
+        const lbl = createHTMLElement('label', 'onoffswitch-label');
         lbl.setAttribute('for', 'myonoffswitch');
         lbl.innerHTML = `<div class="onoffswitch-inner"></div>
         <div class="onoffswitch-switch"></div>`;
         this.onOffGarland.append(check, lbl);
 
-        const btnMult = document.createElement('button');
-        btnMult.className = 'color-btn multicolor-btn';
+        const btnMult = createHTMLElement('button', 'color-btn multicolor-btn');
         btnMult.dataset.color = 'multicolor';
         btnMult.addEventListener('click', () => {
             this.handleBtnColorClick(btnMult);
         });
-        const btnRed = document.createElement('button');
-        btnRed.className = 'color-btn red-btn';
+        const btnRed = createHTMLElement('button', 'color-btn red-btn');
         btnRed.dataset.color = 'red';
         btnRed.addEventListener('click', () => {
             this.handleBtnColorClick(btnRed);
         });
-        const btnBlue = document.createElement('button');
-        btnBlue.className = 'color-btn blue-btn';
+        const btnBlue = createHTMLElement('button', 'color-btn blue-btn');
         btnBlue.dataset.color = 'blue';
         btnBlue.addEventListener('click', () => {
             this.handleBtnColorClick(btnBlue);
         });
-        const btnYellow = document.createElement('button');
-        btnYellow.className = 'color-btn yellow-btn';
+        const btnYellow = createHTMLElement('button', 'color-btn yellow-btn');
         btnYellow.dataset.color = 'yellow';
         btnYellow.addEventListener('click', () => {
             this.handleBtnColorClick(btnYellow);
         });
-        const btnGreen = document.createElement('button');
-        btnGreen.className = 'color-btn green-btn';
+        const btnGreen = createHTMLElement('button', 'color-btn green-btn');
         btnGreen.dataset.color = 'green';
         btnGreen.addEventListener('click', () => {
             this.handleBtnColorClick(btnGreen);
@@ -96,7 +86,7 @@ export class Garland extends BaseComponent {
         this.panelGarland.append(btnMult, btnRed, btnBlue, btnYellow, btnGreen, this.onOffGarland);
     }
 
-    handleBtnColorClick = (btn: HTMLButtonElement) => {
+    handleBtnColorClick = (btn: HTMLElement) => {
         this.bulbs.forEach((item) => {
             item.className = btn.dataset.color;
         });
