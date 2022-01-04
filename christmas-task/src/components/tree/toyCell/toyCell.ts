@@ -2,10 +2,11 @@ import './toyCell.css';
 
 import { BaseComponent } from '../../baseComponent/baseComponent';
 import { Toy } from '../../toy/toy';
+import { createHTMLElement } from '../../helpers/helpers';
 
 export class ToyCell extends BaseComponent {
     private toy: Toy;
-    private toyCountP: HTMLParagraphElement;
+    private toyCountP: HTMLElement;
 
     numImg: number;
     countToy: number;
@@ -19,9 +20,7 @@ export class ToyCell extends BaseComponent {
     }
 
     init() {
-        this.toyCountP = document.createElement('p');
-        this.toyCountP.className = 'toy_count';
-        this.toyCountP.innerHTML = this.countToy.toString();
+        this.toyCountP = createHTMLElement('p','toy_count',this.countToy.toString());
         for (let i = 0; i < this.countToy; i++) {
             const img = new Image();
             img.className = 'img_toy';
