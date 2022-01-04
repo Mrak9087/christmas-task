@@ -5,21 +5,22 @@ import { TreeGame } from '../tree/treeGame';
 import { data } from '../data';
 import { Toy } from '../toy/toy';
 import { IToy } from '../generalTypes/general';
+import { createHTMLElement } from '../helpers/helpers';
 
 export class App extends BaseComponent {
     private toys: Toy[] = [];
     private arrSelect: number[];
     private header: HTMLElement;
     private footer: HTMLElement;
-    private startPage: HTMLDivElement;
-    private counterSelectDiv: HTMLDivElement;
-    private startPageBtn: HTMLButtonElement;
+    private startPage: HTMLElement;
+    private counterSelectDiv: HTMLElement;
+    private startPageBtn: HTMLElement;
     private filterToy: FilterToy;
     private treeGame: TreeGame;
-    private logo: HTMLDivElement;
-    private divToy: HTMLDivElement;
-    private divChristmasTree: HTMLDivElement;
-    private message: HTMLDivElement;
+    private logo: HTMLElement;
+    private divToy: HTMLElement;
+    private divChristmasTree: HTMLElement;
+    private message: HTMLElement;
 
     constructor() {
         super('app');
@@ -40,15 +41,11 @@ export class App extends BaseComponent {
 
     init(parent: HTMLElement) {
         const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true' ? true : false;
-        this.header = document.createElement('header');
-        this.header.className = 'header';
+        this.header = createHTMLElement('header', 'header');
 
-        this.startPage = document.createElement('div');
-        this.startPage.className = 'page start_page';
+        this.startPage = createHTMLElement('div', 'page start_page');
         this.startPage.innerHTML = '<h1 class="start_page_title">Новогодняя игра<span>«Наряди ёлку»</span></h1>';
-        this.startPageBtn = document.createElement('button');
-        this.startPageBtn.className = 'start_btn';
-        this.startPageBtn.innerHTML = 'Начать';
+        this.startPageBtn = createHTMLElement('button', 'start_btn', 'Начать');
         this.startPageBtn.addEventListener('click', () => {
             this.startGame();
         });
@@ -59,8 +56,7 @@ export class App extends BaseComponent {
         this.treeGame.init();
         this.filterToy.node.classList.add('none');
         this.treeGame.node.classList.add('none');
-        this.footer = document.createElement('footer');
-        this.footer.className = 'footer';
+        this.footer = createHTMLElement('footer', 'footer');
         this.footer.innerHTML = `<div class="footer_container">
                     <a class="github" href="https://github.com/Mrak9087" target="blank">Mrak9087</a>
                     <span class="rss_year">2021</span>
@@ -69,9 +65,7 @@ export class App extends BaseComponent {
                     </a>
                 </div>`;
 
-        this.message = document.createElement('div');
-        this.message.className = 'ovr_container';
-        this.message.innerHTML = '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>';
+        this.message = createHTMLElement('div', 'ovr_container', '<div class="start_page_title">Нельзя выбрать больше 20 игрушек</div>');
         this.message.addEventListener('click', () => {
             this.message.classList.remove('show');
         });
@@ -99,45 +93,34 @@ export class App extends BaseComponent {
     }
 
     createHeaderContent() {
-        const headerContainer = document.createElement('div');
-        headerContainer.className = 'header_container';
+        const headerContainer = createHTMLElement('div', 'header_container');
 
-        this.logo = document.createElement('div');
-        this.logo.className = 'logo';
+        this.logo = createHTMLElement('div', 'logo');
         this.logo.addEventListener('click', () => {
             this.showStartPage();
         });
 
-        this.divToy = document.createElement('div');
-        this.divToy.className = 'item_menu';
-        this.divToy.innerHTML = 'игрушки';
+        this.divToy = createHTMLElement('div', 'item_menu', 'игрушки');
         this.divToy.addEventListener('click', () => {
             this.startGame();
         });
-        this.divChristmasTree = document.createElement('div');
-        this.divChristmasTree.className = 'item_menu';
-        this.divChristmasTree.innerHTML = 'елка';
+        this.divChristmasTree = createHTMLElement('div', 'item_menu', 'елка');
         this.divChristmasTree.addEventListener('click', () => {
             this.showTree();
         });
 
-        const nav = document.createElement('nav');
-        nav.className = 'nav';
+        const nav = createHTMLElement('nav', 'nav');
         nav.append(this.logo, this.divToy, this.divChristmasTree);
 
-        const content = document.createElement('div');
-        content.className = 'cnt_header';
-        const btnClearStorage = document.createElement('button');
-        btnClearStorage.className = 'btn clear_btn';
+        const content = createHTMLElement('div', 'cnt_header');
+        const btnClearStorage = <HTMLButtonElement>createHTMLElement('button', 'btn clear_btn');
         btnClearStorage.type = 'button';
         btnClearStorage.innerHTML = 'Clear localStorage';
         btnClearStorage.addEventListener('click', () => {
             localStorage.clear();
         });
 
-        this.counterSelectDiv = document.createElement('div');
-        this.counterSelectDiv.className = 'selectCount';
-        this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
+        this.counterSelectDiv = createHTMLElement('div', 'selectCount', `<span>${this.arrSelect.length}</span>`);
         content.append(btnClearStorage, this.counterSelectDiv);
         headerContainer.append(nav, content);
         this.header.append(headerContainer);
