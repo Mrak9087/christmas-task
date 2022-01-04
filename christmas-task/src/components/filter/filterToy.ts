@@ -47,7 +47,7 @@ export class FilterToy extends BaseComponent {
         };
     }
 
-    async init() {
+    init() {
         const filterContainer = document.createElement('div');
         filterContainer.className = 'filter_container';
         const filterForValue = document.createElement('div');
@@ -84,7 +84,7 @@ export class FilterToy extends BaseComponent {
 
         this.boxToys = document.createElement('div');
         this.boxToys.className = 'box_toys';
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
 
         this.filterCountItem = document.createElement('div');
@@ -138,25 +138,25 @@ export class FilterToy extends BaseComponent {
         const clearSearch = document.createElement('button');
         clearSearch.type = 'button';
         clearSearch.className = 'rst_search';
-        clearSearch.addEventListener('click', async () => {
+        clearSearch.addEventListener('click', () => {
             this.search.value = '';
             clearSearch.classList.remove('show');
-            this.arrFiltered = await this.doSearch(this.search.value);
-            this.arrFiltered = await this.doFilter(this.arrFiltered);
+            this.arrFiltered = this.doSearch(this.search.value);
+            this.arrFiltered = this.doFilter(this.arrFiltered);
             this.showToys(this.arrFiltered);
         });
         this.search = document.createElement('input');
         this.search.className = 'search';
         this.search.autocomplete = 'off';
         this.search.placeholder = 'Название игрушки';
-        this.search.addEventListener('input', async () => {
+        this.search.addEventListener('input', () => {
             if (this.search.value.length) {
                 clearSearch.classList.add('show');
             } else {
                 clearSearch.classList.remove('show');
             }
-            this.arrFiltered = await this.doSearch(this.search.value);
-            this.arrFiltered = await this.doFilter(this.arrFiltered);
+            this.arrFiltered = this.doSearch(this.search.value);
+            this.arrFiltered = this.doFilter(this.arrFiltered);
             this.showToys(this.arrFiltered);
         });
 
@@ -174,7 +174,7 @@ export class FilterToy extends BaseComponent {
         filterContainer.append(filterForValue, filterForRange, sortAndFind);
 
         this.node.append(filterContainer, this.boxToys);
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.sortToy(this.arrFiltered);
         this.showToys(this.arrFiltered);
     }
@@ -233,7 +233,6 @@ export class FilterToy extends BaseComponent {
             }
 
             btn.addEventListener('click', () => {
-                // this.filterColorHandler(btn);
                 this.filterHandler(btn, this.filters.color);
             });
             this.colorFilterBtns.push(btn);
@@ -292,7 +291,7 @@ export class FilterToy extends BaseComponent {
         this.filterFavoriteDiv.append(this.favoriteFilterBtn);
     }
 
-    async filterHandler(btn: HTMLElement, filters: string[]) {
+    filterHandler(btn: HTMLElement, filters: string[]) {
         const idx = filters.findIndex((item) => item === btn.dataset.filterValue);
         if (idx > -1) {
             filters.splice(idx, 1);
@@ -302,27 +301,27 @@ export class FilterToy extends BaseComponent {
             btn.classList.add('active');
         }
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
-    filterCountHandler = async () => {
+    filterCountHandler = () => {
         this.filters.count.min = this.filterCount.minValue;
         this.filters.count.max = this.filterCount.maxValue;
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
 
-    filterYearHandler = async () => {
+    filterYearHandler = () => {
         this.filters.years.min = this.filterYear.minValue;
         this.filters.years.max = this.filterYear.maxValue;
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     };
 
-    async filterFavoriteHandler(btn: HTMLElement) {
+    filterFavoriteHandler(btn: HTMLElement) {
         if (this.filters.favor) {
             this.filters.favor = false;
             btn.classList.remove('active');
@@ -331,61 +330,57 @@ export class FilterToy extends BaseComponent {
             btn.classList.add('active');
         }
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
-    async doFilter(arrayToys: Toy[]): Promise<Toy[]> {
-        return new Promise((resolve) => {
-            const arrToy = arrayToys.filter((itemToy) => {
-                if (this.filters.size.length) {
-                    if (!this.filters.size.find((value) => value === itemToy.getSize())) {
-                        return false;
-                    }
-                }
-
-                if (this.filters.color.length) {
-                    if (!this.filters.color.find((value) => value === itemToy.getColor())) {
-                        return false;
-                    }
-                }
-
-                if (this.filters.shape.length) {
-                    if (!this.filters.shape.find((value) => value === itemToy.getShape())) {
-                        return false;
-                    }
-                }
-
-                if (this.filters.favor) {
-                    if (!itemToy.getFavorite()) {
-                        return false;
-                    }
-                }
-
-                if (itemToy.getCount() < this.filters.count.min || itemToy.getCount() > this.filters.count.max) {
+    doFilter(arrayToys: Toy[]): Toy[] {
+        const arrToy = arrayToys.filter((itemToy) => {
+            if (this.filters.size.length) {
+                if (!this.filters.size.find((value) => value === itemToy.getSize())) {
                     return false;
                 }
+            }
 
-                if (itemToy.getYear() < this.filters.years.min || itemToy.getYear() > this.filters.years.max) {
+            if (this.filters.color.length) {
+                if (!this.filters.color.find((value) => value === itemToy.getColor())) {
                     return false;
                 }
+            }
 
-                return true;
-            });
-            resolve(arrToy);
+            if (this.filters.shape.length) {
+                if (!this.filters.shape.find((value) => value === itemToy.getShape())) {
+                    return false;
+                }
+            }
+
+            if (this.filters.favor) {
+                if (!itemToy.getFavorite()) {
+                    return false;
+                }
+            }
+
+            if (itemToy.getCount() < this.filters.count.min || itemToy.getCount() > this.filters.count.max) {
+                return false;
+            }
+
+            if (itemToy.getYear() < this.filters.years.min || itemToy.getYear() > this.filters.years.max) {
+                return false;
+            }
+
+            return true;
         });
+        return arrToy;
     }
 
-    async doSearch(nameToy: string): Promise<Toy[]> {
-        return new Promise((resolve) => {
-            const arrToy = this.arrayToys.filter((itemToy) => {
-                if (itemToy.getName().toLowerCase().indexOf(nameToy.toLowerCase()) > -1) {
-                    return true;
-                }
-                return false;
-            });
-            resolve(arrToy);
+    doSearch(nameToy: string): Toy[] {
+        const arrToy = this.arrayToys.filter((itemToy) => {
+            if (itemToy.getName().toLowerCase().indexOf(nameToy.toLowerCase()) > -1) {
+                return true;
+            }
+            return false;
         });
+        return arrToy;
     }
 
     showToys(toys: Toy[]): void {
@@ -427,7 +422,7 @@ export class FilterToy extends BaseComponent {
         }
     }
 
-    async clearFilter() {
+    clearFilter() {
         this.filters = {
             size: Array<string>(),
             shape: Array<string>(),
@@ -457,7 +452,7 @@ export class FilterToy extends BaseComponent {
         this.filterCount.setDefault();
         this.selectSort.selectedIndex = 0;
         this.search.value = '';
-        this.arrFiltered = await this.doFilter(this.arrayToys);
+        this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
     }
 
