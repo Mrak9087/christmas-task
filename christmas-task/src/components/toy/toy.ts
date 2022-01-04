@@ -1,6 +1,7 @@
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { IToy } from '../generalTypes/general';
 import './toy.css';
+import { createHTMLElement } from '../helpers/helpers';
 
 export class Toy extends BaseComponent {
     public isSelect: boolean;
@@ -15,15 +16,15 @@ export class Toy extends BaseComponent {
     private favorite: boolean;
     private indexSelect: number;
 
-    private divName: HTMLDivElement;
-    private divImg: HTMLDivElement;
-    private divCount: HTMLDivElement;
-    private divYear: HTMLDivElement;
-    private divShape: HTMLDivElement;
-    private divColor: HTMLDivElement;
-    private divSize: HTMLDivElement;
-    private divFavorite: HTMLDivElement;
-    private selectDiv: HTMLDivElement;
+    private divName: HTMLElement;
+    private divImg: HTMLElement;
+    private divCount: HTMLElement;
+    private divYear: HTMLElement;
+    private divShape: HTMLElement;
+    private divColor: HTMLElement;
+    private divSize: HTMLElement;
+    private divFavorite: HTMLElement;
+    private selectDiv: HTMLElement;
     constructor(toyInfo: IToy) {
         super('toy');
         this.numImage = +toyInfo.num;
@@ -38,49 +39,20 @@ export class Toy extends BaseComponent {
     }
 
     init(): void {
-        this.divName = document.createElement('div');
-        this.divName.className = 'font_name';
-        this.divName.innerHTML = this.name;
-
-        this.divImg = document.createElement('div');
-        this.divImg.className = 'toy_picture';
+        this.divName = createHTMLElement('div','font_name',this.name);
+        this.divImg = createHTMLElement('div', 'toy_picture');
         this.divImg.style.backgroundImage = `url(./assets/toys/${this.numImage}.png)`;
+        this.divCount = createHTMLElement('div','font_info',`Количество: ${this.count}`);
+        this.divYear = createHTMLElement('div', 'font_info',`Год покупки: ${this.year} год`);
+        this.divShape = createHTMLElement('div','font_info', `Форма игрушки: ${this.shape}`);
 
-        this.divCount = document.createElement('div');
-        this.divCount.className = 'font_info';
-        this.divCount.innerHTML = `Количество: ${this.count}`;
+        this.divColor = createHTMLElement('div','font_info',`Цвет игрушки: ${this.color}`);
 
-        this.divYear = document.createElement('div');
-        this.divYear.className = 'font_info';
-        this.divYear.innerHTML = `Год покупки: ${this.year} год`;
+        this.divSize = createHTMLElement('div','font_info',`Размер игрушки: ${this.size}`);
 
-        this.divShape = document.createElement('div');
-        this.divShape.className = 'font_info';
-        this.divShape.innerHTML = `Форма игрушки: ${this.shape}`;
+        this.divFavorite = createHTMLElement('div','font_info',`Любимая: ${this.favorite ? 'да' : 'нет'}`);
 
-        this.divColor = document.createElement('div');
-        this.divColor.className = 'font_info';
-        this.divColor.innerHTML = `Цвет игрушки: ${this.color}`;
-
-        this.divSize = document.createElement('div');
-        this.divSize.className = 'font_info';
-        this.divSize.innerHTML = `Размер игрушки: ${this.size}`;
-
-        this.divFavorite = document.createElement('div');
-        this.divFavorite.className = 'font_info';
-        this.divFavorite.innerHTML = `Любимая: ${this.favorite ? 'да' : 'нет'}`;
-
-        this.selectDiv = document.createElement('div');
-        this.selectDiv.className = 'select';
-
-        // this.node.addEventListener('click',()=>{
-        //     this.isSelect = !this.isSelect;
-        //     if (this.isSelect) {
-        //         this.node.classList.add('active');
-        //     } else {
-        //         this.node.classList.remove('active');
-        //     }
-        // })
+        this.selectDiv = createHTMLElement('div','select');
 
         this.node.append(
             this.divName,
