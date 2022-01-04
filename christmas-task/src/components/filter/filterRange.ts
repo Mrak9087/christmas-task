@@ -1,5 +1,6 @@
 import './filterRange.css';
 import { BaseComponent } from '../baseComponent/baseComponent';
+import { createHTMLElement } from '../helpers/helpers';
 
 export class FilterRange extends BaseComponent {
     minRange: number;
@@ -10,13 +11,13 @@ export class FilterRange extends BaseComponent {
     funcFilter: (e?: Event) => void;
     private inputLeftHid: HTMLInputElement;
     private inputRightHid: HTMLInputElement;
-    private slider: HTMLDivElement;
-    private track: HTMLDivElement;
-    private range: HTMLDivElement;
-    private thumbLeft: HTMLDivElement;
-    private thumbRight: HTMLDivElement;
-    private outMin: HTMLOutputElement;
-    private outMax: HTMLOutputElement;
+    private slider: HTMLElement;
+    private track: HTMLElement;
+    private range: HTMLElement;
+    private thumbLeft: HTMLElement;
+    private thumbRight: HTMLElement;
+    private outMin: HTMLElement;
+    private outMax: HTMLElement;
 
     constructor(minRange: number, maxRange: number, step: number) {
         super('filter_range');
@@ -31,38 +32,31 @@ export class FilterRange extends BaseComponent {
     }
 
     init(): void {
-        this.inputLeftHid = document.createElement('input');
+        this.inputLeftHid = <HTMLInputElement>createHTMLElement('input', 'progress');
         this.inputLeftHid.type = 'range';
-        this.inputLeftHid.className = 'progress';
         this.inputLeftHid.min = this.minRange.toString();
         this.inputLeftHid.max = this.maxRange.toString();
         this.inputLeftHid.step = this.step.toString();
         this.inputLeftHid.value = this.minRange.toString();
         this.inputLeftHid.addEventListener('input', this.setLeftValue);
 
-        this.inputRightHid = document.createElement('input');
+        this.inputRightHid = <HTMLInputElement>createHTMLElement('input', 'progress');
         this.inputRightHid.type = 'range';
-        this.inputRightHid.className = 'progress';
         this.inputRightHid.min = this.minRange.toString();
         this.inputRightHid.max = this.maxRange.toString();
         this.inputRightHid.step = this.step.toString();
         this.inputRightHid.value = this.maxRange.toString();
         this.inputRightHid.addEventListener('input', this.setRightValue);
 
-        this.slider = document.createElement('div');
-        this.slider.className = 'slider';
+        this.slider = createHTMLElement('div', 'slider');
 
-        this.track = document.createElement('div');
-        this.track.className = 'track';
+        this.track = createHTMLElement('div', 'track');
 
-        this.range = document.createElement('div');
-        this.range.className = 'range';
+        this.range = createHTMLElement('div', 'range');
 
-        this.thumbLeft = document.createElement('div');
-        this.thumbLeft.className = 'thumb left';
+        this.thumbLeft = createHTMLElement('div', 'thumb left');
 
-        this.thumbRight = document.createElement('div');
-        this.thumbRight.className = 'thumb right';
+        this.thumbRight = createHTMLElement('div', 'thumb right');
 
         this.inputLeftHid.addEventListener('mouseover', () => {
             this.thumbLeft.classList.add('hover');
@@ -90,10 +84,8 @@ export class FilterRange extends BaseComponent {
             this.thumbRight.classList.remove('active');
         });
 
-        this.outMin = document.createElement('output');
-        this.outMin.className = 'out';
-        this.outMax = document.createElement('output');
-        this.outMax.className = 'out';
+        this.outMin = createHTMLElement('output', 'out');
+        this.outMax = createHTMLElement('output', 'out');
 
         this.slider.append(
             this.inputLeftHid,
@@ -122,7 +114,6 @@ export class FilterRange extends BaseComponent {
         this.thumbLeft.style.left = percent + '%';
         this.range.style.left = percent + '%';
         this.funcFilter();
-        // console.log(this.inputLeftHid.value);
     };
 
     setRightValue = () => {
@@ -140,7 +131,6 @@ export class FilterRange extends BaseComponent {
         this.thumbRight.style.right = 100 - percent + '%';
         this.range.style.right = 100 - percent + '%';
         this.funcFilter();
-        // console.log(this.inputRightHid.value)
     };
 
     setDefault() {
