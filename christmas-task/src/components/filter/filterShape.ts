@@ -3,14 +3,14 @@ import { filterShape } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
 import { FilterObjType } from '../generalTypes/general';
 
-export class FilterShape extends BaseComponent{
+export class FilterShape extends BaseComponent {
     private shapeFilterBtns: HTMLButtonElement[] = [];
-    constructor(){
+    constructor() {
         super('filter_item_val');
         this.node.innerHTML = '<span>Размер:</span>';
     }
 
-    init(filters: FilterObjType, filterHandler:Function){
+    init(filters: FilterObjType, filterHandler: Function) {
         filterShape.forEach((item) => {
             const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_shape');
             btn.type = 'button';
@@ -49,7 +49,7 @@ export class FilterShape extends BaseComponent{
         });
     }
 
-    clear(){
+    clear() {
         this.shapeFilterBtns.forEach((item) => {
             item.classList.remove('active');
         });

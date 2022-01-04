@@ -3,14 +3,14 @@ import { filterSize } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
 import { FilterObjType } from '../generalTypes/general';
 
-export class FilterSize extends BaseComponent{
+export class FilterSize extends BaseComponent {
     private sizeFilterBtns: HTMLButtonElement[] = [];
-    constructor(){
+    constructor() {
         super('filter_item_val');
         this.node.innerHTML = '<span>Размер:</span>';
     }
 
-    init(filters: FilterObjType, filterHandler:Function){
+    init(filters: FilterObjType, filterHandler: Function) {
         filterSize.forEach((item) => {
             const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_size');
             btn.type = 'button';
@@ -32,7 +32,7 @@ export class FilterSize extends BaseComponent{
         });
     }
 
-    clear(){
+    clear() {
         this.sizeFilterBtns.forEach((item) => {
             item.classList.remove('active');
         });

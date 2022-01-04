@@ -3,14 +3,14 @@ import { filterColor } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
 import { FilterObjType } from '../generalTypes/general';
 
-export class FilterColor extends BaseComponent{
+export class FilterColor extends BaseComponent {
     private colorFilterBtns: HTMLButtonElement[] = [];
-    constructor(){
+    constructor() {
         super('filter_item_val');
         this.node.innerHTML = '<span>Размер:</span>';
     }
 
-    init(filters: FilterObjType, filterHandler:Function){
+    init(filters: FilterObjType, filterHandler: Function) {
         filterColor.forEach((item) => {
             const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_color');
             btn.type = 'button';
@@ -49,7 +49,7 @@ export class FilterColor extends BaseComponent{
         });
     }
 
-    clear(){
+    clear() {
         this.colorFilterBtns.forEach((item) => {
             item.classList.remove('active');
         });

@@ -54,20 +54,25 @@ export class FilterToy extends BaseComponent {
         const filterForRange = createHTMLElement('div', 'filter_item', '<h2>Фильтры по диапазону</h2>');
         const sortAndFind = createHTMLElement('div', 'filter_item', '<h2>Сортировка и поиск</h2>');
         this.arrFiltered = this.arrayToys.slice(0);
-        
+
         this.filterShape = new FilterShape();
-        this.filterShape.init(this.filters, this.filterHandler)
+        this.filterShape.init(this.filters, this.filterHandler);
 
         this.filterColor = new FilterColor();
-        this.filterColor.init(this.filters, this.filterHandler)
+        this.filterColor.init(this.filters, this.filterHandler);
 
         this.filterSize = new FilterSize();
-        this.filterSize.init(this.filters, this.filterHandler)
+        this.filterSize.init(this.filters, this.filterHandler);
 
         this.filterFavoriteDiv = createHTMLElement('div', 'filter_item_val', '<span>Только любимые:</span>');
         this.createBtnFilterFavorite();
 
-        filterForValue.append(this.filterShape.node, this.filterColor.node, this.filterSize.node, this.filterFavoriteDiv);
+        filterForValue.append(
+            this.filterShape.node,
+            this.filterColor.node,
+            this.filterSize.node,
+            this.filterFavoriteDiv
+        );
 
         this.boxToys = createHTMLElement('div', 'box_toys');
         this.arrFiltered = this.doFilter(this.arrayToys);
@@ -185,7 +190,7 @@ export class FilterToy extends BaseComponent {
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));
         this.arrFiltered = this.doFilter(this.arrayToys);
         this.showToys(this.arrFiltered);
-    }
+    };
 
     filterCountHandler = () => {
         this.filters.count.min = this.filterCount.minValue;
