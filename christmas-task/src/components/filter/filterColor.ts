@@ -1,7 +1,7 @@
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { filterColor } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
-import { FilterObjType } from '../generalTypes/general';
+import { FilterObjType, CallbackToy } from '../generalTypes/general';
 
 export class FilterColor extends BaseComponent {
     private colorFilterBtns: HTMLButtonElement[] = [];
@@ -10,7 +10,7 @@ export class FilterColor extends BaseComponent {
         this.node.innerHTML = '<span>Размер:</span>';
     }
 
-    init(filters: FilterObjType, filterHandler: Function) {
+    init(filters: FilterObjType, filterHandler: CallbackToy) {
         filterColor.forEach((item) => {
             const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_color');
             btn.type = 'button';

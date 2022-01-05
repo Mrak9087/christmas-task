@@ -1,3 +1,5 @@
+export type CallbackToy = (btn: HTMLElement, filters: string[]) => void;
+
 export interface INodeElement {
     node: HTMLElement;
 }

@@ -1,7 +1,7 @@
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { filterShape } from '../generalTypes/constants';
 import { createHTMLElement } from '../helpers/helpers';
-import { FilterObjType } from '../generalTypes/general';
+import { FilterObjType, CallbackToy } from '../generalTypes/general';
 
 export class FilterShape extends BaseComponent {
     private shapeFilterBtns: HTMLButtonElement[] = [];
@@ -10,7 +10,7 @@ export class FilterShape extends BaseComponent {
         this.node.innerHTML = '<span>Размер:</span>';
     }
 
-    init(filters: FilterObjType, filterHandler: Function) {
+    init(filters: FilterObjType, filterHandler: CallbackToy) {
         filterShape.forEach((item) => {
             const btn = <HTMLButtonElement>createHTMLElement('button', 'btn_shape');
             btn.type = 'button';
