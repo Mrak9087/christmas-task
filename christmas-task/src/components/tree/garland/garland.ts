@@ -5,8 +5,8 @@ import { createHTMLElement } from '../../helpers/helpers';
 
 export class Garland extends BaseComponent {
     private bulbs: Array<HTMLLIElement> = [];
-    private onOffGarland: HTMLElement;
-    panelGarland: HTMLElement;
+    private onOffGarland!: HTMLElement;
+    panelGarland!: HTMLElement;
     constructor() {
         super('garland garland_hide');
     }
@@ -88,7 +88,7 @@ export class Garland extends BaseComponent {
 
     handleBtnColorClick = (btn: HTMLElement) => {
         this.bulbs.forEach((item) => {
-            item.className = btn.dataset.color;
+            item.className = btn.dataset.color || '';
         });
     };
 

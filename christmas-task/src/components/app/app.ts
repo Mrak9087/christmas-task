@@ -10,21 +10,21 @@ import { createHTMLElement } from '../helpers/helpers';
 export class App extends BaseComponent {
     private toys: Toy[] = [];
     private arrSelect: number[];
-    private header: HTMLElement;
-    private footer: HTMLElement;
-    private startPage: HTMLElement;
-    private counterSelectDiv: HTMLElement;
-    private startPageBtn: HTMLElement;
-    private filterToy: FilterToy;
-    private treeGame: TreeGame;
-    private logo: HTMLElement;
-    private divToy: HTMLElement;
-    private divChristmasTree: HTMLElement;
-    private message: HTMLElement;
+    private header!: HTMLElement;
+    private footer!: HTMLElement;
+    private startPage!: HTMLElement;
+    private counterSelectDiv!: HTMLElement;
+    private startPageBtn!: HTMLElement;
+    private filterToy!: FilterToy;
+    private treeGame!: TreeGame;
+    private logo!: HTMLElement;
+    private divToy!: HTMLElement;
+    private divChristmasTree!: HTMLElement;
+    private message!: HTMLElement;
 
     constructor() {
         super('app');
-        this.arrSelect = JSON.parse(localStorage.getItem('mrk90_christmasSel')) || [];
+        this.arrSelect = JSON.parse(localStorage.getItem('mrk90_christmasSel') || '[]') || [];
         data.forEach((item) => {
             const toyLoc: Toy = new Toy(<IToy>item);
             toyLoc.init();

@@ -10,29 +10,29 @@ import { createHTMLElement } from '../helpers/helpers';
 
 export class FilterToy extends BaseComponent {
     private readonly arrayToys: Toy[];
-    private favoriteFilterBtn: HTMLButtonElement;
-    private filterFavoriteDiv: HTMLElement;
-    private boxToys: HTMLElement;
+    private favoriteFilterBtn!: HTMLButtonElement;
+    private filterFavoriteDiv!: HTMLElement;
+    private boxToys!: HTMLElement;
     private filters: FilterObjType;
-    private filterCountItem: HTMLElement;
-    private filterYearsItem: HTMLElement;
-    private selectSort: HTMLSelectElement;
-    private search: HTMLInputElement;
-    private filterCount: FilterRange;
-    private filterYear: FilterRange;
-    private resetBtn: HTMLButtonElement;
+    private filterCountItem!: HTMLElement;
+    private filterYearsItem!: HTMLElement;
+    private selectSort!: HTMLSelectElement;
+    private search!: HTMLInputElement;
+    private filterCount!: FilterRange;
+    private filterYear!: FilterRange;
+    private resetBtn!: HTMLButtonElement;
 
-    private filterSize: FilterSize;
-    private filterColor: FilterColor;
-    private filterShape: FilterShape;
+    private filterSize!: FilterSize;
+    private filterColor!: FilterColor;
+    private filterShape!: FilterShape;
 
-    private sortValue: string;
-    private arrFiltered: Toy[];
+    private sortValue!: string;
+    private arrFiltered!: Toy[];
 
     constructor(arrayToys: Toy[]) {
         super('page filter_toys');
         this.arrayToys = arrayToys;
-        this.filters = JSON.parse(localStorage.getItem('mrk90_christmasFilter')) || {
+        this.filters = JSON.parse(localStorage.getItem('mrk90_christmasFilter') || '[]') || {
             size: Array<string>(),
             shape: Array<string>(),
             color: Array<string>(),
@@ -184,7 +184,7 @@ export class FilterToy extends BaseComponent {
             filters.splice(idx, 1);
             btn.classList.remove('active');
         } else {
-            filters.push(btn.dataset.filterValue);
+            filters.push(btn.dataset.filterValue || '');
             btn.classList.add('active');
         }
         localStorage.setItem('mrk90_christmasFilter', JSON.stringify(this.filters));

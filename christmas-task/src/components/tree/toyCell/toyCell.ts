@@ -6,7 +6,7 @@ import { createHTMLElement } from '../../helpers/helpers';
 
 export class ToyCell extends BaseComponent {
     private toy: Toy;
-    private toyCountP: HTMLElement;
+    private toyCountP!: HTMLElement;
 
     numImg: number;
     countToy: number;

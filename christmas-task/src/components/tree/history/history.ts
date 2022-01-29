@@ -6,7 +6,7 @@ import { createHTMLElement } from '../../helpers/helpers';
 
 export class History extends BaseComponent {
     private thumbTrees: ThumbTree[] = [];
-    btnSave: HTMLElement;
+    btnSave!: HTMLElement;
     constructor() {
         super('history_container');
     }

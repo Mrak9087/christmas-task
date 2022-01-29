@@ -9,15 +9,15 @@ export class FilterRange extends BaseComponent {
     maxValue: number;
     step: number;
     funcFilter: (e?: Event) => void;
-    private inputLeftHid: HTMLInputElement;
-    private inputRightHid: HTMLInputElement;
-    private slider: HTMLElement;
-    private track: HTMLElement;
-    private range: HTMLElement;
-    private thumbLeft: HTMLElement;
-    private thumbRight: HTMLElement;
-    private outMin: HTMLElement;
-    private outMax: HTMLElement;
+    private inputLeftHid!: HTMLInputElement;
+    private inputRightHid!: HTMLInputElement;
+    private slider!: HTMLElement;
+    private track!: HTMLElement;
+    private range!: HTMLElement;
+    private thumbLeft!: HTMLElement;
+    private thumbRight!: HTMLElement;
+    private outMin!: HTMLElement;
+    private outMax!: HTMLElement;
 
     constructor(minRange: number, maxRange: number, step: number) {
         super('filter_range');

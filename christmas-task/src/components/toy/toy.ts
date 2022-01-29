@@ -14,17 +14,17 @@ export class Toy extends BaseComponent {
     private color: string;
     private size: string;
     private favorite: boolean;
-    private indexSelect: number;
+    private indexSelect!: number;
 
-    private divName: HTMLElement;
-    private divImg: HTMLElement;
-    private divCount: HTMLElement;
-    private divYear: HTMLElement;
-    private divShape: HTMLElement;
-    private divColor: HTMLElement;
-    private divSize: HTMLElement;
-    private divFavorite: HTMLElement;
-    private selectDiv: HTMLElement;
+    private divName!: HTMLElement;
+    private divImg!: HTMLElement;
+    private divCount!: HTMLElement;
+    private divYear!: HTMLElement;
+    private divShape!: HTMLElement;
+    private divColor!: HTMLElement;
+    private divSize!: HTMLElement;
+    private divFavorite!: HTMLElement;
+    private selectDiv!: HTMLElement;
     constructor(toyInfo: IToy) {
         super('toy');
         this.numImage = +toyInfo.num;

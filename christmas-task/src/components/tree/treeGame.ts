@@ -18,18 +18,18 @@ export class TreeGame extends BaseComponent {
     private toys: Toy[] = [];
     private thumbTrees: ThumbTree[] = [];
     private thumbBgs: ThumbBg[] = [];
-    private snow: Snow;
-    private player: AudioControl;
-    private garland: Garland;
-    private history: History;
-    private containerDiv: HTMLElement;
-    private settingDiv: HTMLElement;
-    private toyTreeDiv: HTMLElement;
-    private viewGameDiv: HTMLElement;
-    private mapElement: HTMLMapElement;
-    private areaElement: HTMLAreaElement;
-    private toyContainer: HTMLElement;
-    private imageTree: HTMLImageElement;
+    private snow!: Snow;
+    private player!: AudioControl;
+    private garland!: Garland;
+    private history!: History;
+    private containerDiv!: HTMLElement;
+    private settingDiv!: HTMLElement;
+    private toyTreeDiv!: HTMLElement;
+    private viewGameDiv!: HTMLElement;
+    private mapElement!: HTMLMapElement;
+    private areaElement!: HTMLAreaElement;
+    private toyContainer!: HTMLElement;
+    private imageTree!: HTMLImageElement;
     private toyCells: ToyCell[] = [];
 
     private activeBg = '1';
@@ -145,7 +145,7 @@ export class TreeGame extends BaseComponent {
                     this.handleDragStart(e, item);
                 });
                 item.addEventListener('dragend', (e) => {
-                    this.handleDragEnd(e, item, toyCell, this.areaElement);
+                    this.handleDragEnd(e, item, this.areaElement, toyCell);
                 });
             });
             this.toyCells.push(toyCell);
@@ -161,17 +161,20 @@ export class TreeGame extends BaseComponent {
     }
 
     handleDragStart = (e: DragEvent, element: HTMLImageElement) => {
-        e.dataTransfer.setData('id', element.id);
+        e.dataTransfer?.setData('id', element.id);
     };
 
-    handleDragEnd = (e: DragEvent, element: HTMLImageElement, toyCell: ToyCell, parent: HTMLElement) => {
-        if (e.dataTransfer.dropEffect === 'none') {
+    handleDragEnd = (e: DragEvent, element: HTMLImageElement, parent: HTMLElement, toyCell?: ToyCell) => {
+        if (e.dataTransfer?.dropEffect === 'none') {
             if (element.parentNode == toyCell?.node) {
                 return;
             } else {
-                element.parentNode.removeChild(element);
-                element.removeAttribute('style');
-                toyCell?.node.append(element);
+                if (element){
+                    element.parentNode?.removeChild(element);
+                    element.removeAttribute('style');
+                    toyCell?.node.append(element);
+                }
+                
             }
         } else {
             const param = parent.getBoundingClientRect();
@@ -179,7 +182,7 @@ export class TreeGame extends BaseComponent {
             const lft = e.clientX - param.left - element.offsetHeight / 2;
             element.style.top = `${tp}px`;
             element.style.left = `${lft}px`;
-            element.parentNode.removeChild(element);
+            element.parentNode?.removeChild(element);
             parent.append(element);
         }
 
@@ -203,7 +206,7 @@ export class TreeGame extends BaseComponent {
         const imgArr: ImgInfo[] = [];
         this.areaElement.querySelectorAll('img').forEach((item) => {
             const imgElem: ImgInfo = {
-                numImg: item.dataset.imgNum,
+                numImg: item.dataset.imgNum || '-1',
                 top: item.style.top,
                 left: item.style.left,
                 id: item.id,
@@ -232,7 +235,7 @@ export class TreeGame extends BaseComponent {
     }
 
     handleLoadClick(tree: ThumbTree) {
-        const imgArr: SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
+        const imgArr: SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree') || '[]');
         if (imgArr) {
             const obj = imgArr.find((item) => item.treeNum === tree.getTreeImage());
             if (obj) {
@@ -255,7 +258,7 @@ export class TreeGame extends BaseComponent {
                         this.handleDragStart(e, img);
                     });
                     img.addEventListener('dragend', (e) => {
-                        this.handleDragEnd(e, img, null, this.areaElement);
+                        this.handleDragEnd(e, img, this.areaElement);
                     });
                     this.areaElement.append(img);
                 });
@@ -264,7 +267,7 @@ export class TreeGame extends BaseComponent {
     }
 
     setBgThumbHistory() {
-        const imgArr: SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree'));
+        const imgArr: SaveObj[] = JSON.parse(localStorage.getItem('mrk90_savetree') || '[]');
         if (imgArr) {
             this.history.getThumbTrees().forEach((itemTh) => {
                 const obj = imgArr.find((item) => item.treeNum === itemTh.getTreeImage());
