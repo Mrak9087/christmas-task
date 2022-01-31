@@ -169,12 +169,11 @@ export class TreeGame extends BaseComponent {
             if (element.parentNode == toyCell?.node) {
                 return;
             } else {
-                if (element){
+                if (element) {
                     element.parentNode?.removeChild(element);
                     element.removeAttribute('style');
                     toyCell?.node.append(element);
                 }
-                
             }
         } else {
             const param = parent.getBoundingClientRect();
