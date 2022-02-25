@@ -6,20 +6,21 @@ import { data } from '../data';
 import { Toy } from '../toy/toy';
 import { IToy } from '../generalTypes/general';
 import { createHTMLElement } from '../helpers/helpers';
+import { Header } from './header';
 
 export class App extends BaseComponent {
     private toys: Toy[] = [];
     private arrSelect: number[];
-    private header!: HTMLElement;
+    private header!: Header;
     private footer!: HTMLElement;
     private startPage!: HTMLElement;
-    private counterSelectDiv!: HTMLElement;
+    // private counterSelectDiv!: HTMLElement;
     private startPageBtn!: HTMLElement;
     private filterToy!: FilterToy;
     private treeGame!: TreeGame;
-    private logo!: HTMLElement;
-    private divToy!: HTMLElement;
-    private divChristmasTree!: HTMLElement;
+    // private logo!: HTMLElement;
+    // private divToy!: HTMLElement;
+    // private divChristmasTree!: HTMLElement;
     private message!: HTMLElement;
 
     constructor() {
@@ -42,7 +43,8 @@ export class App extends BaseComponent {
 
     init(parent: HTMLElement) {
         const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true';
-        this.header = createHTMLElement('header', 'header');
+        this.header = new Header();
+        this.header.init(this.arrSelect.length);
 
         this.startPage = createHTMLElement('div', 'page start_page');
         this.startPage.innerHTML = '<h1 class="start_page_title">Новогодняя игра<span>«Наряди ёлку»</span></h1>';
@@ -76,7 +78,7 @@ export class App extends BaseComponent {
         });
 
         this.node.append(
-            this.header,
+            this.header.node,
             this.startPage,
             this.filterToy.node,
             this.treeGame.node,
@@ -98,50 +100,31 @@ export class App extends BaseComponent {
     }
 
     createHeaderContent() {
-        const headerContainer = createHTMLElement('div', 'header_container');
-
-        this.logo = createHTMLElement('div', 'logo');
-        this.logo.addEventListener('click', () => {
+        this.header.logo.addEventListener('click', () => {
             this.showStartPage();
         });
 
-        this.divToy = createHTMLElement('div', 'item_menu', 'игрушки');
-        this.divToy.addEventListener('click', () => {
+        
+        this.header.divToy.addEventListener('click', () => {
             this.startGame();
         });
-        this.divChristmasTree = createHTMLElement('div', 'item_menu', 'елка');
-        this.divChristmasTree.addEventListener('click', () => {
+        
+        this.header.divChristmasTree.addEventListener('click', () => {
             this.showTree();
         });
-
-        const nav = createHTMLElement('nav', 'nav');
-        nav.append(this.logo, this.divToy, this.divChristmasTree);
-
-        const content = createHTMLElement('div', 'cnt_header');
-        const btnClearStorage = <HTMLButtonElement>createHTMLElement('button', 'btn clear_btn');
-        btnClearStorage.type = 'button';
-        btnClearStorage.innerHTML = 'Clear localStorage';
-        btnClearStorage.addEventListener('click', () => {
-            localStorage.clear();
-        });
-
-        this.counterSelectDiv = createHTMLElement('div', 'selectCount', `<span>${this.arrSelect.length}</span>`);
-        content.append(btnClearStorage, this.counterSelectDiv);
-        headerContainer.append(nav, content);
-        this.header.append(headerContainer);
     }
 
     showStartPage() {
-        this.divToy.classList.remove('active');
-        this.divChristmasTree.classList.remove('active');
+        this.header.divToy.classList.remove('active');
+        this.header.divChristmasTree.classList.remove('active');
         this.filterToy.node.classList.add('none');
         this.treeGame.node.classList.add('none');
         this.startPage.classList.remove('none');
     }
 
     startGame = () => {
-        this.divToy.classList.add('active');
-        this.divChristmasTree.classList.remove('active');
+        this.header.divToy.classList.add('active');
+        this.header.divChristmasTree.classList.remove('active');
         this.startPage.classList.add('none');
         this.treeGame.node.classList.add('none');
         this.filterToy.setFocus();
@@ -149,8 +132,8 @@ export class App extends BaseComponent {
     };
 
     showTree = () => {
-        this.divChristmasTree.classList.add('active');
-        this.divToy.classList.remove('active');
+        this.header.divChristmasTree.classList.add('active');
+        this.header.divToy.classList.remove('active');
         this.startPage.classList.add('none');
         this.filterToy.node.classList.add('none');
         this.treeGame.clearTree();
@@ -186,6 +169,6 @@ export class App extends BaseComponent {
             }
         }
         localStorage.setItem('mrk90_christmasSel', JSON.stringify(this.arrSelect));
-        this.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
+        this.header.counterSelectDiv.innerHTML = `<span>${this.arrSelect.length}</span>`;
     }
 }

@@ -32,7 +32,9 @@ export class FilterToy extends BaseComponent {
     constructor(arrayToys: Toy[]) {
         super('page filter_toys');
         this.arrayToys = arrayToys;
-        this.filters = JSON.parse(localStorage.getItem('mrk90_christmasFilter') || '[]') || {
+        let christmasFilter = JSON.parse(localStorage.getItem('mrk90_christmasFilter') || '{}');
+        console.log(christmasFilter);
+        this.filters = Object.keys(christmasFilter).length ? christmasFilter : {
             size: Array<string>(),
             shape: Array<string>(),
             color: Array<string>(),
