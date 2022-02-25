@@ -24,7 +24,8 @@ export class App extends BaseComponent {
 
     constructor() {
         super('app');
-        this.arrSelect = JSON.parse(localStorage.getItem('mrk90_christmasSel') || '[]') || [];
+        const christmasSel = localStorage.getItem('mrk90_christmasSel');
+        this.arrSelect = christmasSel ? JSON.parse(christmasSel) : [];
         data.forEach((item) => {
             const toyLoc: Toy = new Toy(<IToy>item);
             toyLoc.init();
