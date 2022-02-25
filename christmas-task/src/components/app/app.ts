@@ -40,7 +40,7 @@ export class App extends BaseComponent {
     }
 
     init(parent: HTMLElement) {
-        const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true' ? true : false;
+        const isPlayer = localStorage.getItem('mrk90_audPlay') === 'true';
         this.header = createHTMLElement('header', 'header');
 
         this.startPage = createHTMLElement('div', 'page start_page');
