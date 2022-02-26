@@ -8,6 +8,13 @@ import { FilterShape } from './filterShape';
 import { FilterObjType } from '../generalTypes/general';
 import { createHTMLElement } from '../helpers/helpers';
 
+function getOptionsSelect(): string{
+    return `<option selected="" value="sort-name-max">По названию от «А» до «Я»</option>
+    <option value="sort-name-min">По названию от «Я» до «А»</option>
+    <option value="sort-count-max">По количеству по возрастанию</option>
+    <option value="sort-count-min">По количеству по убыванию</option>`;
+}
+
 export class FilterToy extends BaseComponent {
     private readonly arrayToys: Toy[];
     private favoriteFilterBtn!: HTMLButtonElement;
@@ -108,10 +115,7 @@ export class FilterToy extends BaseComponent {
         filterForRange.append(this.filterCountItem, this.filterYearsItem);
 
         this.selectSort = <HTMLSelectElement>createHTMLElement('select', 'sort_select');
-        this.selectSort.innerHTML = `<option selected="" value="sort-name-max">По названию от «А» до «Я»</option>
-        <option value="sort-name-min">По названию от «Я» до «А»</option>
-        <option value="sort-count-max">По количеству по возрастанию</option>
-        <option value="sort-count-min">По количеству по убыванию</option>`;
+        this.selectSort.innerHTML = getOptionsSelect();
 
         this.sortValue = localStorage.getItem('mrk90_christmasSort') || this.selectSort.value;
         for (let i = 0; i < this.selectSort.options.length; i++) {
