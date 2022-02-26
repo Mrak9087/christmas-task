@@ -32,20 +32,10 @@ export class FilterRange extends BaseComponent {
     }
 
     init(): void {
-        this.inputLeftHid = <HTMLInputElement>createHTMLElement('input', 'progress');
-        this.inputLeftHid.type = 'range';
-        this.inputLeftHid.min = this.minRange.toString();
-        this.inputLeftHid.max = this.maxRange.toString();
-        this.inputLeftHid.step = this.step.toString();
-        this.inputLeftHid.value = this.minRange.toString();
+        this.inputLeftHid = this.initInput(this.minRange.toString());
         this.inputLeftHid.addEventListener('input', this.setLeftValue);
 
-        this.inputRightHid = <HTMLInputElement>createHTMLElement('input', 'progress');
-        this.inputRightHid.type = 'range';
-        this.inputRightHid.min = this.minRange.toString();
-        this.inputRightHid.max = this.maxRange.toString();
-        this.inputRightHid.step = this.step.toString();
-        this.inputRightHid.value = this.maxRange.toString();
+        this.inputRightHid = this.initInput(this.maxRange.toString());
         this.inputRightHid.addEventListener('input', this.setRightValue);
 
         this.slider = createHTMLElement('div', 'slider');
@@ -98,6 +88,16 @@ export class FilterRange extends BaseComponent {
         this.node.append(this.outMin, this.slider, this.outMax);
         this.setLeftValue();
         this.setRightValue();
+    }
+
+    initInput(value:string):HTMLInputElement{
+        const input = <HTMLInputElement>createHTMLElement('input', 'progress');
+        input.type = 'range';
+        input.min = this.minRange.toString();
+        input.max = this.maxRange.toString();
+        input.step = this.step.toString();
+        input.value = value;
+        return input
     }
 
     setLeftValue = () => {
