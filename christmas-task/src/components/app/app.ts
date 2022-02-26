@@ -104,11 +104,10 @@ export class App extends BaseComponent {
             this.showStartPage();
         });
 
-        
         this.header.divToy.addEventListener('click', () => {
             this.startGame();
         });
-        
+
         this.header.divChristmasTree.addEventListener('click', () => {
             this.showTree();
         });

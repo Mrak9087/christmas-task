@@ -23,6 +23,15 @@ export class Garland extends BaseComponent {
         this.createGarlandItem(650, 58, 2, 29);
     }
 
+    createButton(className: string, color: string): HTMLElement {
+        const button = createHTMLElement('button', className);
+        button.dataset.color = color;
+        button.addEventListener('click', () => {
+            this.handleBtnColorClick(button);
+        });
+        return button;
+    }
+
     createGarlandItem(size: number, grad: number, shift: number, count: number) {
         const ul = createHTMLElement('ul', 'lightrope');
         ul.style.width = `${size}px`;
@@ -57,31 +66,15 @@ export class Garland extends BaseComponent {
         <div class="onoffswitch-switch"></div>`;
         this.onOffGarland.append(check, lbl);
 
-        const btnMult = createHTMLElement('button', 'color-btn multicolor-btn');
-        btnMult.dataset.color = 'multicolor';
-        btnMult.addEventListener('click', () => {
-            this.handleBtnColorClick(btnMult);
-        });
-        const btnRed = createHTMLElement('button', 'color-btn red-btn');
-        btnRed.dataset.color = 'red';
-        btnRed.addEventListener('click', () => {
-            this.handleBtnColorClick(btnRed);
-        });
-        const btnBlue = createHTMLElement('button', 'color-btn blue-btn');
-        btnBlue.dataset.color = 'blue';
-        btnBlue.addEventListener('click', () => {
-            this.handleBtnColorClick(btnBlue);
-        });
-        const btnYellow = createHTMLElement('button', 'color-btn yellow-btn');
-        btnYellow.dataset.color = 'yellow';
-        btnYellow.addEventListener('click', () => {
-            this.handleBtnColorClick(btnYellow);
-        });
-        const btnGreen = createHTMLElement('button', 'color-btn green-btn');
-        btnGreen.dataset.color = 'green';
-        btnGreen.addEventListener('click', () => {
-            this.handleBtnColorClick(btnGreen);
-        });
+        const btnMult = this.createButton('color-btn multicolor-btn', 'multicolor');
+
+        const btnRed = this.createButton('color-btn red-btn', 'red');
+
+        const btnBlue = this.createButton('color-btn red-btn', 'blue');
+
+        const btnYellow = this.createButton('color-btn red-btn', 'yellow');
+
+        const btnGreen = this.createButton('color-btn red-btn', 'green');
 
         this.panelGarland.append(btnMult, btnRed, btnBlue, btnYellow, btnGreen, this.onOffGarland);
     }

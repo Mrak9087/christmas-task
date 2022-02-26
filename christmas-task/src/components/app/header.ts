@@ -1,25 +1,20 @@
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { createHTMLElement } from '../helpers/helpers';
 
-export class Header extends BaseComponent{
-
-
+export class Header extends BaseComponent {
     public logo!: HTMLDivElement;
     public divToy!: HTMLDivElement;
     public divChristmasTree!: HTMLDivElement;
     public counterSelectDiv!: HTMLDivElement;
-    
 
-
-    constructor(){
+    constructor() {
         super('header');
     }
 
-    // 
-    init(countSelect:number){
-        const headerContainer = createHTMLElement('div', 'header_container')
+    //
+    init(countSelect: number) {
+        const headerContainer = createHTMLElement('div', 'header_container');
         this.logo = <HTMLDivElement>createHTMLElement('div', 'logo');
-
 
         this.divToy = <HTMLDivElement>createHTMLElement('div', 'item_menu', 'игрушки');
         this.divChristmasTree = <HTMLDivElement>createHTMLElement('div', 'item_menu', 'елка');
@@ -40,7 +35,4 @@ export class Header extends BaseComponent{
         headerContainer.append(nav, content);
         this.node.append(headerContainer);
     }
-
-        
-
 }

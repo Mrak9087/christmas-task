@@ -21,9 +21,9 @@ const FILTER_DEFAULT = {
         min: 1940,
         max: 2020,
     },
-}; 
+};
 
-function getOptionsSelect(): string{
+function getOptionsSelect(): string {
     return `<option selected="" value="sort-name-max">По названию от «А» до «Я»</option>
     <option value="sort-name-min">По названию от «Я» до «А»</option>
     <option value="sort-count-max">По количеству по возрастанию</option>
@@ -54,7 +54,7 @@ export class FilterToy extends BaseComponent {
     constructor(arrayToys: Toy[]) {
         super('page filter_toys');
         this.arrayToys = arrayToys;
-        let christmasFilter = JSON.parse(localStorage.getItem('mrk90_christmasFilter') || '{}');
+        const christmasFilter = JSON.parse(localStorage.getItem('mrk90_christmasFilter') || '{}');
         this.filters = Object.keys(christmasFilter).length ? christmasFilter : FILTER_DEFAULT;
     }
 

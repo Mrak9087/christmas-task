@@ -90,14 +90,14 @@ export class FilterRange extends BaseComponent {
         this.setRightValue();
     }
 
-    initInput(value:string):HTMLInputElement{
+    initInput(value: string): HTMLInputElement {
         const input = <HTMLInputElement>createHTMLElement('input', 'progress');
         input.type = 'range';
         input.min = this.minRange.toString();
         input.max = this.maxRange.toString();
         input.step = this.step.toString();
         input.value = value;
-        return input
+        return input;
     }
 
     setLeftValue = () => {
