@@ -8,6 +8,21 @@ import { FilterShape } from './filterShape';
 import { FilterObjType } from '../generalTypes/general';
 import { createHTMLElement } from '../helpers/helpers';
 
+const FILTER_DEFAULT = {
+    size: Array<string>(),
+    shape: Array<string>(),
+    color: Array<string>(),
+    favor: false,
+    count: {
+        min: 1,
+        max: 12,
+    },
+    years: {
+        min: 1940,
+        max: 2020,
+    },
+}; 
+
 function getOptionsSelect(): string{
     return `<option selected="" value="sort-name-max">По названию от «А» до «Я»</option>
     <option value="sort-name-min">По названию от «Я» до «А»</option>
@@ -40,21 +55,7 @@ export class FilterToy extends BaseComponent {
         super('page filter_toys');
         this.arrayToys = arrayToys;
         let christmasFilter = JSON.parse(localStorage.getItem('mrk90_christmasFilter') || '{}');
-        console.log(christmasFilter);
-        this.filters = Object.keys(christmasFilter).length ? christmasFilter : {
-            size: Array<string>(),
-            shape: Array<string>(),
-            color: Array<string>(),
-            favor: false,
-            count: {
-                min: 1,
-                max: 12,
-            },
-            years: {
-                min: 1940,
-                max: 2020,
-            },
-        };
+        this.filters = Object.keys(christmasFilter).length ? christmasFilter : FILTER_DEFAULT;
     }
 
     init() {
