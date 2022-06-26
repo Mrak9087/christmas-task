@@ -27,7 +27,7 @@ export class FilterRange extends BaseComponent {
         this.maxValue = maxRange;
         this.step = step;
         this.funcFilter = () => {
-            // ничего не делает
+            // empty func
         };
     }
 

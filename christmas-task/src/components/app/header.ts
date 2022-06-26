@@ -11,7 +11,6 @@ export class Header extends BaseComponent {
         super('header');
     }
 
-    //
     init(countSelect: number) {
         const headerContainer = createHTMLElement('div', 'header_container');
         this.logo = <HTMLDivElement>createHTMLElement('div', 'logo');

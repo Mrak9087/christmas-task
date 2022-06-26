@@ -14,13 +14,9 @@ export class App extends BaseComponent {
     private header!: Header;
     private footer!: HTMLElement;
     private startPage!: HTMLElement;
-    // private counterSelectDiv!: HTMLElement;
     private startPageBtn!: HTMLElement;
     private filterToy!: FilterToy;
     private treeGame!: TreeGame;
-    // private logo!: HTMLElement;
-    // private divToy!: HTMLElement;
-    // private divChristmasTree!: HTMLElement;
     private message!: HTMLElement;
 
     constructor() {
